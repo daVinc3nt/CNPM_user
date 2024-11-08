@@ -35,6 +35,7 @@ export const FloatingNav = ({
     { name: t("online_test"), link: "/" },
     { name: t("notes"), link: "/" },
     { name: t("news"), link: "/" },
+    
   ];
   const { searchTitle, setSearchTitle } = useSearchContext();
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -117,7 +118,7 @@ export const FloatingNav = ({
           <div className="h-10 flex items-center md:w-60">
             <Image src="/photos/logobachkhoa.png" 
             className="object-cover" alt="Your image"
-             height={60} width={60}/>
+            height={60} width={60}/>
             <span className="font-bold text-blue-800">BKPRINTER</span>
           </div>
           <div className="hidden md:flex items-center justify-center space-x-8 w-full border-gray-300/30 h-10">

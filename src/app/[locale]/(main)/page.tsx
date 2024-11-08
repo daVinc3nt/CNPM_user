@@ -81,9 +81,6 @@ export default function Home({params: {locale}}: Props) {
 				</div>			
 			</div>
 			
-			
-          
-          
 		</div>
 		</>
 		

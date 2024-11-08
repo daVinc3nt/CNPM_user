@@ -7,6 +7,7 @@ import Footer from "@/components/Footer/footer";
 import { SessionProvider } from "@/providers/SessionProvider";
 import SidebarProvider from "@/providers/SidebarProvider";
 import Sidebar from "@/components/sidebar";
+import BuyPages from "@/components/BuyPages/buypages"
 
 export default function RootLayout({
   children,
@@ -19,10 +20,12 @@ export default function RootLayout({
           <SessionProvider>
             <FloatingNav />
             <Sidebar />
-            {children}
+              {children} 
+              <FloatingNav />
+              {/* <BuyPages /> */}
             {/* <Footer/> */}
           </SessionProvider>
-        </SidebarProvider>
+        </SidebarProvider> 
       </section>
   );
 }
