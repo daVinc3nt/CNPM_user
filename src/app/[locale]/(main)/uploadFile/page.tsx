@@ -19,7 +19,7 @@ import CustomLoadingElement from "../../loading";
 type Props = {
 	params: {locale: string};
   };
-export default function Home({params: {locale}}: Props) {
+export default function UploadFile({params: {locale}}: Props) {
 	const {session, status} =useSession()
 	const [data, setData] = useState<UpdateAccountPayload>({});
 	useEffect(()=>{	
@@ -29,8 +29,6 @@ export default function Home({params: {locale}}: Props) {
 		if(status ==="authenticated")
 			{setData(session)}
 	},[status,session])
-	const here = useRef(null);
-	const t = useTranslations('home');
 	const [files, setFiles] = useState([]);
 	const fileInputRef = useRef(null);
 	const [isDragging, setIsDragging] = useState(false);
