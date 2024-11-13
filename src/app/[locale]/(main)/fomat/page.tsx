@@ -14,6 +14,8 @@ import Zigzag from "@/components/Zigzag/zigzag";
 import { testimonials } from "@/data";
 import {useTranslations} from 'next-intl';
 import { event } from "jquery";
+import { FaQuestionCircle } from "react-icons/fa"; 
+
 
 export default function Home() {
 	const [value, setValue] = useState(1);
@@ -22,12 +24,18 @@ export default function Home() {
 	const [toPage, setToPage] = useState(1)
 	const [isOpenPreview, setIsOpenPreview] = useState(false);
 	const [scale, setScale] = useState(false);
-	const increaseValue = () => {
-		setValue(prevValue => prevValue + 1);
+	const [copiesperpage, setCopiesperpage] = useState(1)
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+	const increaseValue = (func) => {
+		func(prevValue => prevValue + 1);
 	};
 
-	const decreaseValue = () => {
-		setValue(prevValue => (prevValue > 1 ? prevValue - 1 : 1));
+	const decreaseValue = (func) => {
+		func(prevValue => (prevValue > 1 ? prevValue - 1 : 1));
 	};
 
 	const handleToggle = () => {
@@ -36,11 +44,13 @@ export default function Home() {
 	return (
 		<>
 		{/* {status == "unauthenticated" && open && <SignInPopUp setOpen={setOpen}/>} */}
-		<div className=" h-fit overflow-x-hidden flex flex-row">
+		<div className=" h-fit overflow-x-hidden overflow-y-hidden flex flex-row">
 			{/* {t('title')} */}
-			<div className="relative w-1/3 h-screen flex items-center bg-[#373839]">
+			<div className="relative w-1/3 h-screen flex items-center bg-[#373839] p-7">
+					<iframe src="https://drive.google.com/file/d/1EIQQt-JELO5ZijVSF1tpGD6eq4cokMo1/preview" className="h-screen w-full" allow="autoplay"></iframe>
 			</div>
-			<div className="relative overflow-y-hidden p-5 w-2/3 h-screen flex flex-col space-y-7 text-white bg-[#26282A]">
+			<div className="relative overflow-x-hidden w-2/3 h-screen flex flex-col text-white bg-[#26282A]">
+				<div className="p-5 space-y-7 ">
 				<div className="w-full bg-[#2D3032]">
 					<div className="w-full flex flex-row justify-between p-2 px-7">
 						<div className="self-start">Printer</div>
@@ -94,12 +104,12 @@ export default function Home() {
 								className="text-center w-16 h-5 focus:outline-none bg-[#393A3D] items-end"
 							/>
 							<div className="flex flex-col items-center justify-center space-y-1 pl-2">
-								<button onClick={increaseValue} className="bg-[#AAABAC] hover:bg-[#DDDDDD] focus:outline-none flex items-center justify-center">
+								<button onClick={()=>increaseValue(setValue)} className="bg-[#AAABAC] hover:bg-[#DDDDDD] focus:outline-none flex items-center justify-center">
 									<svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7-7-7 7"/>
 									</svg>
 								</button>
-								<button onClick={decreaseValue} className="bg-[#AAABAC] hover:bg-[#DDDDDD] focus:outline-none flex items-center justify-center">
+								<button onClick={()=>decreaseValue(setValue)} className="bg-[#AAABAC] hover:bg-[#DDDDDD] focus:outline-none flex items-center justify-center">
 									<svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7 7 7-7"/>
 									</svg>
@@ -145,12 +155,12 @@ export default function Home() {
 						<div className="flex justify-end ">
 							<div className="flex flex-row items-center">A4 <div className="ml-1 text-xs text-[#6E7071] self-end">210 by 297 mm</div></div>
 							<div className="flex flex-col items-center justify-center space-y-1 pl-2">
-								<button onClick={increaseValue} className="bg-[#AAABAC] hover:bg-[#DDDDDD] focus:outline-none flex items-center justify-center">
+								<button className="bg-[#AAABAC] hover:bg-[#DDDDDD] focus:outline-none flex items-center justify-center">
 									<svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7-7-7 7"/>
 									</svg>
 								</button>
-								<button onClick={decreaseValue} className="bg-[#AAABAC] hover:bg-[#DDDDDD] focus:outline-none flex items-center justify-center">
+								<button className="bg-[#AAABAC] hover:bg-[#DDDDDD] focus:outline-none flex items-center justify-center">
 									<svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7 7 7-7"/>
 									</svg>
@@ -182,7 +192,7 @@ export default function Home() {
 					</div>
 				</div>
 
-				<div className=" text-white w-full rounded-md">
+				<div className="text-white w-full rounded-md pb-7">
 					<button
 						onClick={handleToggle}
 						className="flex items-center focus:outline-none w-full"
@@ -192,9 +202,8 @@ export default function Home() {
 						</span>
 						<span className="ml-2 font-semibold">Preview</span>
 					</button>
-					
 					{isOpenPreview && (
-						<div className="bg-[#2D3032] p-2 rounded-lg text-white w-full">
+						<div className="bg-[#2D3032] p-2 pb-10 rounded-lg text-white w-full h-full">
 						<div className="flex justify-around">
 						  <div className="">
 							<label className="flex items-center space-x-2">
@@ -243,18 +252,18 @@ export default function Home() {
 							<div className="flex items-center">
 							  	<input
 									type="number"
-									value={value}
+									value={copiesperpage}
 									min={1}
-									onChange={(e) => setValue(() => Number(e.target.value) > 1 ? Number(e.target.value) : 1)}
+									onChange={(e) => setCopiesperpage(() => Number(e.target.value) > 1 ? Number(e.target.value) : 1)}
 									className="text-center w-16 h-5 focus:outline-none bg-[#393A3D] items-end"
 								/>
 								<div className="flex flex-col items-center justify-center space-y-1 pl-2">
-									<button onClick={increaseValue} className="bg-[#AAABAC] hover:bg-[#DDDDDD] focus:outline-none flex items-center justify-center">
+									<button onClick={()=>increaseValue(setCopiesperpage)} className="bg-[#AAABAC] hover:bg-[#DDDDDD] focus:outline-none flex items-center justify-center">
 										<svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7-7-7 7"/>
 										</svg>
 									</button>
-									<button onClick={decreaseValue} className="bg-[#AAABAC] hover:bg-[#DDDDDD] focus:outline-none flex items-center justify-center">
+									<button onClick={()=>decreaseValue(setCopiesperpage)} className="bg-[#AAABAC] hover:bg-[#DDDDDD] focus:outline-none flex items-center justify-center">
 										<svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7 7 7-7"/>
 										</svg>
@@ -265,6 +274,41 @@ export default function Home() {
 						</div>
 					  </div>
 					)}
+					{!isOpenPreview && (<div style={{height: "10rem"}}>
+
+					</div>)
+					}
+					</div>
+					</div>
+					<div className="sticky bottom-0 left-0 bg-[#2D3032] h-fit w-full border-t-2 broder-solid border-[#D1D2D2]">
+					<div className="mx-10 p-4 flex flex-row justify-between items-center ">
+						<div className="flex flex-row space-x-4">
+							<div className="flex items-center space-x-2">
+								<Image src={"/photos/help.png"} alt="none" width={25} height={25} />
+							</div>
+							<div className="relative">
+								<button 
+									className="bg-[#656668] text-white px-2 flex items-center flex flex-row"
+									onClick={toggleDropdown}
+								>
+									<div className="py-1" style={{"width": "4rem"}}>
+										PDF
+									</div>
+									<span className="ml-2 py-1 pl-2 flex border-l-2 border-solid border-white justify-center">&#9660;</span> {/* Mũi tên xuống */}
+								</button>
+								{isDropdownOpen && (
+									<div className="absolute bottom- text-white mt-2 p-2 shadow">
+										<div>Option 1</div>
+										<div>Option 2</div>
+									</div>
+								)}
+							</div>
+						</div>
+						<div className="flex justify-end space-x-10">
+							<button className="bg-[#656668] text-white px-2 py-1" style={{"width": "6rem"}}>Cancel</button>
+							<button className="bg-[#1F66E0] text-white px-2 py-1" style={{"width": "6rem"}}>Print</button>
+						</div>
+					</div>
 					</div>
 			</div>
 		</div>
