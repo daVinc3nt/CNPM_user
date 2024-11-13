@@ -47,7 +47,7 @@ export default function Home() {
 		<div className=" h-fit overflow-x-hidden overflow-y-hidden flex flex-row">
 			{/* {t('title')} */}
 			<div className="relative w-1/3 h-screen flex items-center bg-[#373839] p-7">
-					<iframe src="https://drive.google.com/file/d/1EIQQt-JELO5ZijVSF1tpGD6eq4cokMo1/preview" className="h-screen w-full" allow="autoplay"></iframe>
+					<iframe src="https://drive.google.com/file/d/17yxahSqS7m99W8wpeDQrgK3ePP1Z5NFT/preview" className="h-screen w-full" allow="autoplay"></iframe>
 			</div>
 			<div className="relative overflow-x-hidden w-2/3 h-screen flex flex-col text-white bg-[#26282A]">
 				<div className="p-5 space-y-7 ">
