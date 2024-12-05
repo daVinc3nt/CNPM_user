@@ -22,8 +22,6 @@ export default function RootLayout({
             <Sidebar />
               {children} 
               <FloatingNav />
-              {/* <BuyPages /> */}
-            {/* <Footer/> */}
           </SessionProvider>
         </SidebarProvider> 
       </section>

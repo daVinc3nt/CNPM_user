@@ -1,5 +1,4 @@
 "use client"
-import { AuthOperation } from "@/engonow-library/main";
 import { signIn } from "next-auth/react"; 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -31,35 +30,35 @@ export function CredentialsForm(props: CredentialsFormProps) {
 		   setType('password')
 		}
 	 }
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const { username, password } = formData;
-        ////console.log(data.get ("password"))
-        const Auth = new AuthOperation()
-        const res = await Auth.login({ identifier: username, password:  password })
-        console.log(res)
-        if (res.data)
-            {
-                Cookies.set("uid", res.data.id)
-            }
-        if (res && res.success) {
-                router.push("/");
-            }
-		else if (res && res.status === 401 && res.success) {
-                ////console.log ("Error: ", signInResponse); 
-                toast.warning(res.message)
-            }
-			 else {
-                ////console.log ("Error: ", signInResponse); 
-                toast.warning(res.message)
-            }
-        }
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const { username, password } = formData;
+    //     ////console.log(data.get ("password"))
+    //     const Auth = new AuthOperation()
+    //     const res = await Auth.login({ identifier: username, password:  password })
+    //     console.log(res)
+    //     if (res.data)
+    //         {
+    //             Cookies.set("uid", res.data.id)
+    //         }
+    //     if (res && res.success) {
+    //             router.push("/");
+    //         }
+	// 	else if (res && res.status === 401 && res.success) {
+    //             ////console.log ("Error: ", signInResponse); 
+    //             toast.warning(res.message)
+    //         }
+	// 		 else {
+    //             ////console.log ("Error: ", signInResponse); 
+    //             toast.warning(res.message)
+    //         }
+    //     }
     return (
 		<form
 			className="h-full w-full mt-8 text-black  flex flex-col items-center"
 			action=""
 			method="POST"
-			onSubmit={handleSubmit}>
+			onSubmit={()=>{}}>
 			<div className="relative w-full">
 				<input
 					id="username"
@@ -126,7 +125,7 @@ export function CredentialsForm(props: CredentialsFormProps) {
 			<p className="text-red-500  mt-5 text-xxs sm:text-sm">{error}</p>
 			<button
 				className="mt-5 relative bg-blue-900 px-4 py-2 rounded-full w-2/3 text-white text-sm md:text-xl"
-				onClick={handleSubmit}>
+				onClick={()=>{}}>
 				{t("login")}
 			</button>
 		</form>

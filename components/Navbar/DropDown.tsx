@@ -7,7 +7,6 @@ import LogoutIcon from "../Icon/LogoutIcon";
 import Cookies from 'js-cookie';
 import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "@/providers/SessionProvider";
-import LoadingImage from "./loadingImage";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 export default function DropDown() {
@@ -49,12 +48,12 @@ export default function DropDown() {
 			ref={ref}
 			onClick={() => setDropDown(!dropDown)}>
 			<div className="h-8 w-8 object-fill overflow-hidden rounded-xl">
-				{status =="authenticated" ? session && session.avatar?
-				<LoadingImage
+				{status =="authenticated" ? session && session.image_url?
+				<Image
 				height={100}
 				width={100}
-				filePath={session.avatar}
-				style={""}
+				src={session.image_url}
+				alt={""}
 				/>: 
 				<Image
 					alt="avatar"
@@ -74,18 +73,13 @@ export default function DropDown() {
 					{status =="authenticated" && 
 					<div className="w-full h-fit flex flex-col justify-start items-start gap-2 text-sm">
 						<div className="text-gray-500 w-full text-xl text-center font-semibold">
-							{t("greeting")} <span className="text-red-500">{session && session.firstName}</span> 
+							{t("greeting")} <span className="text-red-500">{session && session.full_name}</span> 
 						</div>
 					</div>}
 
 					<hr className="solid bg-gray-200 border-gray-200 border rounded-full"></hr>
 
 					<div className="w-full h-fit flex flex-col justify-start items-start text-base">
-						<Link
-							href="/statistic"
-							className="w-full hover:bg-primary p-2 flex items-center justify-start">
-							{t("status")}
-						</Link>
 						<Link
 							href="/profile"
 							className="w-full hover:bg-primary p-2 flex items-center justify-start">

@@ -1,253 +1,128 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { RiImageEditLine } from "react-icons/ri";
-import { AnimatePresence, Variants, motion } from "framer-motion";
 import Image from "next/image";
-import { FaEye, FaRegEdit } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
-import Aos from "@/components/aos";
 import { useSession } from "@/providers/SessionProvider";
 import CustomLoadingElement from "../../loading";
-import { TiTick } from "react-icons/ti";
-import { UpdateAccountPayload, UpdateAvatarPayload } from "@/engonow-library/interfaces";
-import { AccountOperation } from "@/engonow-library/main";
-import { toast } from "sonner";
-import LoadingImage from "./component/loadingImage";
-import { Session } from "inspector";
 import { useTranslations } from "next-intl";
-import Cookies from "js-cookie"
+import { PaymentOperation } from "@/BE-library/main";
+import moment from "moment";
+interface Payment {
+	id: number,
+	balance: number,
+	amount: number,
+	status: string,
+	method: string,
+	transactionDate: Date
+}
+function getStatusClass(status) {
+	switch (status) {
+	  case 'in progress':
+		return 'text-yellow-500';
+	  case 'successful':
+		return 'text-green-500';
+	  case 'failed':
+		return 'text-red-500';
+	  default:
+		return ''; // Hoặc một lớp mặc định nếu cần
+	}
+}
 export default function Profile() {
 	const {session, status} =useSession()
-	const [avatar, setAvatar] = useState(null);
-	const [showPassword, setShowPassword] = useState(false);
-	const [data, setData] = useState<UpdateAccountPayload>({});
-	const [isEditing, setIsEditing] = useState(false);
-	const [password, setPassword] = useState("Session.user.password");
-	const [avatarUpload, setavatarUpload] = useState(null);
+	const [ListPayment, setListPayment] = useState<Payment[]>(null)
 	const t =useTranslations("profile")
-	const handleUpdateAvatar = async (e) => {
-		const AccAction = new AccountOperation
-		// AccAction.setLanguage(Cookies.get("NEXT_LOCALE"))
-		const newAva: UpdateAvatarPayload = {
-			avatar: e.target.files[0],
-		};
-		if(e.target.files[0].size > 1000000) {
-			toast.warning("Vui lòng dùng hình ảnh nhỏ hơn 1mb!");
-			e.target.value = "";
-			return 
-		 }
-		console.log(session.id, newAva, "session.sid")
-		const response = await AccAction.updateAvatar(session.id, newAva, "session.sid");
-		console.log(newAva)
-		console.log("response", response);
-		// console.log(avatarUpload)
-		if (response.success) {
-		  // reloadData();
-		  toast.success("Cập nhật ảnh đại diện thành công!")
-		  setavatarUpload(null);
-		  location.reload()
-		} else {
-			toast.warning(response.message)
-		}
-	  };
-	const handleSaveClick = async () => {
-		const x = "staff_id"
-		const accAction = new AccountOperation()
-		accAction.setLanguage(Cookies.get("NEXT_LOCALE"))
-		const condition: UpdateAccountPayload = {
-			username: data.username,
-			firstName: data.firstName,
-			lastName: data.lastName,
-			phoneNumber: data.phoneNumber,
-			dateOfBirth: data.dateOfBirth
-		};
-		console.log(condition)
-		const  res= await accAction.update(session.id, condition, "session.sid")
-		if (res.success)
-		{
-			toast.success(res.message)
-			location.reload()
-			setIsEditing(false)
-		}
-		else 
-			toast.warning(res.message)
+	const action = new PaymentOperation()
+	useEffect(() => {
+        const fetchData = async () => {
+            const res = await action.searchByStudent(session?.sid)
+			// const res = await action.searchStudentByID(1, "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNDkyMDQwOH0.dgKU2O0wOScCWnNpR_FM9IrJZAFN7I_rN_jD53R903I")
 			console.log(res)
-	  };
-	useEffect(()=>{	
-		console.log(status === "loading" && !session )
-		console.log(status, status === "loading")
-		console.log(session, !session)
-		if(status ==="authenticated")
-			{setData(session)}
-	},[status,session])
+			setListPayment(res.data)
+        };
+		if (status == "authenticated")
+        	fetchData();
+    }, [status]);
 	return (
 		<>
 			{status === "authenticated" && session ? 
-			<div className="px-10 md:px-20 pb-10 mt-64 h-fit flex justify-center">
-				<div className="-mt-32 z-10 right-0 w-1/3 h-fit left-0 mr-auto ml-auto animate-pop absolute flex flex-col items-center justify-center">
-					{!session.avatar && (
-						<div className="relative flex w-52 h-52 hover:cursor-pointer rounded-full overflow-hidden transition-all duration-500 cursor-pointer">
-						<Image
-							width={100}
-							height={100}
-							className="w-full h-full object-cover"
-							alt="avatar"
-							src={"/photos/SunGlass.jpg"}
-						/>
-						<label className="absolute w-full h-2/6 py-2.5 bottom-0 inset-x-0 bg-black/50 
-						text-white text-2xl flex items-center hover:cursor-pointer justify-center 
-						active:scale-150 transition-all ease-in-out duration-500">
-							<RiImageEditLine />
-							<input
-							type="file"
-							accept="image/png, image/jpg, image/jpeg"
-							className="hidden"
-							onChange={(e) => {
-								handleUpdateAvatar(e)
-							}}
-							/>
-						</label>
+			<div className="px-10 md:px-20 h-screen flex justify-center">
+				<div className=" bg-white mt-32 animate-slide_in_up  
+				rounded-3xl justify-center w-full  flex flex-col h-[calc(600px)] shadow-xl">
+					<div className="flex gap-5 items-center justify-between bg-blue-500 p-20 rounded-tr-3xl rounded-tl-3xl w-full h-52">
+						<div className="w-fit gap-5 items-center justify-center flex">
+							<div className=" h-fit animate-pop flex flex-col items-center justify-center">
+								{!session.image_url && (
+									<div className="relative flex w-32 h-32 hover:cursor-pointer rounded-full overflow-hidden transition-all duration-500 cursor-pointer">
+									<Image
+										width={100}
+										height={100}
+										className="w-full h-full object-cover"
+										alt="avatar"
+										src={"/photos/SunGlass.jpg"}
+									/>
+									</div>
+								)}
+								{session.image_url && session  && (
+									<div className="relative flex w-32 h-32 hover:cursor-pointer rounded-full overflow-hidden transition-all duration-300 cursor-pointer">
+									<Image
+										alt="avatar"
+										src={session.image_url}
+										width={100}
+										height={100}
+										className="w-full h-full object-cover"
+									/>
+									</div>
+								)}
+							</div>
+							<div className="w-fit">
+								{session != null ? 
+									<div className="flex text-white flex-col w-fit">
+										<div className=" w-full break-all font-extrabold text-3xl">
+											{session && session.full_name ? session.full_name: "Không có thông tin!"}
+										</div>
+										<div className=" w-full break-all">
+											{session && session.email ? session.email: "Tài khoản của bạn không sử dụng email!"}
+										</div>
+									</div> 
+									: <>{t("no_user")}</>
+								}
+							</div>
 						</div>
-					)}
-					{session.avatar && session  && (
-						<div className="relative flex w-52 h-52 hover:cursor-pointer rounded-full overflow-hidden transition-all duration-300 cursor-pointer">
-						<LoadingImage
-							filePath={session.avatar}
-							width={100}
-							height={100}
-							style="w-full h-full object-cover"
-						/>
-						<label className="absolute w-full h-2/6 py-2.5 bottom-0 inset-x-0 bg-black/50 
-						text-white text-2xl flex items-center hover:cursor-pointer justify-center active:scale-150 transition-all duration-300">
-							<RiImageEditLine />
-							<input
-							type="file"
-							className="hidden"
-							accept=".jpg, .jpeg, .png"
-							onChange={(e) => {
-								handleUpdateAvatar(e)
-							}}
-							/>
-						</label>
+						<div className="w-fit text-white animate-pop">
+							Số trang khả dụng:<br/> 
+							<span className="text-2xl">
+								{session ? session.student_balance +" trang"
+								: t("no_info")}
+							</span>
 						</div>
-					)}
-					<div className="font-bold w-full flex justify-center items-center text-white text-xl md:text-3xl mt-5">
-						{!isEditing ?
-						<div>
-							{session ? session.firstName +" "+session.lastName
-							: t("no_info")}
-						</div> :
-						<div className="flex gap-5 justify-center items-center">
-							<input
-								className=" w-44 bg-transparent placeholder-gray-50 focus:outline-none border-b-2 border-white"
-								type="text"
-								placeholder={t("firstName")}
-								onChange={(e) => {
-									setData({ ...data, ["firstName"]: e.target.value });
-								}
-								}
-							/>
-							<input
-								className="w-44 bg-transparent placeholder-gray-50 focus:outline-none border-b-2 border-white"
-								type="text"
-								placeholder={t("lastName")}
-								onChange={(e) => {
-									setData({ ...data, ["lastName"]: e.target.value });
-								}
-								}
-							/>
-						</div>}
 					</div>
-					{session.username && <div className="font-light text-center text-white mt-5 text-lg">
-						{!isEditing ?
-						<div>
-							{session.username ? 
-							"@"+session.username
-							: "@username"}
-						</div> :
-						<input
-							className="w-52 bg-transparent placeholder-gray-50 focus:outline-none border-b-2 border-white"
-							type="text"
-							onChange={(e) => {
-								setData({ ...data, ["username"]: e.target.value });
-							}
-							}
-						/>}
-					</div>}
-				</div>
-				
-				<div className=" bg-white  animate-slide_in_up  
-				rounded-3xl justify-center w-full  h-[calc(600px)] shadow-xl">
-					<div className="z-[100] relative bg-do_600 rounded-tr-3xl rounded-tl-3xl w-full h-52">
-					{!isEditing ?
-						<FaRegEdit size={50} 
-							onClick={()=>setIsEditing(true)}
-							className="absolute z-[100] right-5 top-5 text-white duration-200 ease-in active:scale-110"
-						/> :
-						<TiTick size={50} 
-							onClick={()=>handleSaveClick()}
-							className="absolute z-[100] right-5 top-5 text-white duration-200 ease-in active:scale-110"
-						/>
-					}
+					<h1 className="w-full text-center py-5 text-gray-700">Lịch sử giao dịch</h1>
+					<div className="grid grid-cols-6 text-center items-center p-4 text-lg font-bold w-full">
+							<div>ID</div>
+							<div>Số tờ mua</div>
+							<div>Thanh toán</div>
+							<div>Trạng thái</div>
+							<div>Phương thức</div>
+							<div>Vào lúc</div>
 					</div>
-					<div className="mt-10 right-0 left-0 mr-auto ml-auto 
-					absolute w-full px-10 md:px-20 overflow-y-scroll">
-						{session != null ? 
-							<div className="flex flex-col gap-5 w-full md:w-1/3">
-								<div id="order_id" className="bg-gray-100 p-3 rounded-xl shadow-inner w-full">
-								<div className="font-bold text-base break-all ">
-										Email
-								</div>
-								<div className="text-gray-500 w-full break-all">
-									{data && session.email ? session.email: "Tài khoản của bạn không sử dụng email!"}
-								</div>
-								</div>
-								<div id="order_id" className="bg-gray-100 p-3 rounded-xl shadow-inner w-full">
-								<div className="font-bold text-base break-all ">
-										{t("DOB")}
-								</div>
-								{isEditing ?	
-									<input
-										className="w-2/3 bg-transparent border-b-2 border-[#545e7b] text-black"
-										type="date"
-										onChange={(e) => {
-											setData({ ...data, ["dateOfBirth"]: e.target.valueAsDate });
-										}
-										}
-									/> :
-									<div className="text-gray-500 w-full break-all">
-										{data && session.dateOfBirth ? session.dateOfBirth
-										: t("no_info")}
-									</div>}
-								</div>
-								<div id="order_id" className="bg-gray-100 p-3 rounded-xl shadow-inner w-full">
-								<div className="font-bold text-base break-all ">
-										{t("phoneNumber")}
-								</div>
-								{isEditing ?	
-									<input
-										className="w-2/3 bg-transparent border-b-2 border-[#545e7b] text-black"
-										type="number"
-										value={data && data.phoneNumber}
-										onChange={(e) => {
-											const newForm = e.target.value;
-											if (newForm.length >15)
-												{
-													toast.warning("Vui lòng nhập dưới 15 ký tự bạn nhé!")
-													return
-												}
-											setData({ ...data, ["phoneNumber"]: e.target.value });
-										}
-										}
-									/> :
-									<div className="text-gray-500 w-full break-all">
-										{session && session.phoneNumber ? session.phoneNumber
-										: t("no_info")}
-									</div>}
-								</div>
-							</div> 
-							: <>{t("no_user")}</>
-						}
+					<div className="flex flex-col gap-10 overflow-y-scroll hide-scrollbar flex-1">
+						{ListPayment?.sort((a, b) => {
+							return b.id - a.id;
+						}).map(({ id, balance, amount, status, method, transactionDate}) => (
+							<div
+							className="grid grid-cols-6 text-center items-center p-4 text-lg font-medium w-full rounded-lg shadow-md"
+							key={id}
+							>
+							<div>{id}</div>
+							<div>{balance} tờ</div>
+							<div>{amount} vnd</div>
+							<div className={`${getStatusClass(status)}`}>{status}</div>
+							<div>{method}</div>
+							<div className="flex flex-col items-center space-y-1">
+								<span>{moment(new Date(transactionDate[0], transactionDate[1] - 1, transactionDate[2], transactionDate[3], transactionDate[4], transactionDate[5])).format("DD/MM/YYYY")}</span>
+								<span>{moment(new Date(transactionDate[0], transactionDate[1] - 1, transactionDate[2], transactionDate[3], transactionDate[4], transactionDate[5])).format("HH:mm:ss")}</span>
+							</div>
+							</div>
+						))}
 					</div>
 				</div>
 			</div> :

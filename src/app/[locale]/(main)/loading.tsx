@@ -1,22 +1,11 @@
 'use client'
-import { Player } from "@lottiefiles/react-lottie-player";
-import Image from "next/image";
-import Link from "next/link";
 export default function CustomLoadingElement() {
     return (
-        <div className="w-full h-screen flex flex-col gap-4 justify-center place-items-center  ">
-            <div className="w-fit animate-spin h-fit p-20 gap-10 items-center justify-center  flex flex-col">
-                {/* <Player
-                    src='/animation/loading.json'
-                    loop
-                    autoplay
-                    className="md:block hidden"
-                    style={{ height: '100px', width: '100px' }}
-                    rendererSettings={{
-                        preserveAspectRatio: "xMidYMid slice",
-                    }}
-                    data-aos="fade-left"
-                /> */}
+        <div className="w-screen h-screen flex overflow-hidden flex-col gap-4 justify-center place-items-center  ">
+            <div className="w-fit h-fit p-20 gap-10 items-center justify-center  flex flex-col">
+                <div className="flex justify-center items-center h-full">
+                    <div className="rounded-full h-20 w-20 bg-do_600 animate-ping"></div>
+                </div>
             </div>
         </div>
     );

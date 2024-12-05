@@ -4,7 +4,6 @@ import { HiX } from "react-icons/hi";
 import Image from 'next/image';
 import { useSidebarContext } from '@/providers/SidebarProvider';
 import Links from "./components/Links";
-import LoadingImage from '../Navbar/loadingImage';
 import { useSession } from '@/providers/SessionProvider';
 import UserIcon from '../Icon/UserIcon';
 import Link from 'next/link';
@@ -35,20 +34,18 @@ const Sidebar: FC<Props> = () => {
         
 						
         <div className="relative w-full h-full flex flex-col justify-center cursor-pointer">
-				{status =="authenticated" ? session && session.avatar?
+				{status =="authenticated" ? session && session.image_url?
         <div className="flex mr-auto ml-auto right-0 left-0 w-fit flex-col gap-2 ">
           <div className="w-14 h-14 hover:cursor-pointer 
           rounded-full overflow-hidden ">
-          <LoadingImage
-          filePath={session.avatar}
+          <Image
+          alt=""
+          src={session.image_url}
           width={30}
           height={30}
-          style="w-full h-full object-cover"
+          className="w-full h-full object-cover"
           />
           </div>
-          {/* <div className="text-black text-center">
-          {session.firstName + " " +session.lastName}
-          </div> */}
         </div>
         : 
         <div className="flex mr-auto ml-auto right-0 left-0 w-fit flex-col gap-2 ">
@@ -56,7 +53,6 @@ const Sidebar: FC<Props> = () => {
         </div>
 				:<div className="text-neutral-600 w-full text-center">{t("please")} <Link href="/login" className="text-blue-400 underline">{t("here")}</Link></div>}
 			  </div>
-
         <div className=" mb-1 h-px bg-gray-300" />
         <ul className="mb-auto pt-1">
           <Links onClickRoute={() => setOpenSidebar(false)} />

@@ -1,24 +1,14 @@
 "use client";
 import { signIn } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import Cookies from "js-cookie"
 export function GoogleSignInButton() {
     const router = useRouter();
     const [disable, setDisable]= useState(false)
     const handleClick = async () => {
-    setDisable(true)
-    const signInResponse = await signIn("google", {
-        redirect: false,
-        callbackUrl:"/"
-    }, 
-    );
-    if (signInResponse?.error) {
-        toast.warning(signInResponse?.error)
-        } else {
-            // toast.warning("Đăng nhập lỗi")
-        }
+        setDisable(true)
+        router.push('https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/users/custom-oauth-login');
     }
     return ( 
             <button 

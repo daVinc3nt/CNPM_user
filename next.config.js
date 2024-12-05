@@ -8,6 +8,11 @@ const nextConfig = {
 				hostname: "19427440-test.s3-hcm5-r1.longvan.net",
 				pathname: "**",
 			},
+			{
+				protocol: "https",
+				hostname: "lh3.googleusercontent.com",
+				pathname: "**",
+			},
 		],
   },
   // ...

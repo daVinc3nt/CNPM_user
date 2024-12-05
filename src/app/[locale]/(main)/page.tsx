@@ -1,17 +1,11 @@
 "use client";
-import EaseIn from "@/components/AnimationWrapper/EaseIn";
-import CourseCard from "@/components/Card/CourseCard";
 import Image from "next/image";
 import Aos from "@/components/aos";
 import 'aos/dist/aos.css'
 import { useEffect, useRef, useState } from "react";
-import {Swiper,SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import Zigzag from "@/components/Zigzag/zigzag";
-import { testimonials } from "@/data";
 import {useTranslations} from 'next-intl';
 type Props = {
 	params: {locale: string};
