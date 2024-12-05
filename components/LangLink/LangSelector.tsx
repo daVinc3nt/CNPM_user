@@ -10,7 +10,6 @@ import {
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import React from 'react';
-import { useLocalStorage } from "usehooks-ts";
 import { useLocale } from "next-intl";
 import {useParams} from 'next/navigation';
 import {ChangeEvent, ReactNode, useTransition} from 'react';

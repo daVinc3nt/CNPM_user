@@ -1,8 +1,5 @@
 "use client";
-import EaseIn from "@/components/AnimationWrapper/EaseIn";
-import CourseCard from "@/components/Card/CourseCard";
 import Image from "next/image";
-import Aos from "@/components/aos";
 import 'aos/dist/aos.css'
 import {useState } from "react";
 import 'swiper/css';
