@@ -1,46 +1,18 @@
+
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useSession } from "@/providers/SessionProvider";
 import CustomLoadingElement from "../../loading";
 import { useTranslations } from "next-intl";
-import { PaymentOperation } from "@/BE-library/main";
-import moment from "moment";
-interface Payment {
-	id: number,
-	balance: number,
-	amount: number,
-	status: string,
-	method: string,
-	transactionDate: Date
-}
-function getStatusClass(status) {
-	switch (status) {
-	  case 'in progress':
-		return 'text-yellow-500';
-	  case 'successful':
-		return 'text-green-500';
-	  case 'failed':
-		return 'text-red-500';
-	  default:
-		return ''; // Hoặc một lớp mặc định nếu cần
-	}
-}
+
+import ViewPayments from "./_view/viewPayments";
+import ViewFiles from "./_view/viewFiles";
+
 export default function Profile() {
-	const {session, status} =useSession()
-	const [ListPayment, setListPayment] = useState<Payment[]>(null)
 	const t =useTranslations("profile")
-	const action = new PaymentOperation()
-	useEffect(() => {
-        const fetchData = async () => {
-            const res = await action.searchByStudent(session?.sid)
-			// const res = await action.searchStudentByID(1, "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNDkyMDQwOH0.dgKU2O0wOScCWnNpR_FM9IrJZAFN7I_rN_jD53R903I")
-			console.log(res)
-			setListPayment(res.data)
-        };
-		if (status == "authenticated")
-        	fetchData();
-    }, [status]);
+	const {session, status} =useSession()
+	const [view, setView] = useState<"payments"|"files">("payments");
 	return (
 		<>
 			{status === "authenticated" && session ? 
@@ -95,35 +67,18 @@ export default function Profile() {
 							</span>
 						</div>
 					</div>
-					<h1 className="w-full text-center py-5 text-gray-700">Lịch sử giao dịch</h1>
-					<div className="grid grid-cols-6 text-center items-center p-4 text-lg font-bold w-full">
-							<div>ID</div>
-							<div>Số tờ mua</div>
-							<div>Thanh toán</div>
-							<div>Trạng thái</div>
-							<div>Phương thức</div>
-							<div>Vào lúc</div>
+					<div className="flex flex-row w-full py-5 text-gray-700">
+						<h1 onClick={()=>{
+                            setView("payments")}}
+						className="text-center"
+							> Lịch sử thanh toán</h1>
+						<div onClick={()=>{
+                            setView("files")}}
+						className="text-center"
+							>Lịch sử in</div>
 					</div>
-					<div className="flex flex-col gap-10 overflow-y-scroll hide-scrollbar flex-1">
-						{ListPayment?.sort((a, b) => {
-							return b.id - a.id;
-						}).map(({ id, balance, amount, status, method, transactionDate}) => (
-							<div
-							className="grid grid-cols-6 text-center items-center p-4 text-lg font-medium w-full rounded-lg shadow-md"
-							key={id}
-							>
-							<div>{id}</div>
-							<div>{balance} tờ</div>
-							<div>{amount} vnd</div>
-							<div className={`${getStatusClass(status)}`}>{status}</div>
-							<div>{method}</div>
-							<div className="flex flex-col items-center space-y-1">
-								<span>{moment(new Date(transactionDate[0], transactionDate[1] - 1, transactionDate[2], transactionDate[3], transactionDate[4], transactionDate[5])).format("DD/MM/YYYY")}</span>
-								<span>{moment(new Date(transactionDate[0], transactionDate[1] - 1, transactionDate[2], transactionDate[3], transactionDate[4], transactionDate[5])).format("HH:mm:ss")}</span>
-							</div>
-							</div>
-						))}
-					</div>
+					{view =="payments" && <ViewPayments/>}
+					{view =="files" && <ViewFiles/>}
 				</div>
 			</div> :
 			<div className="h-screen  w-screen">
