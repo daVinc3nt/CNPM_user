@@ -1,10 +1,19 @@
+import { PaymentOperation } from "@/BE-library/main";
+import { useSession } from "@/providers/SessionProvider";
 import { columns } from "./column";
 import { DataTable } from "./datatable";
+import { useState, useEffect } from "react";
 // import { FindingStudentInfoByAdmin, StudentOperation, token } from "@/ambLib/amb";
 // import { ProductOperation } from "@/do_an-library/main";
 // const conditions: FindingStudentInfoByAdmin[] = [];
 async function getData(criteria ,value): Promise<any> {
 
+  // const {session, status} = useSession();
+  const action = new PaymentOperation();
+  const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNTIwMzUzN30.3Ueo-ovG1SspA3gOpij48hp0Zc1VCb6VM9Gd1myLWKI";
+  const res = await action.getAll(cnpm_token);
+  console.log(res)
+  // if (status == "authenticated")
   // const ProdAction = new ProductOperation()
   // if (criteria == "search")
   // {
@@ -16,7 +25,7 @@ async function getData(criteria ,value): Promise<any> {
   // const res = await ProdAction.search(criteria, value)
   // console.log(res)
   // const data = await res.json();
-  return {};
+  return res?.data;
 }
 export default async function DemoPage(criteria:string, value:string, reloadData:any) {
   // const test = useContext(UserContext)

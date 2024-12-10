@@ -1,4 +1,4 @@
-import StaffMenu from "@/components/Payment/StaffMenu";
+import StaffMenu from "@/components/Payments/StaffMenu";
 import type { NextPage } from "next";
 const staff: NextPage = () => {
   return (
