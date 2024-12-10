@@ -135,7 +135,7 @@ export function DataTable<TData, TValue>({
               <Dropdown className="z-30">
                 <DropdownTrigger>
                   <Button
-                    className="text-xs md:text-base border border-gray-600 rounded ml-2 w-24 text-center hover:bg-gray-300"
+                    className="text-xs md:text-base border border-gray-600 rounded ml-2 w-24 text-center hover:bg-gray-300 dark:hover:bg-gray-500"
                     aria-label="Show items per page"
                   >
                     Show {table.getState().pagination.pageSize}
@@ -149,7 +149,7 @@ export function DataTable<TData, TValue>({
                     <DropdownItem
                       key={pageSize}
                       textValue={`Show ${pageSize} items per page`}
-                      className="bg-[#282A35] -top-3 border border-[#282A35] rounded"
+                      className="bg-[#282A35] -top-3 border border-[#282A35] rounded dark:hover:bg-gray-500"
                     >
                       <Button
                         onClick={() => table.setPageSize(pageSize)}
@@ -191,7 +191,7 @@ export function DataTable<TData, TValue>({
           <Button
           className={`text-xs md:text-sm justify-self-start rounded-lg border
             border-gray-600 px-4 py-2 bg-transparent hover:bg-gray-300
-             focus:outline-none font-normal text-black dark:text-white
+             focus:outline-none font-normal text-black dark:text-white dark:hover:bg-gray-500
             ${
               table.getFilteredSelectedRowModel().rows.length > 0
               ? "border-red-500"
@@ -268,7 +268,7 @@ export function DataTable<TData, TValue>({
           className="px-2 py-[0.15rem] mb-0.5 w-12 sm:w-16 bg-transparent 
           drop-shadow-md border border-black dark:border-white text-black
            md:text-base focus:outline-none font-normal
-          dark:text-white rounded-md text-sm text-center me-2 hover:cursor-pointer hover:bg-gray-300"
+          dark:text-white rounded-md text-sm text-center me-2 hover:cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-500"
         >
           <span>
             Trước
@@ -305,7 +305,7 @@ export function DataTable<TData, TValue>({
           className="px-2 py-[0.15rem] mb-0.5 w-12 sm:w-16 bg-transparent 
           drop-shadow-md border border-black dark:border-white md:text-base focus:outline-none font-normal
           dark:text-white rounded-md text-sm text-center me-2 hover:cursor-pointer
-          hover:bg-gray-300
+          hover:bg-gray-300 dark:hover:bg-gray-500
           "
         >
           <span>

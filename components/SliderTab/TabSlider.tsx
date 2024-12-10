@@ -55,7 +55,7 @@ import { CgMoreO } from "react-icons/cg";
                       key={tab.id}
                       ref={((el) => (tabsRef.current[tab.id] = el)) as any}
                       className={`${
-                        isActive ? `` : `hover:text-do_600`
+                        isActive ? `` : `hover:text-green-500`
                       } my-auto cursor-pointer select-none rounded-full px-2 text-center font-medium text-white `}
                       onClick={() => handleSelect(tab.id, tab.value)}
                     >
