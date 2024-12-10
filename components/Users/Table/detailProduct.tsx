@@ -19,11 +19,6 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
   const [updateData, setupdateData] = useState<any>({});
   const filterData =[
     {id: 0, name: "Thông tin", value: "details"},
-		{id: 1, name: "Giá mua vào", value: "costHist"},
-		{id: 2, name: "Giá bán ra", value: "priceHist"},
-		{id: 3, name: "Kho", value: "inventory"},
-		{id: 4, name: "Trạng thái", value: "stats"},
-		{id: 5, name: "Trả tiền", value: "purchaseStats"},
 	]
 	const[filter, setFilter] = useState<"purchaseStats"|"costHist" |"priceHist" |"inventory"| "stats"|"details">("details")
   const handleUpdateData =(e, key:string, input:string = "string") => {
@@ -233,17 +228,17 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
           </div>
 
             <IoMdClose className=" absolute right-0 w-8 h-8 cursor-pointer
-            rounded-full mb-2 text-white hover:bg-gray-400 hover:text-black"
+            rounded-full mb-2 text-black hover:bg-gray-400 hover:text-black"
             onClick={handleClose}/>
         </div>
-        <TabSlider allTabs={ filterData } onSelectOption={setFilter}/>
+        {/* <TabSlider allTabs={ filterData } onSelectOption={setFilter}/> */}
         <div className="w-full h-4/6 border border-[#545e7b] mt-4 no-scrollbar
         justify-center flex flex-wrap gap-5 bg-gray-100 dark:bg-[#14141a] p-5 rounded-md 
         dark:text-white text-black  overflow-y-scroll">
             {
                 filter==="details" && traverse(data, isEditing)
             }
-            {
+            {/* {
                 filter==="inventory" &&  Array.isArray(data) && data.map((ele, i) => 
                   <div key={i} className="w-80 h-fit bg-slate-300 rounded-xl p-5">
                     {traverseToList(ele, isEditing)}
@@ -269,7 +264,7 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
             }
             {
                 filter==="stats" && traverse(data, isEditing)
-            }
+            } */}
         </div>
         <div className="w-full flex">
           {!isEditing ? (
@@ -280,7 +275,7 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
               onClick={handleEditClick}
             >
               <FaPen className="xs:mr-2" />
-              <span className="hidden xs:block">
+              <span className=" xs:block">
                 Sửa
               </span>
             </Button>
@@ -292,7 +287,7 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
               onClick={()=>{}}
             >
               <FaPen className="xs:mr-2" />
-              <span className="hidden xs:block">
+              <span className="xs:block">
                 Lưu
               </span>
             </Button>

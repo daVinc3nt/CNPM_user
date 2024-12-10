@@ -1,38 +1,16 @@
 "use client";
-
+import { FormattedMessage } from "react-intl";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 import DetailStaff from "./detailProduct";
 import { Checkbox } from "@/components/TableUI/checkbox";
-import { UUID } from "crypto";
 export type product = {
-  ProductID: number,
-  Name: string,
-  ProductNumber: string,
-  MakeFlag: boolean,
-  FinishedGoodsFlag: boolean,
-  Color: string,
-  SafetyStockLevel: number,
-  ReorderPoint: number,
-  StandardCost: number,
-  ListPrice: number,
-  Size: number,
-  SizeUnitMeasureCode: number,
-  WeightUnitMeasureCode: string,
-  Weight: number,
-  DaysToManufacture: number,
-  ProductLine: string,
-  Class: string,
-  Style: string,
-  ProductSubcategoryID: number,
-  ProductModelID: number,
-  SellStartDate: Date,
-  SellEndDate: Date,
-  DiscontinuedDate: Date,
-  rowguid: UUID,
-  ModifiedDate: Date
+  student_id: number,
+  full_name: string,
+  email: string,
+  image_url: string,
 };
 type MyColumnDef<T> = ColumnDef<T> & {
   reloadData?: () => void;
@@ -44,14 +22,14 @@ export async function columns(
       {
         id: "select",
         header: ({ table }) => (
-          <Checkbox
-            checked={
-              table.getIsAllPageRowsSelected() ||
-              (table.getIsSomePageRowsSelected() ? "indeterminate" : false)
-            }
-            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-            aria-label="Select all"
-          />
+            <Checkbox
+              checked={
+                table.getIsAllPageRowsSelected() ||
+                (table.getIsSomePageRowsSelected() ? "indeterminate" : false)
+              }
+              onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+              aria-label="Select all"
+              />
         ),
         cell: ({ row }) => (
           <Checkbox
@@ -64,102 +42,45 @@ export async function columns(
         enableHiding: false,
       },
       {
-        accessorKey: "ProductID",
+        accessorKey: "student_id",
         header: ({ column }) => {
           return (
             <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
               ID
-              <ArrowUpDown className="ml-2 h-4 w-4" />
+              {/* <ArrowUpDown className="ml-2 h-4 w-4" /> */}
             </Button>
           );
         },
       },
       {
-        accessorKey: "Name",
+        accessorKey: "full_name",
         header: ({ column }) => {
           return (
             <Button
               variant="ghost"
               onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
-              Name
-              <ArrowUpDown className="ml-2 h-4 w-4" />
+              Họ và tên
+              {/* <FormattedMessage id="student.fullname" /> */}
+              {/* <ArrowUpDown className="ml-2 h-4 w-4" /> */}
             </Button>
           );
         },
       },
       {
-        accessorKey: "SellStartDate",
+        accessorKey: "email",
         header: ({ column }) => {
           return (
             <Button
               variant="ghost"
               onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
-              Sell start date
-              <ArrowUpDown className="ml-2 h-4 w-4" />
+              Email
+              {/* <ArrowUpDown className="ml-2 h-4 w-4" /> */}
             </Button>
-          );
-        },
-      },
-      {
-        accessorKey: "SellEndDate",
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Sell end date
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          );
-        },
-      },
-      {
-        accessorKey: "Style",
-
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Style
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          );
-        },
-      },
-      {
-        accessorKey: "FinishedGoodsFlag",
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Finished Goods Flag
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          );
-        },
-        cell: ({ row }) => {
-          return (
-            <div className="flex items-center">
-              {row.original.FinishedGoodsFlag ? (
-                <span className=" text-green-500">
-                  Finished
-                </span>
-              ) : (
-                <span className=" text-red-500">
-                 Unfinished
-                </span>
-              )}
-            </div>
           );
         },
       },
@@ -180,12 +101,12 @@ export async function columns(
           };
 
           return (
-            <div className="relative flex  mr-2">
+            <div className="relative flex content-center  mr-2">
               <Button
                 onClick={openModal}
-                className="bg-transparent hover:bg-white font-bold hover:text-black py-1 px-[0.65rem] border border-gray-600 hover:border-transparent rounded-full"
+                className="font-bold hover:text-black hover:text-[#1488DB] hover:underline py-1 px-[0.65rem] "
               >
-                +
+                Thông tin chi tiết
               </Button>
               {modalIsOpen && (
                 <DetailStaff onClose={closeModal} dataInitial={row.original} reload={reloadData} />
