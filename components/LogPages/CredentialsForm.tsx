@@ -6,6 +6,7 @@ import Cookies from "js-cookie"
 import { toast } from "sonner";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
+import { AuthOperation } from "@/BE-library/main";
 interface CredentialsFormProps {
     csrfToken?: string;
 }
@@ -30,29 +31,29 @@ export function CredentialsForm(props: CredentialsFormProps) {
 		   setType('password')
 		}
 	 }
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const { username, password } = formData;
-    //     ////console.log(data.get ("password"))
-    //     const Auth = new AuthOperation()
-    //     const res = await Auth.login({ identifier: username, password:  password })
-    //     console.log(res)
-    //     if (res.data)
-    //         {
-    //             Cookies.set("uid", res.data.id)
-    //         }
-    //     if (res && res.success) {
-    //             router.push("/");
-    //         }
-	// 	else if (res && res.status === 401 && res.success) {
-    //             ////console.log ("Error: ", signInResponse); 
-    //             toast.warning(res.message)
-    //         }
-	// 		 else {
-    //             ////console.log ("Error: ", signInResponse); 
-    //             toast.warning(res.message)
-    //         }
-    //     }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const { username, password } = formData;
+        ////console.log(data.get ("password"))
+        const Auth = new AuthOperation()
+        const res = await Auth.login({ username: username, password:  password, role: "ADMIN" })
+        console.log(res)
+        if (res.data)
+            {
+                Cookies.set("gid", res.data.id)
+            }
+        if (res && res.success) {
+                router.push("/");
+            }
+		else if (res && res.status === 401 && res.success) {
+                ////console.log ("Error: ", signInResponse); 
+                toast.warning(res.message)
+            }
+			 else {
+                ////console.log ("Error: ", signInResponse); 
+                toast.warning(res.message)
+            }
+        }
     return (
 		<form
 			className="h-full w-full mt-8 text-black  flex flex-col items-center"

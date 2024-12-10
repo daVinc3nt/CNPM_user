@@ -87,8 +87,9 @@ export interface SignUpPayload {
 }
 
 export interface LoginPayload {
-    identifier: string;
-    password: string;
+    "username": string,
+    "password": string,
+    "role": string
 }
 
 export interface RefreshToken {

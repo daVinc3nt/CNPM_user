@@ -6,7 +6,7 @@ import { FloatingNav } from "@/components/Navbar/FloatingNavbar";
 import Footer from "@/components/Footer/footer";
 import { SessionProvider } from "@/providers/SessionProvider";
 import SidebarProvider from "@/providers/SidebarProvider";
-import Sidebar from "@/components/sidebar";
+import Sidebar from "@/components/Sidebar";
 import BuyPages from "@/components/BuyPages/buypages"
 
 export default function RootLayout({

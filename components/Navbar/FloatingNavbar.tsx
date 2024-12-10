@@ -19,7 +19,7 @@ import { useSession } from "@/providers/SessionProvider";
 import LocaleSwitcher from "../LangLink/LocaleSwitcher";
 import LangSelector from "../LangLink/LangSelector";
 import { useTranslations } from "next-intl";
-import Sidebar from "../sidebar";
+import Sidebar from "../Sidebar";
 
 export const FloatingNav = ({
   className,

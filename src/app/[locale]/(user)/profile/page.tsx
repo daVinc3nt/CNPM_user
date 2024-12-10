@@ -33,7 +33,8 @@ export default function Profile() {
 	const action = new PaymentOperation()
 	useEffect(() => {
         const fetchData = async () => {
-            const res = await action.searchByStudent(session?.sid)
+			const cnpm_token ="token"
+            const res = await action.searchByStudent(cnpm_token)
 			// const res = await action.searchStudentByID(1, "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNDkyMDQwOH0.dgKU2O0wOScCWnNpR_FM9IrJZAFN7I_rN_jD53R903I")
 			console.log(res)
 			setListPayment(res.data)

@@ -7,14 +7,9 @@ export class AuthOperation {
     private langQuery: string;
 
     constructor() {
-        this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/v1/auth';
+        this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/internal/admin';
         this.langQuery = `lang=${LangVersion.vi}`;
     }
-
-    public setLanguage(lang: LangVersion) {
-        this.langQuery = `lang=${lang}`;
-    }
-
     public async signup(payload: SignUpPayload) {
         try {
 			const response: AxiosResponse = await axios.post(`${this.baseUrl}/signup?${this.langQuery}`, payload, {
@@ -37,10 +32,10 @@ export class AuthOperation {
     }
 
     public async login(payload: LoginPayload) {
-        try {
-			const response: AxiosResponse = await axios.post(`${this.baseUrl}/login?${this.langQuery}`, payload, {
+       try {
+			const response: AxiosResponse = await axios.post(`${this.baseUrl}/login`,payload,{
 				withCredentials: true,
-                validateStatus: status => status >= 200 && status <= 500
+                validateStatus: status => status >= 200 && status <= 500,
 			});
 			
 			return {
@@ -51,71 +46,7 @@ export class AuthOperation {
             };
 		} 
 		catch (error: any) {
-			console.log("Error logging in: ", error?.response?.data);
-            console.error("Request that caused the error: ", error?.request);
-            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
-		}
-    }
-
-    public async verifyOtp(payload: VerifyOtpPayload) {
-        try {
-			const response: AxiosResponse = await axios.post(`${this.baseUrl}/otp/verify?${this.langQuery}`, payload, {
-				withCredentials: true,
-                validateStatus: status => status >= 200 && status <= 500
-			});
-			
-			return {
-                success: response.data.success,
-                message: response.data.message,
-                data: response.data.data,
-                status: response.status
-            };
-		} 
-		catch (error: any) {
-			console.log("Error verifying otp: ", error?.response?.data);
-            console.error("Request that caused the error: ", error?.request);
-            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
-		}
-    }
-
-    
-    public async resendOTP(payload: ResendOTPPayload) {
-        try {
-			const response: AxiosResponse = await axios.post(`${this.baseUrl}/otp/resend?${this.langQuery}`, payload, {
-				withCredentials: true,
-                validateStatus: status => status >= 200 && status <= 500
-			});
-			
-			return {
-                success: response.data.success,
-                message: response.data.message,
-                data: response.data.data,
-                status: response.status
-            };
-		} 
-		catch (error: any) {
-			console.log("Error verifying otp: ", error?.response?.data);
-            console.error("Request that caused the error: ", error?.request);
-            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
-		}
-    }
-
-    public async refreshToken() {
-        try {
-			const response: AxiosResponse = await axios.post(`${this.baseUrl}/token/refresh?${this.langQuery}`, {
-				withCredentials: true,
-                validateStatus: status => status >= 200 && status <= 500
-			});
-			
-			return {
-                success: response.data.success,
-                message: response.data.message,
-                data: response.data.data,
-                status: response.status
-            };
-		} 
-		catch (error: any) {
-			console.log("Error logging in: ", error?.response?.data);
+			console.log("Error searching accounts: ", error?.response?.data);
             console.error("Request that caused the error: ", error?.request);
             return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
 		}
@@ -371,8 +302,6 @@ export class AccountOperation {
 		}
     }
 }
-
-
 export class PaymentOperation {
     private baseUrl: string;
     private langQuery: string;
@@ -480,8 +409,6 @@ export class PaymentOperation {
 		}
     }
 }
-
-
 export class PrinterOperation {
     private baseUrl: string;
     private langQuery: string;
@@ -682,6 +609,85 @@ export class PrintJobOperation {
 
     constructor() {
         this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/print_jobs';
+    }
+    async create(payload: PrintJobPayload, token: string) {
+        try {
+			const response: AxiosResponse = await axios.post(`${this.baseUrl}/create`, payload,{
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error searching accounts: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return {message:error?.response?.data.message, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+
+    async searchAllUserFiles(token: string) {
+        try {
+			const response: AxiosResponse = await axios.get(`${this.baseUrl}/get-all`,{
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error searching accounts: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+
+    async searchFilesById(id: string, token: string) {
+        try {
+			const response: AxiosResponse = await axios.get(`${this.baseUrl}/${id}`,{
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error searching accounts: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+}
+export class UserOperation {
+    private baseUrl: string;
+    private langQuery: string;
+
+    constructor() {
+        this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/print_jobs';
         this.langQuery = `lang=${LangVersion.vi}`;
     }
 
@@ -784,6 +790,5 @@ export class PrintJobOperation {
 		}
     }
 }
-
 // flash card
 
