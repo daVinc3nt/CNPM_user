@@ -113,22 +113,56 @@ export function DataTable<TData, TValue>({
       //hàm delete ở đây
     });
   }
+  const[findby, setFindby] = useState< "student_id"|"full_name"|"email">("student_id")
+  const handleFindBy = (findB: "student_id" | "full_name" | "email") =>{
+    setFindby(findB);
+  }
   return (
     <div>
       <div className="flex items-center py-4">
         <div className="w-full flex flex-col sm:flex-row">
           <div className="flex flex-col gap-5 w-full">
-            <div className="relative w-full sm:w-1/2 lg:w-1/3 flex">
+            <div className="relative w-full sm:w-1/2 lg:w-1/2 flex">
+            <Dropdown className="z-30">
+                <DropdownTrigger>
+                  <Button
+                    className="text-xs md:text-base border border-gray-600 rounded-l ml-2 w-24 text-center hover:bg-gray-300 dark:hover:bg-gray-500"
+                    aria-label="Show items per page"
+                  >
+                    {(findby === "student_id") ? "ID": ((findby === "full_name") ? "Họ và tên": "Email")}
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu
+                  className="bg-blue m-0 p-0 border border-gray-300 rounded w-24 bg-[#282A35] "
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  {["student_id", "full_name", "email"].map((pageSize, index) => (
+                    <DropdownItem
+                      key={pageSize}
+                      textValue={`Show ${pageSize} items per page`}
+                      className="bg-[#282A35] -top-3 border border-[#282A35] rounded dark:hover:bg-gray-500 hover:bg-gray-500"
+                    >
+                      <Button
+                        onClick={() => handleFindBy(pageSize as "student_id" | "full_name" | "email")}
+                        variant="bordered"
+                        aria-label={`Show ${pageSize}`}
+                        className="content-center text-white w-full m-0 p-0"
+                      >
+                        {(pageSize === "student_id") ? "ID": ((pageSize === "full_name") ? "Họ và tên": "Email")}
+                      </Button>
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
             <input
-              id="staffSearch"
               type="text"
               value={
-                (table.getColumn("full_name")?.getFilterValue() as string) ?? ""
+                (table.getColumn(findby)?.getFilterValue() as string) ?? ""
               }
               onChange={(event) =>
-                table.getColumn("full_name")?.setFilterValue(event.target.value)
+                table.getColumn(findby)?.setFilterValue(event.target.value)
               }
-              className={`peer h-full self-center w-full border border-gray-600 rounded focus:outline-none focus:border-blue-500 truncate bg-transparent
+              className={`peer h-full self-center w-60 border border-gray-600 rounded-r focus:outline-none focus:border-blue-500 truncate bg-transparent
                     text-left placeholder-transparent pl-3 pr-3 text-sm text`}
               placeholder="Tìm kiếm tên"
             />
@@ -142,14 +176,14 @@ export function DataTable<TData, TValue>({
                   </Button>
                 </DropdownTrigger>
                 <DropdownMenu
-                  className="bg-blue m-0 p-0 border border-gray-300 rounded w-23 bg-[#282A35] "
+                  className="bg-blue m-0 p-0 border border-gray-300 rounded w-24 bg-[#282A35] "
                   aria-labelledby="dropdownMenuButton"
                 >
                   {[10, 20, 30, 40, 50].map((pageSize, index) => (
                     <DropdownItem
                       key={pageSize}
                       textValue={`Show ${pageSize} items per page`}
-                      className="bg-[#282A35] -top-3 border border-[#282A35] rounded dark:hover:bg-gray-500"
+                      className="bg-[#282A35] -top-3 border border-[#282A35] rounded dark:hover:bg-gray-500 hover:bg-gray-500"
                     >
                       <Button
                         onClick={() => table.setPageSize(pageSize)}

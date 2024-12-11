@@ -54,6 +54,7 @@ export async function columns(
             </Button>
           );
         },
+        
       },
       {
         accessorKey: "full_name",
