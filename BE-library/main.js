@@ -484,7 +484,6 @@ var PaymentOperation = /** @class */ (function () {
             });
         });
     };
-    //for admin
     PaymentOperation.prototype.getAll = function (token) {
         return __awaiter(this, void 0, void 0, function () {
             var response, error_14;
@@ -497,7 +496,7 @@ var PaymentOperation = /** @class */ (function () {
                                 withCredentials: true,
                                 validateStatus: function (status) { return status >= 200 && status <= 500; },
                                 headers: {
-                                    Authorization: "Bearer ".concat(token)
+                                    Authorization: "Bearer ".concat(token),
                                 },
                             })];
                     case 1:
@@ -982,8 +981,7 @@ var PrintJobOperation = /** @class */ (function () {
     return PrintJobOperation;
 }());
 exports.PrintJobOperation = PrintJobOperation;
-
-var UserOperation = /** @class */ (function () {    
+var UserOperation = /** @class */ (function () {
     function UserOperation() {
         this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/print_jobs';
         this.langQuery = "lang=".concat(interfaces_1.LangVersion.vi);

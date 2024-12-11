@@ -340,7 +340,7 @@ export class PaymentOperation {
     }
     async getAll(token: string) {
         try {
-			const response: AxiosResponse = await axios.post(`https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/payments`,{},{
+			const response: AxiosResponse = await axios.get(`https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/payments`,{
                 withCredentials: true,
                 validateStatus: status => status >= 200 && status <= 500,
                 headers: {
@@ -360,7 +360,7 @@ export class PaymentOperation {
             console.error("Request that caused the error: ", error?.request);
             return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
 		}
-    }z
+    }
     //for admin
     async searchStudentByID(studentId: number, token: string) {
         try {

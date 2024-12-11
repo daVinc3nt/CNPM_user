@@ -10,7 +10,7 @@ async function getData(criteria ,value): Promise<any> {
 
   // const {session, status} = useSession();
   const action = new PaymentOperation();
-  const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNTIwMzUzN30.3Ueo-ovG1SspA3gOpij48hp0Zc1VCb6VM9Gd1myLWKI";
+  const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
   const res = await action.getAll(cnpm_token);
   console.log(res)
   // if (status == "authenticated")

@@ -167,8 +167,7 @@ export async function columns(
         const status = row.original.status;
         let statusClass = '';
         let backgroundClass = '';
-    
-        // Gán màu sắc nền cho các trạng thái khác nhau
+  
         if (status === "in progress") {
           statusClass = "text-yellow-800"; // Màu chữ vàng
           backgroundClass = "bg-yellow-200"; // Nền vàng nhạt
