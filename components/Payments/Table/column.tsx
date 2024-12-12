@@ -1,5 +1,4 @@
 "use client";
-import { FormattedMessage } from "react-intl";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@nextui-org/react";
