@@ -741,7 +741,6 @@ export class UserOperation {
             return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
 		}
     }
-
     async searchFilesById(id: string, token: string) {
         try {
 			const response: AxiosResponse = await axios.get(`${this.baseUrl}/${id}`,{
