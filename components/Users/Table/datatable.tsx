@@ -32,7 +32,6 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
-import { FormattedMessage } from "react-intl";
 import Filter from "@/components/Common/Filters";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import BasicPopover from "@/components/Common/Popover";
@@ -113,7 +112,7 @@ export function DataTable<TData, TValue>({
       //hàm delete ở đây
     });
   }
-  const[findby, setFindby] = useState< "student_id"|"full_name"|"email">("student_id")
+  const[findby, setFindby] = useState< "student_id"|"full_name"|"email">("full_name")
   const handleFindBy = (findB: "student_id" | "full_name" | "email") =>{
     setFindby(findB);
   }
@@ -136,7 +135,7 @@ export function DataTable<TData, TValue>({
                   className="bg-blue m-0 p-0 border border-gray-300 rounded w-24 bg-[#282A35] "
                   aria-labelledby="dropdownMenuButton"
                 >
-                  {["student_id", "full_name", "email"].map((pageSize, index) => (
+                  {["full_name", "email"].map((pageSize, index) => (
                     <DropdownItem
                       key={pageSize}
                       textValue={`Show ${pageSize} items per page`}
@@ -162,7 +161,7 @@ export function DataTable<TData, TValue>({
               onChange={(event) =>
                 table.getColumn(findby)?.setFilterValue(event.target.value)
               }
-              className={`peer h-full self-center w-60 border border-gray-600 rounded-r focus:outline-none focus:border-blue-500 truncate bg-transparent
+              className={`peer h-full self-center focus:border-blue-500 dark:focus:border-gray-500 w-60 border border-gray-600 rounded-r focus:outline-none  truncate bg-transparent
                     text-left placeholder-transparent pl-3 pr-3 text-sm text`}
               placeholder="Tìm kiếm tên"
             />
@@ -200,7 +199,7 @@ export function DataTable<TData, TValue>({
             </div>
 
           </div>
-          <div className="flex-grow h-10 flex mt-4 sm:mt-0 justify-center sm:justify-end ">
+          {/* <div className="flex-grow h-10 flex mt-4 sm:mt-0 justify-center sm:justify-end ">
             <BasicPopover icon={<FilterAltIcon />} >
               <div
                 onClick={()=>{
@@ -219,7 +218,7 @@ export function DataTable<TData, TValue>({
             </BasicPopover>
               {modalIsOpen &&<AddStaff onClose={closeModal} reload={reload}/>}
               {modalIsOpen2 && ( <AddFile onClose={closeModal2} reloadData={reload} />)}
-          </div>
+          </div> */}
           <div className="flex-grow h-10 mx-2 flex justify-center sm:justify-end">
 
           <Button

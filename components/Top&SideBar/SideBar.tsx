@@ -23,7 +23,7 @@ const SideItemData = [
   {
     id: 2,
     title: "Payments",
-    url: "/payments",
+    url: "/payment",
     icon: <BsCashCoin className="text-2xl lg:block" />,
   }
 ];

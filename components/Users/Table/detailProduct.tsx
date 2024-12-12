@@ -1,10 +1,11 @@
 import React, { useRef, useEffect, useState, ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
-import { MdSave } from "react-icons/md"; 
+import { MdSave } from "react-icons/md";
 import { Button } from "@nextui-org/react";
 import { FaPen } from "react-icons/fa";
 import { TabSlider } from "@/components/SliderTab/TabSlider";
+import Image from "next/image";
 
 interface DetailStaffProps {
   onClose: () => void;
@@ -18,16 +19,16 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
   const [isVisible, setIsVisible] = useState(true);
   const [data, setData] = useState<any>(dataInitial);
   const [updateData, setupdateData] = useState<any>({});
-  const filterData =[
-    {id: 0, name: "Thông tin", value: "details"},
-		{id: 1, name: "Lịch sử in ấn", value: "history"},
-	]
-	const[filter, setFilter] = useState< "history"|"details">("details")
-  const handleUpdateData =(e, key:string, input:string = "string") => {
+  const filterData = [
+    { id: 0, name: "Thông tin", value: "details" },
+    { id: 1, name: "Lịch sử in ấn", value: "history" },
+  ]
+  const [filter, setFilter] = useState<"history" | "details">("details")
+  const handleUpdateData = (e, key: string, input: string = "string") => {
     if (input == "number")
-      setupdateData({...updateData, [key]: parseInt(e.target.value)});
-    else 
-      setupdateData({...updateData, [key]: e.target.value});
+      setupdateData({ ...updateData, [key]: parseInt(e.target.value) });
+    else
+      setupdateData({ ...updateData, [key]: e.target.value });
   }
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -87,10 +88,10 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
   // };
 
   const traverse = (obj, isEditing, canEdit?) => {
-  
+
     const editableElements = [];
     const nonEditableElements = [];
-  
+
     obj && Object?.keys(obj)?.forEach((key) => {
       if (obj[key] && typeof obj[key] === 'object') {
         traverse(obj[key], isEditing);
@@ -98,13 +99,13 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
         const formattedKey = `student.${key}`;
         const formattedValue = obj[key] ? obj[key] : "No info"
         const element = (
-          <div key={key} id="order_id" className="bg-gray-100 p-3 rounded-xl shadow-inner  dark:text-black">
-            <div className="font-bold text-base text-black dark:text-black">
+          <div key={key} id="order_id" className="bg-gray-100 p-3 w-fit rounded-xl shadow-inner  dark:text-black">
+            <div className="font-bold w-fit text-base text-black dark:text-black">
               {key.replace(/([A-Z])/g, " $1")}
             </div>
             {isEditing ? (
               <input
-                className={`text-gray-500 w-fit inline-block break-all dark:text-black` + !(key === "student_id" || key === "email" || key === "image_url")? "border-b-2": ""}
+                className={`text-gray-500 w-fit inline-block dark:text-black` + !(key === "student_id" || key === "email" || key === "image_url") ? "border-b-2" : ""}
                 type="text"
                 value={obj[key]}
                 onChange={(e) => {
@@ -114,14 +115,14 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
                 disabled={key === "student_id" || key === "email" || key === "image_url"}
               />
             ) : (
-              <div className="text-gray-500 w-fit inline-block break-all  dark:text-black">{formattedValue}</div>
+              <div className="text-gray-500 w-fit truncate text-center dark:text-black">{formattedValue}</div>
             )}
           </div>
         );
-        if (true) {
+        if (true && key !== "image_url") {
           editableElements.push(element);
         } else {
-          nonEditableElements.push(element);
+          // nonEditableElements.push(element);
         }
       }
     });
@@ -130,7 +131,7 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
         {/* <div className="text-xl text-black dark:text-white font-bold uppercase text-center">
           Thông tin 1
         </div> */}
-        <div className="grid-cols-2 grid lg:grid-cols-3 p-10 gap-4">
+        <div className="flex gap-5">
           {editableElements}
         </div>
 
@@ -144,10 +145,10 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
     );
   };
   // const traverseToList = (obj, isEditing, canEdit?) => {
-  
+
   //   const editableElements = [];
   //   const nonEditableElements = [];
-  
+
   //   obj && Object.keys(obj).forEach((key) => {
 
   //     if (obj[key] && typeof obj[key] === 'object') {
@@ -204,7 +205,7 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
   //     </div>
   //   );
   // };
-  
+
   return (
     <motion.div
       className={`fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-60 z-50 text-[#545e7b]`}
@@ -219,7 +220,7 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
     >
       <motion.div
         ref={notificationRef}
-        className={`relative w-11/12 bg-white dark:bg-[#14141a] h-5/6 rounded-xl p-4
+        className={`relative w-2/3 bg-white dark:bg-[#14141a] h-5/6 rounded-xl p-4
           ${isShaking ? "animate-shake" : ""}`}
         initial={{ scale: 0 }}
         animate={{ scale: isVisible ? 1 : 0 }}
@@ -231,22 +232,29 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
             Thông tin 3
           </div>
 
-            <IoMdClose className=" absolute right-0 w-8 h-8 cursor-pointer
+          <IoMdClose className=" absolute right-0 w-8 h-8 cursor-pointer
             rounded-full mb-2 text-black dark:text-white hover:bg-gray-400 hover:text-black"
-            onClick={handleClose}/>
+            onClick={handleClose} />
         </div>
-        <TabSlider allTabs={ filterData } onSelectOption={setFilter}/>
+        <TabSlider allTabs={filterData} onSelectOption={setFilter} />
         <div className="w-full h-4/6 border border-[#545e7b] mt-4 no-scrollbar
         justify-center flex flex-wrap gap-5 bg-gray-100 dark:bg-[#14141a] p-5 rounded-md 
         dark:text-white text-black  overflow-y-scroll ">
-            {
-                filter==="details" && traverse(data, isEditing)
-            }
-            {
-                filter==="history" &&  traverse(data, isEditing)
-            }
+          {
+            <div className="flex gap-5">
+                <Image
+                  alt="avatar" src={data.image_url}
+                  className="rounded-lg w-fit"
+                  width={200}
+                  height={200} />
+              {filter === "details" && traverse(data, isEditing)}
+            </div>
+          }
+          {
+            filter === "history" && traverse(data, isEditing)
+          }
         </div>
-        <div className="w-full flex">
+        {/* <div className="w-full flex">
           {!isEditing ? (
             <Button
               className="w-full rounded-lg mt-5 mb-1 py-3 border-green-700 hover:bg-green-700 text-green-500
@@ -286,7 +294,7 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
             </Button>
             </div>
           )}
-        </div>
+        </div> */}
       </motion.div>
     </motion.div>
   );

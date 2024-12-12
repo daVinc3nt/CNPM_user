@@ -1,5 +1,4 @@
 "use client";
-import { FormattedMessage } from "react-intl";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@nextui-org/react";
@@ -50,7 +49,7 @@ export async function columns(
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
               ID
-              {/* <ArrowUpDown className="ml-2 h-4 w-4" /> */}
+              <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
           );
         },
@@ -66,7 +65,7 @@ export async function columns(
             >
               Họ và tên
               {/* <FormattedMessage id="student.fullname" /> */}
-              {/* <ArrowUpDown className="ml-2 h-4 w-4" /> */}
+              <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
           );
         },
@@ -80,7 +79,7 @@ export async function columns(
               onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
               Email
-              {/* <ArrowUpDown className="ml-2 h-4 w-4" /> */}
+              <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
           );
         },
@@ -102,12 +101,12 @@ export async function columns(
           };
 
           return (
-            <div className="relative flex content-center  mr-2">
+            <div className="relative grid place-items-center  mr-2">
               <Button
                 onClick={openModal}
-                className="font-bold hover:text-black hover:text-[#1488DB] hover:underline py-1 px-[0.65rem] "
+                className="bg-transparent hover:bg-white font-bold hover:text-black h-10 w-10 border border-gray-600 hover:border-transparent rounded-full"
               >
-                Thông tin chi tiết
+                +
               </Button>
               {modalIsOpen && (
                 <DetailStaff onClose={closeModal} dataInitial={row.original} reload={reloadData} />
