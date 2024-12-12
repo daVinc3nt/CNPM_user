@@ -10,19 +10,19 @@ import { FaUsers } from "react-icons/fa";
 const SideItemData = [
   {
     id: 0,
-    title: "Printers",
+    title: "Máy in",
     url: "/product",
     icon: <FiPrinter className="text-2xl lg:block" />,
   },
   {
     id: 1,
-    title: "Users",
+    title: "Người dùng",
     url: "/users",
     icon: <FaUsers className="text-2xl lg:block" />,
   },
   {
     id: 2,
-    title: "Payments",
+    title: "Hoá đơn",
     url: "/payment",
     icon: <BsCashCoin className="text-2xl lg:block" />,
   }

@@ -5,6 +5,7 @@ import MenuHambuger from "./Top&SideBar/MenuHambuger";
 // import ThemeSwitcher from "./Theme/ThemeSwitch";
 // import Provider from "./Theme/Provider";
 import { motion, Variants } from "framer-motion";
+import ThemeSwitcher from "./Theme/ThemeSwitch";
 // import LangSelector from "@/components/LangSelector/LangSelector";
 interface LayoutProps {
   children: ReactNode;
@@ -55,13 +56,13 @@ const Wrapper = ({ children }: LayoutProps) => {
           />
           <MenuHambuger toggle ={handleSidebarToggleMobile}/>
         </div>
-          <div className="flex items-center">
-              {/* <div className="flex items-center">
+          {/* <div className="flex items-center">
+              <div className="flex items-center">
                 <div className="flex flex-row gap-2 items-center">
                   <ThemeSwitcher/>
                 </div>
-              </div> */}
-          </div>
+              </div>
+          </div> */}
         </header>
 
         <div className="flex-1 flex">
