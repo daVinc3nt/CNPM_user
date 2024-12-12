@@ -983,13 +983,13 @@ var PrintJobOperation = /** @class */ (function () {
 exports.PrintJobOperation = PrintJobOperation;
 var UserOperation = /** @class */ (function () {
     function UserOperation() {
-        this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/print_jobs';
+        this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/users';
         this.langQuery = "lang=".concat(interfaces_1.LangVersion.vi);
     }
     UserOperation.prototype.setLanguage = function (lang) {
         this.langQuery = "lang=".concat(lang);
     };
-    UserOperation.prototype.create = function (payload, token) {
+    UserOperation.prototype.searchAllUser = function (limit, page, token) {
         return __awaiter(this, void 0, void 0, function () {
             var response, error_28;
             var _a, _b;
@@ -997,7 +997,8 @@ var UserOperation = /** @class */ (function () {
                 switch (_c.label) {
                     case 0:
                         _c.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, axios_1.default.post("".concat(this.baseUrl, "/create"), payload, {
+                        return [4 /*yield*/, axios_1.default.get("".concat(this.baseUrl, "/get"), {
+                                params: { limit: limit, page: page },
                                 withCredentials: true,
                                 validateStatus: function (status) { return status >= 200 && status <= 500; },
                                 headers: {
@@ -1013,16 +1014,16 @@ var UserOperation = /** @class */ (function () {
                                 status: response.status
                             }];
                     case 2:
-                        error_28 = _c.sent();
-                        console.log("Error searching accounts: ", (_a = error_28 === null || error_28 === void 0 ? void 0 : error_28.response) === null || _a === void 0 ? void 0 : _a.data);
-                        console.error("Request that caused the error: ", error_28 === null || error_28 === void 0 ? void 0 : error_28.request);
-                        return [2 /*return*/, { message: (_b = error_28 === null || error_28 === void 0 ? void 0 : error_28.response) === null || _b === void 0 ? void 0 : _b.data.message, request: error_28 === null || error_28 === void 0 ? void 0 : error_28.request, status: error_28.response ? error_28.response.status : null }];
+                        error_27 = _c.sent();
+                        console.log("Error searching accounts: ", (_a = error_27 === null || error_27 === void 0 ? void 0 : error_27.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.error("Request that caused the error: ", error_27 === null || error_27 === void 0 ? void 0 : error_27.request);
+                        return [2 /*return*/, { success: (_b = error_27 === null || error_27 === void 0 ? void 0 : error_27.response) === null || _b === void 0 ? void 0 : _b.data, request: error_27 === null || error_27 === void 0 ? void 0 : error_27.request, status: error_27.response ? error_27.response.status : null }];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    UserOperation.prototype.searchAllUserFiles = function (token) {
+    UserOperation.prototype.searchFilesById = function (id, token) {
         return __awaiter(this, void 0, void 0, function () {
             var response, error_29;
             var _a, _b;
@@ -1030,7 +1031,7 @@ var UserOperation = /** @class */ (function () {
                 switch (_c.label) {
                     case 0:
                         _c.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, axios_1.default.get("".concat(this.baseUrl, "/get-all"), {
+                        return [4 /*yield*/, axios_1.default.get("".concat(this.baseUrl, "/").concat(id), {
                                 withCredentials: true,
                                 validateStatus: function (status) { return status >= 200 && status <= 500; },
                                 headers: {
@@ -1055,42 +1056,9 @@ var UserOperation = /** @class */ (function () {
             });
         });
     };
-    UserOperation.prototype.searchFilesById = function (id, token) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, error_30;
-            var _a, _b;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        _c.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, axios_1.default.get("".concat(this.baseUrl, "/").concat(id), {
-                                withCredentials: true,
-                                validateStatus: function (status) { return status >= 200 && status <= 500; },
-                                headers: {
-                                    Authorization: "Bearer ".concat(token)
-                                },
-                            })];
-                    case 1:
-                        response = _c.sent();
-                        return [2 /*return*/, {
-                                success: response.data.success,
-                                message: response.data.message,
-                                data: response.data.data,
-                                status: response.status
-                            }];
-                    case 2:
-                        error_30 = _c.sent();
-                        console.log("Error searching accounts: ", (_a = error_30 === null || error_30 === void 0 ? void 0 : error_30.response) === null || _a === void 0 ? void 0 : _a.data);
-                        console.error("Request that caused the error: ", error_30 === null || error_30 === void 0 ? void 0 : error_30.request);
-                        return [2 /*return*/, { success: (_b = error_30 === null || error_30 === void 0 ? void 0 : error_30.response) === null || _b === void 0 ? void 0 : _b.data, request: error_30 === null || error_30 === void 0 ? void 0 : error_30.request, status: error_30.response ? error_30.response.status : null }];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
     UserOperation.prototype.delete = function (id, token) {
         return __awaiter(this, void 0, void 0, function () {
-            var response, error_31;
+            var response, error_30;
             var _a, _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -1112,10 +1080,10 @@ var UserOperation = /** @class */ (function () {
                                 status: response.status
                             }];
                     case 2:
-                        error_31 = _c.sent();
-                        console.log("Error updating account: ", (_a = error_31 === null || error_31 === void 0 ? void 0 : error_31.response) === null || _a === void 0 ? void 0 : _a.data);
-                        console.error("Request that caused the error: ", error_31 === null || error_31 === void 0 ? void 0 : error_31.request);
-                        return [2 /*return*/, { success: (_b = error_31 === null || error_31 === void 0 ? void 0 : error_31.response) === null || _b === void 0 ? void 0 : _b.data, request: error_31 === null || error_31 === void 0 ? void 0 : error_31.request, status: error_31.response ? error_31.response.status : null }];
+                        error_29 = _c.sent();
+                        console.log("Error updating account: ", (_a = error_29 === null || error_29 === void 0 ? void 0 : error_29.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.error("Request that caused the error: ", error_29 === null || error_29 === void 0 ? void 0 : error_29.request);
+                        return [2 /*return*/, { success: (_b = error_29 === null || error_29 === void 0 ? void 0 : error_29.response) === null || _b === void 0 ? void 0 : _b.data, request: error_29 === null || error_29 === void 0 ? void 0 : error_29.request, status: error_29.response ? error_29.response.status : null }];
                     case 3: return [2 /*return*/];
                 }
             });

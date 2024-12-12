@@ -6,12 +6,13 @@ import LoadingSkeleton from "../LoadingSkeleton/loadingSkeleton";
 // import { FormattedMessage } from "react-intl";
 
 const StaffMenu = () => {
+  
   const [demoPage, setDemoPage] = useState(<LoadingSkeleton />);
-  const fetchDemoPage = async (params="",value="") => {
+  const fetchDemoPage = async (params="1000",value="1") => {
       const result = await DemoPage(params,value,reloadData);
       setDemoPage(result);
   };
-  const reloadData = useCallback((params="",value="") => {
+  const reloadData = useCallback((params="1000",value="1") => {
       fetchDemoPage(params,value);
     }, []);
   useEffect(() => {
@@ -24,7 +25,7 @@ const StaffMenu = () => {
           <div className="container shadow-sm rounded-xl px-3 bg-white dark:text-white dark:bg-[#1a1b23]">
             <div className="relative text-3xl font-bold border-b-[1px] border-gray-600">
               <div className=" font-bold text-xl sm:text-3xl pt-3 pb-2 text-center">
-                Products information
+                Danh sánh người dùng
               </div>
             </div>
             <div className="w-full">{demoPage}</div>

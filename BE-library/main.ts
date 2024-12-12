@@ -710,41 +710,17 @@ export class UserOperation {
     private langQuery: string;
 
     constructor() {
-        this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/print_jobs';
+        this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/users';
         this.langQuery = `lang=${LangVersion.vi}`;
     }
 
     setLanguage(lang: LangVersion) {
         this.langQuery = `lang=${lang}`;
     }
-
-    async create(payload: PrintJobPayload, token: string) {
+    async searchAllUser(limit: number, page: number, token: string) {
         try {
-			const response: AxiosResponse = await axios.post(`${this.baseUrl}/create`, payload,{
-				withCredentials: true,
-                validateStatus: status => status >= 200 && status <= 500,
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-			});
-			
-			return {
-                success: response.data.success,
-                message: response.data.message,
-                data: response.data.data,
-                status: response.status
-            };
-		} 
-		catch (error: any) {
-			console.log("Error searching accounts: ", error?.response?.data);
-            console.error("Request that caused the error: ", error?.request);
-            return {message:error?.response?.data.message, request: error?.request, status: error.response ? error.response.status : null };
-		}
-    }
-
-    async searchAllUserFiles(token: string) {
-        try {
-			const response: AxiosResponse = await axios.get(`${this.baseUrl}/get-all`,{
+			const response: AxiosResponse = await axios.get(`${this.baseUrl}/get`,{
+                params: {limit, page},
 				withCredentials: true,
                 validateStatus: status => status >= 200 && status <= 500,
                 headers: {
