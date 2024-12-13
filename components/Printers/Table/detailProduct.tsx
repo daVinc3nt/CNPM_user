@@ -5,12 +5,21 @@ import { MdSave } from "react-icons/md";
 import { Button, select } from "@nextui-org/react";
 import { FaPen } from "react-icons/fa";
 import { TabSlider } from "@/components/SliderTab/TabSlider";
-import { PrinterOperation } from "@/BE-library/main";
+import { AccountOperation, AuthOperation, PrinterOperation } from "@/BE-library/main";
+import CustomDropdown from "./AddProduct/dropdown";
 
 interface DetailStaffProps {
   onClose: () => void;
   dataInitial: any;
   reload: any;
+}
+interface nSPSO{
+  id: number;
+  name: string;
+  username: string;
+  role: string;
+  email: string;
+  phoneNumber: string;
 }
 const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload }) => {
   const [isShaking, setIsShaking] = useState(false);
@@ -18,6 +27,18 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
   const [isVisible, setIsVisible] = useState(true);
   const [data, setData] = useState<any>(dataInitial);
   const [updateData, setupdateData] = useState<any>(dataInitial);
+  const [listSPSO, setlistSPSO] = useState<nSPSO[]>([]);
+  const [selectedSPSO, setselectedSPSO] = useState<nSPSO>(dataInitial.spso)
+  const handlesetSelectedSPSO = (newspso: nSPSO)=>{
+    newspso = {...newspso, ["id"]: newspso["user_id"]}
+    delete newspso?.["user_id"]
+    delete newspso?.["role"]
+    console.log(newspso)
+    setselectedSPSO(newspso);
+  }
+  const handlesetlistspso = (newspso: nSPSO)=>{
+    setlistSPSO((prevlistSPSO) => [...prevlistSPSO, newspso]);
+  }
   const filterData = [
     { id: 0, name: "Thông tin máy in", value: "details" },
     { id: 1, name: "Thông tin spso", value: "students" },
@@ -28,6 +49,12 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
       setupdateData({ ...updateData, [key]: parseInt(e.target.value) });
     else
       setupdateData({ ...updateData, [key]: e.target.value });
+  }
+  const handleUpdateDataSPSO = () => {
+    setupdateData((prevState) => {
+      const newData = { ...prevState, spso: selectedSPSO };
+      return newData;
+    });
   }
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -45,12 +72,21 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
     const action =new PrinterOperation()
     setIsEditing(false);
     delete updateData?.spso?.authorities;
+    console.log(updateData)
     const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
     const res =await action.update(data["id"], updateData, cnpm_token)
 
     reload()
   };
   useEffect(() => {
+    const fetchSPSO = async () =>{
+      const action = new AuthOperation()
+      const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
+      const res = await action.getAdmin(1000, 1, cnpm_token)
+      res?.data.map((spso)=>{if(spso.role === "SPSO") handlesetlistspso(spso)})
+    }
+    fetchSPSO();
+
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
@@ -72,10 +108,53 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
   };
 
   const traverse = (obj, isEditing, canEdit?) => {
-    console.log(updateData)
     const editableElements = [];
     const nonEditableElements = [];
-
+    if (filter === "students") 
+      obj && Object?.keys(obj)?.forEach((key) => {
+        if (obj[key] && typeof obj[key] === 'object') {
+          traverse(obj[key], isEditing);
+        } else {
+          const formattedKey = `student.${key}`;
+          const formattedValue = obj[key] ? obj[key] : "No info"
+          const element = (
+            <div key={key} id="order_id" className="bg-gray-100 p-3 rounded-xl shadow-inner  dark:text-black">
+              <div className="font-bold text-base text-black dark:text-black">
+                {key.replace(/([A-Z])/g, " $1")}
+              </div>
+              {isEditing ? (key != "id") ?
+                <input
+                  className={`text-gray-500 w-fit inline-block break-all dark:text-black`
+                    + !(key === "id" || key === "a4RemainingPages" || key === "a3RemainingPages") ? "border-b-2" : ""}
+                  type="text"
+                  value={selectedSPSO?.[key]}
+                  onChange={(e) => {
+                    setData({ ...selectedSPSO, [key]: e.target.value });
+                    handleUpdateData(e, key);
+                  }}
+                  disabled={key!="id"}
+                  
+                />
+              : (
+                
+              <CustomDropdown
+              label="id"
+              options={listSPSO.map((data)=> (data["user_id"] as string))}
+              selectedOption={(String(selectedSPSO?.id))? String(selectedSPSO?.id): String(selectedSPSO?.["user_id"])}
+              onSelectOption={(option) => {handlesetSelectedSPSO(listSPSO.find((data)=>data["user_id"]==Number(option)));handleUpdateDataSPSO();}}
+              />)
+               : (
+                <div className="text-gray-500 w-fit inline-block break-all  dark:text-black">{formattedValue}</div>
+              )}
+            </div>
+          );
+          if (true && key != "password" && key != "enabled" && key != "accountNonExpired" && key != "credentialsNonExpired" && key != "accountNonLocked" ) {
+            editableElements.push(element);
+          } else {
+            // nonEditableElements.push(element);
+          }
+        }})
+    else
     obj && Object?.keys(obj)?.forEach((key) => {
       if (obj[key] && typeof obj[key] === 'object') {
         traverse(obj[key], isEditing);
@@ -123,7 +202,8 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
           // nonEditableElements.push(element);
         }
       }
-    });
+    }
+  );
     return (
       <div className="flex flex-col">
         {/* <div className="text-xl text-black dark:text-white font-bold uppercase text-center">
@@ -192,6 +272,7 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
               bg-transparent drop-shadow-md hover:drop-shadow-xl hover:text-white border 
               hover:shadow-md"
               onClick={ToggleEditClick}
+              // onClick={()=>{console.log()}}
             >
               <FaPen className="xs:mr-2" />
               <span className=" xs:block">

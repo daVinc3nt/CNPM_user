@@ -10,6 +10,30 @@ export class AuthOperation {
         this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/internal/admin';
         this.langQuery = `lang=${LangVersion.vi}`;
     }
+    async getAdmin(limit: number, page: number, token: string) {
+        try {
+			const response: AxiosResponse = await axios.get(`${this.baseUrl}/get`, {
+                params: {limit, page},
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error searching accounts: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
     public async signup(payload: SignUpPayload) {
         try {
 			const response: AxiosResponse = await axios.post(`${this.baseUrl}/signup?${this.langQuery}`, payload, {
