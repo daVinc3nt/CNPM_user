@@ -445,9 +445,10 @@ export class PrinterOperation {
         this.langQuery = `lang=${lang}`;
     }
 
-    async create(a4Count: number, a3Count:number, token: string) {
+    async create(payload: any, token: string) {
         try {
-			const response: AxiosResponse = await axios.post(`${this.baseUrl}/create?a4Count=${a4Count}&a3Count=${a3Count}`, {
+			const response: AxiosResponse = await axios.post(`${this.baseUrl}`, payload, {
+
 				withCredentials: true,
                 validateStatus: status => status >= 200 && status <= 500,
                 headers: {
@@ -494,9 +495,32 @@ export class PrinterOperation {
 		}
     }
 
-    async delete(id: UUID, token: string) {
+    async update(id: UUID, payload: UpdatePrinterPayload, token: string) {
         try {
-			const response: AxiosResponse = await axios.delete(`${this.baseUrl}/delete/${id}?${this.langQuery}`, {
+			const response: AxiosResponse = await axios.put(`${this.baseUrl}/${id}`, payload, {
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error updating account: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+    async delete(id: string, token: string) {
+        try {
+			const response: AxiosResponse = await axios.delete(`${this.baseUrl}/${id}`, {
 				withCredentials: true,
                 validateStatus: status => status >= 200 && status <= 500,
                 headers: {
@@ -788,5 +812,105 @@ export class UserOperation {
 		}
     }
 }
+export class LocationOperation {
+    private baseUrl: string;
+    private langQuery: string;
+
+    constructor() {
+        this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/locations';
+        this.langQuery = `lang=${LangVersion.vi}`;
+    }
+
+    setLanguage(lang: LangVersion) {
+        this.langQuery = `lang=${lang}`;
+    }
+    async searchAll(token: string) {
+        try {
+			const response: AxiosResponse = await axios.get(`${this.baseUrl}`,{
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error searching accounts: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+    async searchFilesById(id: string, token: string) {
+        try {
+			const response: AxiosResponse = await axios.get(`${this.baseUrl}/${id}`,{
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error searching accounts: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+    async delete(id: UUID, token: string) {
+        try {
+			const response: AxiosResponse = await axios.delete(`${this.baseUrl}/delete/${id}?${this.langQuery}`, {
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error updating account: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+}
+
 // flash card
 
+export interface UpdatePrinterPayload {
+    name?: number;
+    brand?: string;
+    type?: string;
+    lastMaintenanceDate?: number[];
+    supportContact?: string;
+    description?: string;
+    a4RemainingPages?: number;
+    a3RemainingPages?: number;
+    status?: string;
+    location?: {
+        id?: number;
+    };
+    spso?: {
+        id?: number;
+    };
+}

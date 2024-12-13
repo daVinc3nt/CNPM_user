@@ -11,7 +11,7 @@ const SideItemData = [
   {
     id: 0,
     title: "Máy in",
-    url: "/product",
+    url: "/printer",
     icon: <FiPrinter className="text-2xl lg:block" />,
   },
   {
