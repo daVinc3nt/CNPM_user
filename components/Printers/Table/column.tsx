@@ -81,6 +81,7 @@ export async function columns(
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           ID
+          <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
     },
@@ -105,7 +106,7 @@ export async function columns(
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Địa điểm
-          {/* <ArrowUpDown className="ml-2 h-4 w-4" /> */}
+          <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
     },
@@ -114,8 +115,10 @@ export async function columns(
       header: ({ column }) => (
         <Button
           variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Trạng thái
+          <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
       cell: ({ row }) => {

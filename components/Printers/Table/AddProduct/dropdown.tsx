@@ -34,7 +34,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
         aria-labelledby="dropdownMenuButton"
       >
         {options.map((option, index) => (
-          <DropdownItem key={index} textValue={option}>
+          <DropdownItem key={index} textValue={option} className=" dark:hover:bg-gray-500">
             <Button
               onClick={() => onSelectOption(option)}
               aria-label={option}

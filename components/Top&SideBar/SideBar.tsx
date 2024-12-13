@@ -17,7 +17,7 @@ const SideItemData = [
   {
     id: 1,
     title: "Người dùng",
-    url: "/users",
+    url: "/user",
     icon: <FaUsers className="text-2xl lg:block" />,
   },
   {
