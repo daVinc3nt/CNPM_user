@@ -6,6 +6,7 @@ import {
 import { FiPrinter } from "react-icons/fi";
 import { BsCashCoin } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
+import { AiOutlineFile } from "react-icons/ai";
 // import { FormattedMessage } from "react-intl";
 const SideItemData = [
   {
@@ -25,6 +26,12 @@ const SideItemData = [
     title: "Hoá đơn",
     url: "/payment",
     icon: <BsCashCoin className="text-2xl lg:block" />,
+  },
+  {
+    id: 3,
+    title: "Định dạng tệp",
+    url: "/fileformat",
+    icon: <AiOutlineFile className="text-2xl lg:block" />,
   }
 ];
 export default function SideBar({ toggleCollapse }) {

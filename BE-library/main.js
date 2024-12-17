@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LocationOperation = exports.UserOperation = exports.PrintJobOperation = exports.FileOperation = exports.PrinterOperation = exports.PaymentOperation = exports.AccountOperation = exports.AuthOperation = void 0;
+exports.FileFormatOperation = exports.LocationOperation = exports.UserOperation = exports.PrintJobOperation = exports.FileOperation = exports.PrinterOperation = exports.PaymentOperation = exports.AccountOperation = exports.AuthOperation = void 0;
 var axios_1 = require("axios");
 var interfaces_1 = require("./interfaces");
 var AuthOperation = /** @class */ (function () {
@@ -1269,3 +1269,114 @@ var LocationOperation = /** @class */ (function () {
     return LocationOperation;
 }());
 exports.LocationOperation = LocationOperation;
+var FileFormatOperation = /** @class */ (function () {
+    function FileFormatOperation() {
+        this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/file-formats';
+        this.langQuery = "lang=".concat(interfaces_1.LangVersion.vi);
+    }
+    FileFormatOperation.prototype.setLanguage = function (lang) {
+        this.langQuery = "lang=".concat(lang);
+    };
+    FileFormatOperation.prototype.create = function (payload, token) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, error_36;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _c.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, axios_1.default.post("".concat(this.baseUrl), payload, {
+                                withCredentials: true,
+                                validateStatus: function (status) { return status >= 200 && status <= 500; },
+                                headers: {
+                                    Authorization: "Bearer ".concat(token)
+                                },
+                            })];
+                    case 1:
+                        response = _c.sent();
+                        return [2 /*return*/, {
+                                success: response.data.success,
+                                message: response.data.message,
+                                data: response.data.data,
+                                status: response.status
+                            }];
+                    case 2:
+                        error_36 = _c.sent();
+                        console.log("Error searching accounts: ", (_a = error_36 === null || error_36 === void 0 ? void 0 : error_36.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.error("Request that caused the error: ", error_36 === null || error_36 === void 0 ? void 0 : error_36.request);
+                        return [2 /*return*/, { success: (_b = error_36 === null || error_36 === void 0 ? void 0 : error_36.response) === null || _b === void 0 ? void 0 : _b.data, request: error_36 === null || error_36 === void 0 ? void 0 : error_36.request, status: error_36.response ? error_36.response.status : null }];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    //get tags
+    FileFormatOperation.prototype.searchAll = function (token) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, error_37;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _c.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, axios_1.default.get("".concat(this.baseUrl), {
+                                withCredentials: true,
+                                validateStatus: function (status) { return status >= 200 && status <= 500; },
+                                headers: {
+                                    Authorization: "Bearer ".concat(token)
+                                },
+                            })];
+                    case 1:
+                        response = _c.sent();
+                        return [2 /*return*/, {
+                                success: response.data.success,
+                                message: response.data.message,
+                                data: response.data.data,
+                                status: response.status
+                            }];
+                    case 2:
+                        error_37 = _c.sent();
+                        console.log("Error searching accounts: ", (_a = error_37 === null || error_37 === void 0 ? void 0 : error_37.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.error("Request that caused the error: ", error_37 === null || error_37 === void 0 ? void 0 : error_37.request);
+                        return [2 /*return*/, { success: (_b = error_37 === null || error_37 === void 0 ? void 0 : error_37.response) === null || _b === void 0 ? void 0 : _b.data, request: error_37 === null || error_37 === void 0 ? void 0 : error_37.request, status: error_37.response ? error_37.response.status : null }];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    FileFormatOperation.prototype.delete = function (id, token) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, error_38;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _c.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, axios_1.default.delete("".concat(this.baseUrl, "/").concat(id), {
+                                withCredentials: true,
+                                validateStatus: function (status) { return status >= 200 && status <= 500; },
+                                headers: {
+                                    Authorization: "Bearer ".concat(token)
+                                },
+                            })];
+                    case 1:
+                        response = _c.sent();
+                        return [2 /*return*/, {
+                                success: response.data.success,
+                                message: response.data.message,
+                                data: response.data.data,
+                                status: response.status
+                            }];
+                    case 2:
+                        error_38 = _c.sent();
+                        console.log("Error updating account: ", (_a = error_38 === null || error_38 === void 0 ? void 0 : error_38.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.error("Request that caused the error: ", error_38 === null || error_38 === void 0 ? void 0 : error_38.request);
+                        return [2 /*return*/, { success: (_b = error_38 === null || error_38 === void 0 ? void 0 : error_38.response) === null || _b === void 0 ? void 0 : _b.data, request: error_38 === null || error_38 === void 0 ? void 0 : error_38.request, status: error_38.response ? error_38.response.status : null }];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return FileFormatOperation;
+}());
+exports.FileFormatOperation = FileFormatOperation;

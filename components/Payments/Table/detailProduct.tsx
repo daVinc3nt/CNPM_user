@@ -5,6 +5,7 @@ import { MdSave } from "react-icons/md";
 import { Button } from "@nextui-org/react";
 import { FaPen } from "react-icons/fa";
 import { TabSlider } from "@/components/SliderTab/TabSlider";
+import Image from "next/image";
 
 interface DetailStaffProps {
   onClose: () => void;
@@ -21,14 +22,14 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
   const filterData = [
     { id: 0, name: "Đơn hàng", value: "details" },
     { id: 1, name: "Sinh viên", value: "students" },
-  ]
-  const [filter, setFilter] = useState<"purchaseStats" | "costHist" | "priceHist" | "inventory" | "stats" | "details"| "students">("details")
+  ];
+  const [filter, setFilter] = useState<"details" | "students">("details");
   const handleUpdateData = (e, key: string, input: string = "string") => {
     if (input == "number")
       setupdateData({ ...updateData, [key]: parseInt(e.target.value) });
     else
       setupdateData({ ...updateData, [key]: e.target.value });
-  }
+  };
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -49,6 +50,7 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose]);
+
   const handleClose = () => {
     setIsVisible(false);
   };
@@ -58,63 +60,63 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
       onClose();
     }
   };
+
   const [isEditing, setIsEditing] = useState(false);
   const ToggleEditClick = () => {
     setIsEditing(!isEditing);
   };
 
-  const traverse = (obj, isEditing, canEdit?) => {
-
+  const traverse = (obj, isEditing, filter) => {
     const editableElements = [];
     const nonEditableElements = [];
 
     obj && Object?.keys(obj)?.forEach((key) => {
       if (obj[key] && typeof obj[key] === 'object') {
-        traverse(obj[key], isEditing);
+        traverse(obj[key], isEditing, filter);
       } else {
+        // Bỏ qua không render imageUrl khi filter là "details"
+        if (key === "imageUrl" && filter === "details") {
+          return;
+        }
+
         const formattedKey = `student.${key}`;
-        const formattedValue = obj[key] ? obj[key] : "No info"
+        const formattedValue = obj[key] ? obj[key] : "No info";
         const element = (
-          <div key={key} id="order_id" className="bg-gray-100 p-3 rounded-xl shadow-inner  dark:text-black">
+          <div key={key} id="order_id" className="bg-gray-100 p-3 rounded-xl shadow-inner dark:text-black">
             <div className="font-bold text-base text-black dark:text-black">
               {key.replace(/([A-Z])/g, " $1")}
             </div>
             {isEditing ? (
               <input
-                className={`text-gray-500 w-fit inline-block break-all dark:text-black`
-                  + !(key === "id" || key === "orderId" || key === "requestId") ? "border-b-2" : ""}
+                className={`text-gray-500 w-fit inline-block break-all dark:text-black` + 
+                  !(key === "id" || key === "orderId" || key === "requestId" || key === "imageUrl" || key === "") 
+                  ? "border-b-2" 
+                  : ""}
                 type="text"
                 value={obj[key]}
                 onChange={(e) => {
                   setData({ ...obj, [key]: e.target.value });
                   handleUpdateData(e, key);
                 }}
-                disabled={key === "id" || key === "orderId" || key === "requestId"}
+                disabled={key === "id" || key === "orderId" || key === "requestId" || key === "imageUrl" || key === "password"}
               />
             ) : (
-              <div className="text-gray-500 w-fit inline-block break-all  dark:text-black">{formattedValue}</div>
+              <div className="text-gray-500 w-fit inline-block break-all dark:text-black">
+                {formattedValue}
+              </div>
             )}
           </div>
         );
-        if (true) {
+        if (true && key !== "imageUrl" && key !== "password") {
           editableElements.push(element);
-        } else {
-          nonEditableElements.push(element);
         }
       }
     });
     return (
       <div className="flex flex-col">
-        {/* <div className="text-xl text-black dark:text-white font-bold uppercase text-center">
-          Thông tin 1
-        </div> */}
         <div className="grid-cols-2 grid lg:grid-cols-3 p-10 gap-4">
           {editableElements}
         </div>
-
-        {/* <div className="text-xl text-black dark:text-white font-bold uppercase text-center">
-          Thông tin 2
-        </div> */}
         <div className="grid-cols-2 grid lg:grid-cols-3 p-10 gap-4">
           {nonEditableElements}
         </div>
@@ -136,8 +138,7 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
     >
       <motion.div
         ref={notificationRef}
-        className={`relative w-11/12 bg-white dark:bg-[#14141a] h-5/6 rounded-xl p-4
-          ${isShaking ? "animate-shake" : ""}`}
+        className={`relative w-11/12 bg-white dark:bg-[#14141a] h-5/6 rounded-xl p-4 ${isShaking ? "animate-shake" : ""}`}
         initial={{ scale: 0 }}
         animate={{ scale: isVisible ? 1 : 0 }}
         exit={{ scale: 0 }}
@@ -148,61 +149,23 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
             Thông tin chi tiết
           </div>
 
-          <IoMdClose className=" absolute right-0 w-8 h-8 cursor-pointer
-            rounded-full mb-2 text-black dark:text-white hover:bg-gray-400 hover:text-black"
-            onClick={handleClose} />
+          <IoMdClose className=" absolute right-0 w-8 h-8 cursor-pointer rounded-full mb-2 text-black dark:text-white hover:bg-gray-400 hover:text-black" onClick={handleClose} />
         </div>
         <TabSlider allTabs={filterData} onSelectOption={setFilter} />
-        <div className="w-full h-4/6 border border-[#545e7b] mt-4 no-scrollbar
-        justify-center flex flex-wrap gap-5 bg-gray-100 dark:bg-[#14141a] p-5 rounded-md 
-        dark:text-white text-black  overflow-y-scroll">
+        <div className="w-full h-4/6 border border-[#545e7b] mt-4 no-scrollbar justify-center flex flex-wrap gap-5 bg-gray-100 dark:bg-[#14141a] p-5 rounded-md dark:text-white text-black  overflow-y-scroll">
           {
-            filter === "details" && traverse(data, isEditing)
-          }
-          {
-            filter === "students" && traverse(data.student, isEditing)
-          }
-          
-        </div>
-        <div className="w-full flex">
-          {!isEditing ? (
-            <Button
-              className="w-full rounded-lg mt-5 mb-1 py-3 border-green-700 hover:bg-green-700 text-green-500
-              bg-transparent drop-shadow-md hover:drop-shadow-xl hover:text-white border 
-              hover:shadow-md"
-              onClick={ToggleEditClick}
-            >
-              <FaPen className="xs:mr-2" />
-              <span className=" xs:block">
-                Sửa
-              </span>
-            </Button>
-          ) : (
-            <div className="flex flex-row w-full">
-              <Button
-                className="w-full rounded-lg mt-5 mb-1 py-3 border-green-700 hover:bg-green-700 text-green-500
-              bg-transparent drop-shadow-md hover:drop-shadow-xl hover:text-white border 
-              hover:shadow-md"
-                onClick={ToggleEditClick}
-              >
-                <IoMdClose className="xs:mr-2" />
-                <span className="xs:block">
-                  Quay lại
-                </span>
-              </Button>
-              <Button
-                className="w-full rounded-lg mt-5 mb-1 py-3 border-green-700 hover:bg-green-700 text-green-500
-              bg-transparent drop-shadow-md hover:drop-shadow-xl hover:text-white border 
-              hover:shadow-md"
-                onClick={() => { }}
-              >
-                <MdSave className="xs:mr-2" />
-                <span className="xs:block">
-                  Lưu
-                </span>
-              </Button>
+            <div className="flex gap-5">
+              <Image
+                alt="avatar" src={data.student.imageUrl}
+                className="rounded-lg w-fit"
+                width={300}
+                height={200} />
+                {filter === "students" && traverse(data.student, isEditing, filter)}
             </div>
-          )}
+          }
+          {
+            filter === "details" && traverse(data, isEditing, filter)
+          }
         </div>
       </motion.div>
     </motion.div>
