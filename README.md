@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Dựa trên thông tin của bạn, đây là một mẫu README phù hợp cho dự án hệ thống Bkprinter:
 
-## Getting Started
+# Bkprinter System
 
-First, run the development server:
+A web-based printing system designed for students of Bach Khoa University, offering functionalities for purchasing print pages, managing print formats, and administrative controls.
 
-```bash
+## Features
+
+### User Features
+- **Purchase Print Pages**: Students can purchase print pages directly through the system.
+- **Print Management**: Choose printing formats and settings as needed.
+- **Google Login**: Users log in securely via their Google accounts.
+
+### Admin Features
+- **User Management**: Add, edit, or remove users in the system.
+- **Payment Management**: Monitor and manage payment transactions.
+- **File Format Management**: Administer available file formats for printing.
+- **Secure Login**: Admins log in using predefined credentials.
+Default Admin Credentials
+Username: tantai
+Password: @hcmut.edu.vn
+
+## Installation
+
+Follow these steps to set up and run the project locally:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/Bkprinter.git
+   cd Bkprinter
+Install dependencies:
+npm i
+Start the development server:
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Or start the production server:
+npm run start
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Usage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Manage users, payments, and file formats via the admin dashboard.
+License
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project is licensed under MIT License.
 
-## Learn More
+Contact
 
-To learn more about Next.js, take a look at the following resources:
+For questions or feedback, contact the development team at:
 
-- [Next.js documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Team: BKprinter_L03_Mai Đức Trung

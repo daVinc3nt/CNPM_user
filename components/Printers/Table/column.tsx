@@ -130,8 +130,8 @@ export async function columns(
           statusClass = "text-red-800"; // Màu chữ đỏ
           backgroundClass = "bg-red-200"; // Nền đỏ nhạt
         } else if (status === "active") {
-          statusClass = "text-green-500"; // Màu chữ xanh
-          backgroundClass = "bg-green-200"; // Nền xanh nhạt
+          statusClass = "text-white"; // Màu chữ xanh
+          backgroundClass = "bg-green-500"; // Nền xanh nhạt
         } else {
           statusClass = "text-gray-800"; // Màu chữ xám
           backgroundClass = "bg-gray-200"; // Nền xám nhạt

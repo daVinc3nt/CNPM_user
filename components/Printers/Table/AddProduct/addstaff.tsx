@@ -140,7 +140,6 @@ const AddStaff: React.FC<AddStaffProps> = ({ onClose, reload }) => {
       handleClose()
       reload();
     }
-    // console.log(Printer)
     senddata();
   };
 
@@ -223,7 +222,7 @@ const AddStaff: React.FC<AddStaffProps> = ({ onClose, reload }) => {
               <div className="flex gap-3 mt-3"> 
                   <input required
                     type="string"
-                    className="text-xs md:text-sm border border-gray-600 rounded w-1/3 bg-white dark:bg-[#14141a] h-10 p-2 w-full"
+                    className="text-xs md:text-sm border border-gray-600 rounded w-1/3 bg-white dark:bg-[#14141a] h-10 p-2"
                     placeholder={"supportContact"}
                     onChange={(e) => handleInputChange("supportContact", e.target.value)}
                   />

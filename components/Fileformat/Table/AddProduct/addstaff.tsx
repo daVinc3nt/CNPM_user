@@ -121,7 +121,7 @@ const AddStaff: React.FC<AddStaffProps> = ({ onClose, reload }) => {
                   type="string"
                   className={`text-xs md:text-sm border border-gray-600 rounded  bg-white dark:bg-[#14141a] h-10 p-2 w-full
                   `}
-                  placeholder="Name"
+                  placeholder="Nhập tên định dạng"
                   onChange={(e) => handleInputChange("name", e.target.value)}
                 />
               </div>

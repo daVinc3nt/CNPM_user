@@ -108,7 +108,7 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
     >
       <motion.div
         ref={notificationRef}
-        className={`relative w-11/12 bg-white dark:bg-[#14141a] h-5/6 rounded-xl p-4
+        className={`relative w-1/3 bg-white dark:bg-[#14141a] h-5/6 rounded-xl p-4
             ${isShaking ? "animate-shake" : ""}`}
         initial={{ scale: 0 }}
         animate={{ scale: isVisible ? 1 : 0 }}
@@ -125,45 +125,11 @@ const DetailStaff: React.FC<DetailStaffProps> = ({ onClose, dataInitial, reload 
             onClick={handleClose}
           />
         </div>
-        <TabSlider
-          allTabs={[
-            { id: 0, name: "Thông tin định dạng tệp", value: "details" },
-          ]}
-          onSelectOption={setFilter}
-        />
         <div
-          className="w-full h-4/6 border border-[#545e7b] mt-4 no-scrollbar justify-center flex flex-wrap gap-5 bg-gray-100 dark:bg-[#14141a] p-5 rounded-md dark:text-white text-black overflow-y-scroll"
+          className="w-full h-5/6 border border-[#545e7b] mt-4 no-scrollbar justify-center flex flex-wrap gap-5 bg-gray-100 dark:bg-[#14141a] p-5 rounded-md dark:text-white text-black"
         >
           {filter === "details" && traverse(data, isEditing)}
         </div>
-        {/* <div className="w-full flex">
-          {!isEditing ? (
-            <Button
-              className="w-full rounded-lg mt-5 mb-1 py-3 border-green-700 hover:bg-green-700 text-green-500 bg-transparent drop-shadow-md hover:drop-shadow-xl hover:text-white border hover:shadow-md"
-              onClick={() => setIsEditing(true)}
-            >
-              <FaPen className="xs:mr-2" />
-              <span className="xs:block">Sửa</span>
-            </Button>
-          ) : (
-            <div className="flex flex-row w-full">
-              <Button
-                className="w-full rounded-lg mt-5 mb-1 py-3 border-green-700 hover:bg-green-700 text-green-500 bg-transparent drop-shadow-md hover:drop-shadow-xl hover:text-white border hover:shadow-md"
-                onClick={() => setIsEditing(false)}
-              >
-                <IoMdClose className="xs:mr-2" />
-                <span className="xs:block">Quay lại</span>
-              </Button>
-              <Button
-                className="w-full rounded-lg mt-5 mb-1 py-3 border-green-700 hover:bg-green-700 text-green-500 bg-transparent drop-shadow-md hover:drop-shadow-xl hover:text-white border hover:shadow-md"
-                onClick={() => console.log("Save data:", data)}
-              >
-                <MdSave className="xs:mr-2" />
-                <span className="xs:block">Lưu</span>
-              </Button>
-            </div>
-          )}
-        </div> */}
       </motion.div>
     </motion.div>
   );
