@@ -32,6 +32,12 @@ const SideItemData = [
     title: "Định dạng tệp",
     url: "/fileformat",
     icon: <AiOutlineFile className="text-2xl lg:block" />,
+  },
+  {
+    id: 4,
+    title: "Cấp giấy",
+    url: "/pageAlloc",
+    icon: <AiOutlineFile className="text-2xl lg:block" />,
   }
 ];
 export default function SideBar({ toggleCollapse }) {

@@ -7,7 +7,7 @@
   import { TabSlider } from "@/components/SliderTab/TabSlider";
   import { AccountOperation, AuthOperation, PrinterOperation } from "@/BE-library/main";
   import CustomDropdown from "./AddProduct/dropdown";
-  import {toast} from "sonner";
+
   interface DetailStaffProps {
     onClose: () => void;
     dataInitial: any;
@@ -61,7 +61,7 @@
     //   console.log("Updated:", newspso);
     // };
     const filterData = [
-      { id: 0, name: "Thông tin máy in", value: "details" },
+      { id: 0, name: "Thông tin cấp giấy", value: "details" },
       { id: 1, name: "Thông tin spso", value: "students" },
     ]
     const [filter, setFilter] = useState<"purchaseStats" | "costHist" | "priceHist" | "inventory" | "stats" | "details"| "students">("details")
@@ -80,7 +80,6 @@
         });
       });
     
-      console.log("Updated updateData:", updateData);
     };
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -101,12 +100,7 @@
       console.log(updateData)
       const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
       const res =await action.update(data["id"], updateData, cnpm_token)
-      if (res?.status >= 200 && res?.status <= 299) {
-        toast.success("Chỉnh sửa thành công.")
-      }
-      else {
-        toast.error(res.message)
-      }
+
       reload()
     };
     useEffect(() => {
@@ -269,7 +263,7 @@
       >
         <motion.div
           ref={notificationRef}
-          className={`relative w-11/12 bg-white dark:bg-[#14141a] h-5/6 rounded-xl p-4
+          className={`relative w-1/2 bg-white dark:bg-[#14141a] h-4/6 rounded-xl p-4
             ${isShaking ? "animate-shake" : ""}`}
           initial={{ scale: 0 }}
           animate={{ scale: isVisible ? 1 : 0 }}
@@ -288,7 +282,7 @@
           <TabSlider allTabs={filterData} onSelectOption={setFilter} />
           <div className="w-full h-4/6 border border-[#545e7b] mt-4 no-scrollbar
           justify-center flex flex-wrap gap-5 bg-gray-100 dark:bg-[#14141a] p-5 rounded-md 
-          dark:text-white text-black  overflow-y-scroll">
+          dark:text-white text-black  overflow-y-hidden">
             {
               filter === "details" && traverse(data, isEditing)
             }
@@ -297,7 +291,7 @@
             }
             
           </div>
-          <div className="w-full flex">
+          <div className="w-full flex hidden">
             {!isEditing ? (
               <Button
                 className="w-full rounded-lg mt-5 mb-1 py-3 border-green-700 hover:bg-green-700 text-green-500

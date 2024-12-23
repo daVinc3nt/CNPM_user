@@ -1005,6 +1005,137 @@ export class FileFormatOperation {
 		}
     }
 }
+
+export class PageAllocOperation {
+    private baseUrl: string;
+    private langQuery: string;
+
+    constructor() {
+        this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/page-allocations';
+        this.langQuery = `lang=${LangVersion.vi}`;
+    }
+
+    setLanguage(lang: LangVersion) {
+        this.langQuery = `lang=${lang}`;
+    }
+    async insert(payload: any, token: string) {
+        try {
+			const response: AxiosResponse = await axios.post(`${this.baseUrl}`, payload, {
+
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error searching accounts: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+    async getAll(token: string) {
+        try {
+			const response: AxiosResponse = await axios.get(`${this.baseUrl}`,{
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error searching accounts: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+    async getById(id: string, token: string) {
+        try {
+			const response: AxiosResponse = await axios.get(`${this.baseUrl}/${id}`,{
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error searching accounts: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+    async update(id: UUID, payload: any, token: string) {
+        try {
+			const response: AxiosResponse = await axios.put(`${this.baseUrl}/${id}`, payload, {
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error updating account: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+    async delete(id: UUID, token: string) {
+        try {
+			const response: AxiosResponse = await axios.delete(`${this.baseUrl}/${id}`, {
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error updating account: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+}
+
 // flash card
 
 export interface UpdatePrinterPayload {

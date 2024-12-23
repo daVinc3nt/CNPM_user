@@ -2,8 +2,8 @@
 import React, { useEffect } from "react";
 import { TbMinusVertical } from "react-icons/tb";
 import { useState } from "react";
-import { toast } from "sonner";
 import AddStaff from "./AddProduct/addstaff";
+import { toast } from "sonner";
 import {
   ColumnDef,
   SortingState,
@@ -33,17 +33,19 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
+import { FormattedMessage } from "react-intl";
 import Filter from "@/components/Common/Filters";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import BasicPopover from "@/components/Common/Popover";
 import AddFile from "./AddProduct/addNoti2";
+import { PageAllocOperation, PrinterOperation } from "@/BE-library/main";
 // import { ProductOperation } from "@/do_an-library/main";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   reload: any;
 }
-const validValue = ["AGENCY_MANAGER","AGENCY_HUMAN_RESOURCE_MANAGER", "ADMIN", "HUMAN_RESOURCE_MANAGER"]
+const validValue = ["AGENCY_MANAGER", "AGENCY_HUMAN_RESOURCE_MANAGER", "ADMIN", "HUMAN_RESOURCE_MANAGER"]
 // const student = new StudentOperation()
 
 export function DataTable<TData, TValue>({
@@ -76,6 +78,7 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalIsOpen2, setModalIsOpen2] = React.useState(false);
 
@@ -101,21 +104,38 @@ export function DataTable<TData, TValue>({
   }
   const handleDeleteRowsSelected = async () => {
     table.getFilteredSelectedRowModel().rows.forEach(async (row) => {
-      // const action = new ProductOperation()
-      // console.log()
-      // const res = await action.delete((row.original as any).ProductID, "");
-      // if (res?.status >= 200 && res?.status <= 299) {
-      //   toast.success("Xóa thành công.")
-      // }
-      // else {
-      //   toast.error(res.message)
-      // }
-      // reload();
-      //hàm delete ở đây
+      const action = new PageAllocOperation
+      const condition = (row.original as any).id
+      const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
+      const res = await action.delete(condition, cnpm_token);
+      if (res?.status >= 200 && res?.status <= 299) {
+        toast.success("Xóa thành công.")
+      }
+      else {
+        toast.error(res.message)
+      }
+      row.toggleSelected(false)
+      reload();
     });
-  }
-  const[findby, setFindby] = useState< "student_id"|"full_name"|"email">("full_name")
-  const handleFindBy = (findB: "student_id" | "full_name" | "email") =>{
+  };
+  const confirmDelete = () => {
+    return window.confirm("Are you sure you want to delete?");
+  };
+  const deleteRows = () => {
+    // Gọi hàm confirmDelete và lưu kết quả vào biến result
+    const result = confirmDelete();
+    // Nếu result là true, tức là người dùng nhấn yes
+    if (result) {
+      // Gọi hàm handleDeleteRowsSelected để xóa các hàng đã chọn
+      handleDeleteRowsSelected();
+    }
+    // Nếu result là false, tức là người dùng nhấn no
+    else {
+      // Không làm gì cả
+    }
+  };
+  const [findby, setFindby] = useState<"semester" | "date">("semester")
+  const handleFindBy = (findB: "semester" | "date") => {
     setFindby(findB);
   }
   return (
@@ -123,68 +143,68 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center py-4">
         <div className="w-full flex flex-col sm:flex-row">
           <div className="flex flex-col gap-5 w-full">
-            <div className="relative w-full sm:w-1/2 lg:w-1/2 flex">
-            <Dropdown className="z-30">
-                <DropdownTrigger>
+            <div className="relative w-full sm:w-1/2 lg:w-1/2 flex gap-2">
+              {/* <Dropdown className="z-30"> */}
+                {/* <DropdownTrigger> */}
                   <Button
-                    className="text-xs md:text-base border border-gray-600 rounded-l ml-2 w-24 text-center hover:bg-gray-300 dark:hover:bg-gray-500"
+                    className="text-xs md:text-base border border-gray-600  rounded w-32 text-center hover:bg-gray-300 dark:hover:bg-gray-500"
                     aria-label="Show items per page"
                   >
-                    {(findby === "student_id") ? "ID": ((findby === "full_name") ? "Họ và tên": "Email")}
+                    {(findby === "semester") ? "Học kì" : "Ngày cấp"}
                   </Button>
-                </DropdownTrigger>
+                {/* </DropdownTrigger>
                 <DropdownMenu
-                  className="bg-blue m-0 p-0 border border-gray-300 rounded w-24 bg-[#282A35] "
+                  className="bg-blue m-0 px-0 border border-gray-300 rounded w-fit bg-[#282A35] "
                   aria-labelledby="dropdownMenuButton"
                 >
-                  {["full_name", "email"].map((pageSize, index) => (
+                  {["semester", "date"].map((pageSize, index) => (
                     <DropdownItem
                       key={pageSize}
                       textValue={`Show ${pageSize} items per page`}
-                      className="bg-[#282A35] -top-3 border border-[#282A35] rounded dark:hover:bg-gray-500 hover:bg-gray-500"
+                      className="bg-[#282A35] border border-[#282A35] rounded dark:hover:bg-gray-500 hover:bg-gray-500"
                     >
                       <Button
-                        onClick={() => handleFindBy(pageSize as "student_id" | "full_name" | "email")}
+                        onClick={() => handleFindBy(pageSize as "semester" | "date")}
                         variant="bordered"
                         aria-label={`Show ${pageSize}`}
                         className="content-center text-white w-full m-0 p-0"
                       >
-                        {(pageSize === "student_id") ? "ID": ((pageSize === "full_name") ? "Họ và tên": "Email")}
+                        {(pageSize === "semester") ? "Học kì" : "Ngày cấp"}
                       </Button>
                     </DropdownItem>
                   ))}
                 </DropdownMenu>
-              </Dropdown>
-            <input
-              type="text"
-              value={
-                (table.getColumn(findby)?.getFilterValue() as string) ?? ""
-              }
-              onChange={(event) =>
-                table.getColumn(findby)?.setFilterValue(event.target.value)
-              }
-              className={`peer h-full self-center focus:border-blue-500 dark:focus:border-gray-500 w-60 border border-gray-600 rounded-r focus:outline-none  truncate bg-transparent
+              </Dropdown> */}
+              <input
+                type="text"
+                value={
+                  (table.getColumn(findby)?.getFilterValue() as string) ?? ""
+                }
+                onChange={(event) =>
+                  table.getColumn(findby)?.setFilterValue(event.target.value)
+                }
+                className={`peer h-full self-center w-full border border-gray-600 rounded focus:outline-none dark:focus:border-gray-100 focus:border-blue-500 truncate bg-transparent
                     text-left placeholder-transparent pl-3 pr-3 text-sm text`}
-              placeholder="Tìm kiếm tên"
-            />
+                placeholder="Tìm kiếm tên"
+              />
               <Dropdown className="z-30">
                 <DropdownTrigger>
                   <Button
-                    className="text-xs md:text-base border border-gray-600 rounded ml-2 w-24 text-center hover:bg-gray-300 dark:hover:bg-gray-500"
+                    className="text-xs md:text-base border border-gray-600 rounded w-24 text-center hover:bg-gray-300 dark:hover:bg-gray-500"
                     aria-label="Show items per page"
                   >
                     Show {table.getState().pagination.pageSize}
                   </Button>
                 </DropdownTrigger>
                 <DropdownMenu
-                  className="bg-blue m-0 p-0 border border-gray-300 rounded w-24 bg-[#282A35] "
+                  className="bg-blue m-0 p-0 border border-gray-300 rounded w-23 bg-[#282A35]"
                   aria-labelledby="dropdownMenuButton"
                 >
                   {[10, 20, 30, 40, 50].map((pageSize, index) => (
                     <DropdownItem
                       key={pageSize}
                       textValue={`Show ${pageSize} items per page`}
-                      className="bg-[#282A35] -top-3 border border-[#282A35] rounded dark:hover:bg-gray-500 hover:bg-gray-500"
+                      className="bg-[#282A35] border border-[#282A35] rounded dark:hover:bg-gray-500"
                     >
                       <Button
                         onClick={() => table.setPageSize(pageSize)}
@@ -201,43 +221,34 @@ export function DataTable<TData, TValue>({
             </div>
 
           </div>
-          {/* <div className="flex-grow h-10 flex mt-4 sm:mt-0 justify-center sm:justify-end ">
-            <BasicPopover icon={<FilterAltIcon />} >
-              <div
-                onClick={()=>{
-                  if (!click)
-                    reload("active")
-                  else 
-                    reload()
-                  setClick(!click)
-                }}
-                className={`m-10 p-1 text-white rounded-lg
-                  ${click ? "bg-green-500":"bg-gray-700"} 
-                  active:bg-gray-500 cursor-pointer`}
-              >
-                For sale
-              </div>
-            </BasicPopover>
-              {modalIsOpen &&<AddStaff onClose={closeModal} reload={reload}/>}
-              {modalIsOpen2 && ( <AddFile onClose={closeModal2} reloadData={reload} />)}
-          </div> */}
-          <div className="flex-grow h-10 mx-2 flex justify-center sm:justify-end">
-
-          <Button
-          className={`text-xs md:text-sm justify-self-start rounded-lg border
-            border-gray-600 px-4 py-2 bg-transparent hover:bg-gray-300
-             focus:outline-none font-normal text-black dark:text-white dark:hover:bg-gray-500
-            ${
-              table.getFilteredSelectedRowModel().rows.length > 0
-              ? "border-red-500"
-              : "border-gray-600"
-            }`}
-            onClick={handleDeleteRowsSelected}
+          <div className="flex-grow h-10 flex mt-4 sm:mt-0 justify-center sm:justify-end">
+            <Button
+              className={`text-xs md:text-sm justify-self-start rounded-lg border
+              border-gray-600 px-4 py-2 bg-transparent hover:bg-gray-300
+              focus:outline-none font-normal text-black dark:text-white dark:hover:bg-gray-500
+              `}
+              onClick={openModal}
             >
-          Xoá {" "}
-          {table.getFilteredSelectedRowModel().rows.length}/
-          {table.getFilteredRowModel().rows.length}
-        </Button>
+              Cấp phát giấy
+            </Button>
+            {modalIsOpen && <AddStaff onClose={closeModal} reload={reload} />}
+          </div>
+
+          <div className="flex-grow h-10 mx-2 flex justify-center sm:justify-end">
+            <Button
+              className={`text-xs md:text-sm justify-self-start rounded-lg border
+            border-gray-600 px-4 py-2 bg-transparent hover:bg-gray-300
+            focus:outline-none font-normal text-black dark:text-white dark:hover:bg-gray-500
+            ${table.getFilteredSelectedRowModel().rows.length > 0
+                  ? "border-red-500"
+                  : "border-gray-600"
+                }`}
+              onClick={handleDeleteRowsSelected}
+            >
+              Xoá {" "}
+              {table.getFilteredSelectedRowModel().rows.length}/
+              {table.getFilteredRowModel().rows.length}
+            </Button>
           </div>
         </div>
       </div>
@@ -252,9 +263,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}
@@ -266,9 +277,8 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  className={`border-gray-700 ${
-                    row.getIsSelected() ? "bg-gray-300 dark:bg-gray-700" : ""
-                  }`}
+                  className={`border-gray-700 ${row.getIsSelected() ? "bg-gray-300 dark:bg-gray-700" : ""
+                    }`}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -302,7 +312,7 @@ export function DataTable<TData, TValue>({
           disabled={!table.getCanPreviousPage()}
           className="px-2 py-[0.15rem] mb-0.5 w-12 sm:w-16 bg-transparent 
           drop-shadow-md border border-black dark:border-white text-black
-           md:text-base focus:outline-none font-normal
+          md:text-base focus:outline-none font-normal
           dark:text-white rounded-md text-sm text-center me-2 hover:cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-500"
         >
           <span>
@@ -311,7 +321,7 @@ export function DataTable<TData, TValue>({
         </Button>
         <span className="flex items-center gap-1">
           <div className="text-xs md:text-base">
-           Trang
+            Trang
           </div>
           <strong className="text-xs md:text-base whitespace-nowrap">
             {table.getState().pagination.pageIndex + 1}{" "}

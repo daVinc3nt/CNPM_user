@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { TbMinusVertical } from "react-icons/tb";
 import { useState } from "react";
 import AddStaff from "./AddProduct/addstaff";
+import {toast} from "sonner";
 import {
   ColumnDef,
   SortingState,
@@ -107,6 +108,12 @@ export function DataTable<TData, TValue>({
       const condition = (row.original as any).id
       const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
       const res = await action.delete(condition, cnpm_token);
+      if (res?.status >= 200 && res?.status <= 299) {
+        toast.success("Xóa thành công.")
+      }
+      else {
+        toast.error(res.message)
+      }
       row.toggleSelected(false)
       reload();
     });

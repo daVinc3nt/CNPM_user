@@ -4,14 +4,10 @@ import { IoMdClose } from "react-icons/io";
 import { Button } from "@nextui-org/react";
 import CustomDropdown from "./dropdown";
 import { toast } from "sonner";
-import { LocationOperation, PrinterOperation } from "@/BE-library/main";
+import { LocationOperation, PageAllocOperation, PrinterOperation } from "@/BE-library/main";
 interface AddStaffProps {
   onClose: () => void;
   reload: any;
-}
-interface Location{
-  id: string;
-  local: string;
 }
 const AddStaff: React.FC<AddStaffProps> = ({ onClose, reload }) => {
   const openModal = (type) => {
@@ -20,20 +16,6 @@ const AddStaff: React.FC<AddStaffProps> = ({ onClose, reload }) => {
   };
   const closeModal = () => {
     setModalIsOpen(false);
-  };
-  const [location, setLocation] = useState<Location[]>([]);
-  const handleSetLocation = (lid: string, newLocation: string) => {
-      setPrinter((prevState) => ({
-      ...prevState,
-      location: {
-        id: lid
-      },}));
-    if (selectedLocation == "") setselectlocation(newLocation);
-    const newlocal: Location ={
-      id: lid,
-      local: newLocation,
-    }
-    setLocation((prevLocation) => [...prevLocation, newlocal]);
   };
   const [selectedLocation, setselectlocation] = useState<string>("");
   const [isShaking, setIsShaking] = useState(false);
@@ -57,13 +39,6 @@ const AddStaff: React.FC<AddStaffProps> = ({ onClose, reload }) => {
   };
   
   useEffect(() => {
-      const fetchlocation = async () => {
-        const action = new LocationOperation();
-        const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
-        const res = await action.searchAll(cnpm_token);
-        res?.data.map((data)=>handleSetLocation(data?.id, `Phòng ${data?.roomNumber}, Tầng ${data?.floor},Tòa ${data?.name}, ${data?.campus}`))
-      }
-      fetchlocation();
     document.addEventListener("mousedown", handleClickOutside);
     
     return () => {
@@ -134,9 +109,9 @@ const AddStaff: React.FC<AddStaffProps> = ({ onClose, reload }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const senddata = async ()=>{
-      const action =new PrinterOperation()
+      const action =new PageAllocOperation()
       const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
-      const res= await action.create(Printer, cnpm_token)
+      const res= await action.insert(Printer, cnpm_token)
       if (res?.status >= 200 && res?.status <= 299) {
         toast.success("Thêm thành công.")
       }
@@ -185,64 +160,46 @@ const AddStaff: React.FC<AddStaffProps> = ({ onClose, reload }) => {
             <div 
               className="w-fit h-fit"
             >
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-row gap-3">
                 <input required
                   type="string"
                   className={`text-xs md:text-sm border border-gray-600 rounded  bg-white dark:bg-[#14141a] h-10 p-2 w-full
                   `}
-                  placeholder="Name"
-                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  placeholder="Năm"
+                  onChange={(e) => handleInputChange("year", e.target.value)}
                 />
-
                 <input required
                   type="string"
                   className="text-xs md:text-sm border border-gray-600 rounded  bg-white dark:bg-[#14141a] h-10 p-2 w-full"
-                  placeholder={"Brand"}
-                  onChange={(e) => handleInputChange("brand", e.target.value)}
+                  placeholder={"Học kì"}
+                  onChange={(e) => handleInputChange("semester", e.target.value)}
                 />
               </div>
 
               <div className="flex gap-3 mt-3">
               <input required
-                  type="text"
-                  className="text-xs md:text-sm border border-gray-600 rounded  bg-white dark:bg-[#14141a] h-10 p-2 w-full"
-                  placeholder={"Type"}
-                  onChange={(e) => handleInputChange("type", e.target.value)}
-                />
-                
-                <input required
-                  type="string"
-                  className="text-xs md:text-sm border border-gray-600 rounded  bg-white dark:bg-[#14141a] h-10 p-2 w-full"
-                  placeholder={"description"}
-                  onChange={(e) => handleInputChange("description", e.target.value)}
-                />
-                
-                <input required
                   type="number"
                   className="text-xs md:text-sm border border-gray-600 rounded  bg-white dark:bg-[#14141a] h-10 p-2 w-full"
-                  placeholder={"remainingPages"}
-                  onChange={(e) => handleInputChange("remainingPages", e.target.valueAsNumber)}
+                  placeholder="Số lượng"
+                  onChange={(e) => handleInputChange("numberOfPages", e.target.value)}
                 />
               </div>
               
               <div className="flex gap-3 mt-3"> 
+                  <div className="w-full">
+                  <span
+                    className="text-xs text-gray-400"
+                  >
+                    {"Ngày cấp"}
+                  </span>
+
                   <input required
-                    type="string"
-                    className="text-xs md:text-sm border border-gray-600 rounded w-1/3 bg-white dark:bg-[#14141a] h-10 p-2"
-                    placeholder={"supportContact"}
-                    onChange={(e) => handleInputChange("supportContact", e.target.value)}
+                    type="date"
+                    min={new Date().toISOString().split("T")[0]}
+                    className="text-xs md:text-sm border border-gray-600 rounded bg-white dark:bg-[#14141a] h-10 p-2 w-full dark:text-white"
+                    onChange={(e) => handleInputChange("date", e.target.value)}
                   />
-                  <div
-                  className={`text-xs text-center md:text-sm border border-gray-600 rounded bg-white dark:bg-[#14141a] h-10 p-2 w-2/3
-                  `}
-                >
-                  <CustomDropdown
-                    label={"Location"}
-                    options={location.map((data)=> data.local)}
-                    selectedOption={selectedLocation}
-                    onSelectOption={(option) => {setselectlocation(option);handleInputChange("location", location.find((data)=> data.local == option))}}
-                  />
-                </div>   
+                </div>
               </div>
             </div>
           </div>
