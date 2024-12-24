@@ -7,7 +7,8 @@ import { FiPrinter } from "react-icons/fi";
 import { BsCashCoin } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
 import { AiOutlineFile } from "react-icons/ai";
-// import { FormattedMessage } from "react-intl";
+import { MdLocationOn } from "react-icons/md";  // Thêm icon location
+
 const SideItemData = [
   {
     id: 0,
@@ -32,8 +33,15 @@ const SideItemData = [
     title: "Định dạng tệp",
     url: "/fileformat",
     icon: <AiOutlineFile className="text-2xl lg:block" />,
+  },
+  {
+    id: 4,  // Sửa lại id để tránh trùng
+    title: "Địa điểm máy in",
+    url: "/location",
+    icon: <MdLocationOn className="text-2xl lg:block" />,  // Cập nhật icon
   }
 ];
+
 export default function SideBar({ toggleCollapse }) {
   const [dropdown, Setdropdown] = useState(false);
   return (

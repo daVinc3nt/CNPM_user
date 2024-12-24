@@ -37,7 +37,7 @@ import Filter from "@/components/Common/Filters";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import BasicPopover from "@/components/Common/Popover";
 import AddFile from "./AddProduct/addNoti2";
-import { FileFormatOperation, PrinterOperation } from "@/BE-library/main";
+import { LocationOperation } from "@/BE-library/main";
 import { toast } from "sonner";
 // import { ProductOperation } from "@/do_an-library/main";
 interface DataTableProps<TData, TValue> {
@@ -78,7 +78,7 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
-  
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalIsOpen2, setModalIsOpen2] = React.useState(false);
 
@@ -104,12 +104,12 @@ export function DataTable<TData, TValue>({
   }
   const handleDeleteRowsSelected = async () => {
     table.getFilteredSelectedRowModel().rows.forEach(async (row) => {
-      const action = new FileFormatOperation
-      const condition = (row.original as any).format_id
-      const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
+      const action = new LocationOperation
+      const condition = (row.original as any).id
+      const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNzUxNTgwN30.Czy6rMZVB-UpKzIdBDeQiTvvl-Rh9qN_OXbHbUnBCrY";
       const res = await action.delete(condition, cnpm_token);
-      if( res.status === 200) {
-        toast.success("Xóa định dạng tệp thành công")
+      if (res.status === 200) {
+        toast.success("Xóa địa điểm thành công")
         row.toggleSelected(false)
         reload();
       } else {
@@ -123,22 +123,10 @@ export function DataTable<TData, TValue>({
   const confirmDelete = () => {
     return window.confirm("Are you sure you want to delete?");
   };
-  const deleteRows = () => {
-    // Gọi hàm confirmDelete và lưu kết quả vào biến result
-    const result = confirmDelete();
-    // Nếu result là true, tức là người dùng nhấn yes
-    if (result) {
-      // Gọi hàm handleDeleteRowsSelected để xóa các hàng đã chọn
-      handleDeleteRowsSelected();
-    }
-    // Nếu result là false, tức là người dùng nhấn no
-    else {
-      // Không làm gì cả
-    }
-  };
-  const[findby, setFindby] = useState< "student_id"|"name">("name")
-    const handleFindBy = (findB: "student_id" | "name") =>{
-      setFindby(findB);
+
+  const [findby, setFindby] = useState<"name" | "campus">("name")
+  const handleFindBy = (findB: "name" | "campus") => {
+    setFindby(findB);
   }
   return (
     <div>
@@ -146,48 +134,52 @@ export function DataTable<TData, TValue>({
         <div className="w-full flex flex-col sm:flex-row">
           <div className="flex flex-col gap-5 w-full">
             <div className="relative w-full sm:w-1/2 lg:w-1/2 flex gap-2">
-                        <Dropdown className="z-30">
-                            <DropdownTrigger>
-                              <Button
-                                className="text-xs md:text-base border border-gray-600 rounded ml-2 w-56 text-center hover:bg-gray-300 dark:hover:bg-gray-500"
-                                aria-label="Show items per page"
-                              >
-                                {(findby === "student_id") ? "ID": ((findby === "name") ? "Tên định dạng": "")}
-                              </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu
-                              className="bg-blue m-0 p-0 border border-gray-300 rounded w-fit bg-[#282A35] "
-                              aria-labelledby="dropdownMenuButton"
-                            >
-                              {["name"].map((pageSize, index) => (
-                                <DropdownItem
-                                  key={pageSize}
-                                  textValue={`Show ${pageSize} items per page`}
-                                  className="bg-[#282A35] -top-3 border border-[#282A35] rounded dark:hover:bg-gray-500 hover:bg-gray-500"
-                                >
-                                  <Button
-                                    onClick={() => handleFindBy(pageSize as "student_id" | "name")}
-                                    variant="bordered"
-                                    aria-label={`Show ${pageSize}`}
-                                    className="content-center text-white w-full m-0 p-0"
-                                  >
-                                    {(pageSize === "student_id") ? "ID": ((pageSize === "name") ? "Tên định dạng": "")}
-                                  </Button>
-                                </DropdownItem>
-                              ))}
-                            </DropdownMenu>
-                          </Dropdown>
+              <Dropdown className="z-30">
+                <DropdownTrigger>
+                  <Button
+                    className="text-xs md:text-base border border-gray-600 rounded ml-2 w-56 text-center hover:bg-gray-300 dark:hover:bg-gray-500"
+                    aria-label="Show items per page"
+                  >
+                    {/* {(findby === "student_id") ? "ID" : ((findby === "name") ? "Tên địa điểm" : "")} */}
+                    {
+                          findby === "name" ? "Tên địa điểm" : "Cơ sở"}
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu
+                  className="bg-blue m-0 p-0 border border-gray-300 rounded w-fit bg-[#282A35] "
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  {["name", "campus"].map((field) => (
+                    <DropdownItem
+                      key={field}
+                      textValue={`Tìm kiếm theo ${field}`}
+                      className="bg-[#282A35] -top-3 border border-[#282A35] rounded dark:hover:bg-gray-500 hover:bg-gray-500"
+                    >
+                      <Button
+                        onClick={() => handleFindBy(field as "name"| "campus")}
+                        variant="bordered"
+                        aria-label={`Tìm kiếm theo ${field}`}
+                        className="content-center text-white w-full m-0 p-0"
+                      >
+                        {
+                          field === "name" ? "Tên địa điểm" : "Cơ sở"}
+                      </Button>
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
               <input
                 type="text"
-                value={
-                  (table.getColumn(findby)?.getFilterValue() as string) ?? ""
-                }
-                onChange={(event) =>
-                  table.getColumn(findby)?.setFilterValue(event.target.value)
-                }
-                className={`peer h-full self-center w-full border border-gray-600 rounded focus:outline-none dark:focus:border-gray-100 focus:border-blue-500 truncate bg-transparent
-                    text-left placeholder-transparent pl-3 pr-3 text-sm text`}
-                placeholder="Tìm kiếm tên"
+                value={(table.getColumn(findby)?.getFilterValue() as string) ?? ""}
+                onChange={(event) => {
+                  // Thiết lập bộ lọc cho cột hiện tại
+                  table.getColumn(findby)?.setFilterValue(event.target.value);
+                }}
+                className={`peer h-full self-center w-full border border-gray-600 rounded focus:outline-none 
+              dark:focus:border-gray-100 focus:border-blue-500 truncate bg-transparent
+              text-left placeholder-transparent pl-3 pr-3 text-sm`}
+                placeholder={`Tìm kiếm ${
+                  findby === "name" ? "Tên địa điểm" : "Cơ sở"}`}
               />
               <Dropdown className="z-30">
                 <DropdownTrigger>
@@ -225,15 +217,15 @@ export function DataTable<TData, TValue>({
           </div>
           <div className="flex-grow h-10 flex mt-4 sm:mt-0 justify-center sm:justify-end">
             <Button
-                className={`text-xs md:text-sm justify-self-start rounded-lg border
+              className={`text-xs md:text-sm justify-self-start rounded-lg border
               border-gray-600 px-4 py-2 bg-transparent hover:bg-gray-300
               focus:outline-none font-normal text-black dark:text-white dark:hover:bg-gray-500
               `}
               onClick={openModal}
-              >
-                Thêm định dạng tệp 
+            >
+              Thêm địa điểm
             </Button>
-            {modalIsOpen &&<AddStaff onClose={closeModal} reload={reload}/>}
+            {modalIsOpen && <AddStaff onClose={closeModal} reload={reload} />}
           </div>
 
           <div className="flex-grow h-10 mx-2 flex justify-center sm:justify-end">

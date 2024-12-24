@@ -1167,7 +1167,7 @@ var LocationOperation = /** @class */ (function () {
     LocationOperation.prototype.setLanguage = function (lang) {
         this.langQuery = "lang=".concat(lang);
     };
-    LocationOperation.prototype.searchAll = function (token) {
+    LocationOperation.prototype.create = function (payload, token) {
         return __awaiter(this, void 0, void 0, function () {
             var response, error_33;
             var _a, _b;
@@ -1175,7 +1175,7 @@ var LocationOperation = /** @class */ (function () {
                 switch (_c.label) {
                     case 0:
                         _c.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, axios_1.default.get("".concat(this.baseUrl), {
+                        return [4 /*yield*/, axios_1.default.post("".concat(this.baseUrl), payload, {
                                 withCredentials: true,
                                 validateStatus: function (status) { return status >= 200 && status <= 500; },
                                 headers: {
@@ -1200,7 +1200,7 @@ var LocationOperation = /** @class */ (function () {
             });
         });
     };
-    LocationOperation.prototype.searchFilesById = function (id, token) {
+    LocationOperation.prototype.searchAll = function (token) {
         return __awaiter(this, void 0, void 0, function () {
             var response, error_34;
             var _a, _b;
@@ -1208,7 +1208,7 @@ var LocationOperation = /** @class */ (function () {
                 switch (_c.label) {
                     case 0:
                         _c.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, axios_1.default.get("".concat(this.baseUrl, "/").concat(id), {
+                        return [4 /*yield*/, axios_1.default.get("".concat(this.baseUrl), {
                                 withCredentials: true,
                                 validateStatus: function (status) { return status >= 200 && status <= 500; },
                                 headers: {
@@ -1233,7 +1233,7 @@ var LocationOperation = /** @class */ (function () {
             });
         });
     };
-    LocationOperation.prototype.delete = function (id, token) {
+    LocationOperation.prototype.searchFilesById = function (id, token) {
         return __awaiter(this, void 0, void 0, function () {
             var response, error_35;
             var _a, _b;
@@ -1241,7 +1241,7 @@ var LocationOperation = /** @class */ (function () {
                 switch (_c.label) {
                     case 0:
                         _c.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, axios_1.default.delete("".concat(this.baseUrl, "/delete/").concat(id, "?").concat(this.langQuery), {
+                        return [4 /*yield*/, axios_1.default.get("".concat(this.baseUrl, "/").concat(id), {
                                 withCredentials: true,
                                 validateStatus: function (status) { return status >= 200 && status <= 500; },
                                 headers: {
@@ -1258,9 +1258,42 @@ var LocationOperation = /** @class */ (function () {
                             }];
                     case 2:
                         error_35 = _c.sent();
-                        console.log("Error updating account: ", (_a = error_35 === null || error_35 === void 0 ? void 0 : error_35.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.log("Error searching accounts: ", (_a = error_35 === null || error_35 === void 0 ? void 0 : error_35.response) === null || _a === void 0 ? void 0 : _a.data);
                         console.error("Request that caused the error: ", error_35 === null || error_35 === void 0 ? void 0 : error_35.request);
                         return [2 /*return*/, { success: (_b = error_35 === null || error_35 === void 0 ? void 0 : error_35.response) === null || _b === void 0 ? void 0 : _b.data, request: error_35 === null || error_35 === void 0 ? void 0 : error_35.request, status: error_35.response ? error_35.response.status : null }];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    LocationOperation.prototype.delete = function (id, token) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, error_36;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _c.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, axios_1.default.delete("".concat(this.baseUrl, "/").concat(id), {
+                                withCredentials: true,
+                                validateStatus: function (status) { return status >= 200 && status <= 500; },
+                                headers: {
+                                    Authorization: "Bearer ".concat(token)
+                                },
+                            })];
+                    case 1:
+                        response = _c.sent();
+                        return [2 /*return*/, {
+                                success: response.data.success,
+                                message: response.data.message,
+                                data: response.data.data,
+                                status: response.status
+                            }];
+                    case 2:
+                        error_36 = _c.sent();
+                        console.log("Error updating account: ", (_a = error_36 === null || error_36 === void 0 ? void 0 : error_36.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.error("Request that caused the error: ", error_36 === null || error_36 === void 0 ? void 0 : error_36.request);
+                        return [2 /*return*/, { success: (_b = error_36 === null || error_36 === void 0 ? void 0 : error_36.response) === null || _b === void 0 ? void 0 : _b.data, request: error_36 === null || error_36 === void 0 ? void 0 : error_36.request, status: error_36.response ? error_36.response.status : null }];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -1279,47 +1312,13 @@ var FileFormatOperation = /** @class */ (function () {
     };
     FileFormatOperation.prototype.create = function (payload, token) {
         return __awaiter(this, void 0, void 0, function () {
-            var response, error_36;
-            var _a, _b;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        _c.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, axios_1.default.post("".concat(this.baseUrl), payload, {
-                                withCredentials: true,
-                                validateStatus: function (status) { return status >= 200 && status <= 500; },
-                                headers: {
-                                    Authorization: "Bearer ".concat(token)
-                                },
-                            })];
-                    case 1:
-                        response = _c.sent();
-                        return [2 /*return*/, {
-                                success: response.data.success,
-                                message: response.data.message,
-                                data: response.data.data,
-                                status: response.status
-                            }];
-                    case 2:
-                        error_36 = _c.sent();
-                        console.log("Error searching accounts: ", (_a = error_36 === null || error_36 === void 0 ? void 0 : error_36.response) === null || _a === void 0 ? void 0 : _a.data);
-                        console.error("Request that caused the error: ", error_36 === null || error_36 === void 0 ? void 0 : error_36.request);
-                        return [2 /*return*/, { success: (_b = error_36 === null || error_36 === void 0 ? void 0 : error_36.response) === null || _b === void 0 ? void 0 : _b.data, request: error_36 === null || error_36 === void 0 ? void 0 : error_36.request, status: error_36.response ? error_36.response.status : null }];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    //get tags
-    FileFormatOperation.prototype.searchAll = function (token) {
-        return __awaiter(this, void 0, void 0, function () {
             var response, error_37;
             var _a, _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
                         _c.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, axios_1.default.get("".concat(this.baseUrl), {
+                        return [4 /*yield*/, axios_1.default.post("".concat(this.baseUrl), payload, {
                                 withCredentials: true,
                                 validateStatus: function (status) { return status >= 200 && status <= 500; },
                                 headers: {
@@ -1344,9 +1343,43 @@ var FileFormatOperation = /** @class */ (function () {
             });
         });
     };
-    FileFormatOperation.prototype.delete = function (id, token) {
+    //get tags
+    FileFormatOperation.prototype.searchAll = function (token) {
         return __awaiter(this, void 0, void 0, function () {
             var response, error_38;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _c.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, axios_1.default.get("".concat(this.baseUrl), {
+                                withCredentials: true,
+                                validateStatus: function (status) { return status >= 200 && status <= 500; },
+                                headers: {
+                                    Authorization: "Bearer ".concat(token)
+                                },
+                            })];
+                    case 1:
+                        response = _c.sent();
+                        return [2 /*return*/, {
+                                success: response.data.success,
+                                message: response.data.message,
+                                data: response.data.data,
+                                status: response.status
+                            }];
+                    case 2:
+                        error_38 = _c.sent();
+                        console.log("Error searching accounts: ", (_a = error_38 === null || error_38 === void 0 ? void 0 : error_38.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.error("Request that caused the error: ", error_38 === null || error_38 === void 0 ? void 0 : error_38.request);
+                        return [2 /*return*/, { success: (_b = error_38 === null || error_38 === void 0 ? void 0 : error_38.response) === null || _b === void 0 ? void 0 : _b.data, request: error_38 === null || error_38 === void 0 ? void 0 : error_38.request, status: error_38.response ? error_38.response.status : null }];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    FileFormatOperation.prototype.delete = function (id, token) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, error_39;
             var _a, _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -1368,10 +1401,10 @@ var FileFormatOperation = /** @class */ (function () {
                                 status: response.status
                             }];
                     case 2:
-                        error_38 = _c.sent();
-                        console.log("Error updating account: ", (_a = error_38 === null || error_38 === void 0 ? void 0 : error_38.response) === null || _a === void 0 ? void 0 : _a.data);
-                        console.error("Request that caused the error: ", error_38 === null || error_38 === void 0 ? void 0 : error_38.request);
-                        return [2 /*return*/, { success: (_b = error_38 === null || error_38 === void 0 ? void 0 : error_38.response) === null || _b === void 0 ? void 0 : _b.data, request: error_38 === null || error_38 === void 0 ? void 0 : error_38.request, status: error_38.response ? error_38.response.status : null }];
+                        error_39 = _c.sent();
+                        console.log("Error updating account: ", (_a = error_39 === null || error_39 === void 0 ? void 0 : error_39.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.error("Request that caused the error: ", error_39 === null || error_39 === void 0 ? void 0 : error_39.request);
+                        return [2 /*return*/, { success: (_b = error_39 === null || error_39 === void 0 ? void 0 : error_39.response) === null || _b === void 0 ? void 0 : _b.data, request: error_39 === null || error_39 === void 0 ? void 0 : error_39.request, status: error_39.response ? error_39.response.status : null }];
                     case 3: return [2 /*return*/];
                 }
             });
