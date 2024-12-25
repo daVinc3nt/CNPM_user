@@ -37,8 +37,9 @@ export function SessionProvider({ children }) {
     const infoAction = new AccountOperation()
     useEffect(() => {
         const fetchData = async () => {
-            setSession(null)
+            setSession(sid)
             const infoRes = await infoAction.getAuthenticatedInfo(sid)
+            console.log( infoRes )
             if(infoRes.status != 200)
                 {
                     if(pathName.toString() !== "/error?error=Configuration"&& pathName.toString() !== "/error?error=AccessDenied" && pathName.toString() !== "/" && pathName.toString() !== "/en" && pathName.toString() !== "/vi") router.push("/login")

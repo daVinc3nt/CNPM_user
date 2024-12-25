@@ -34,32 +34,27 @@ export function CredentialsForm(props: CredentialsFormProps) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { username, password } = formData;
-        ////console.log(data.get ("password"))
         const Auth = new AuthOperation()
-        const res = await Auth.login({ username: username, password:  password, role: "ADMIN" })
-        console.log(res)
-        if (res.data)
-            {
-                Cookies.set("gid", res.data.id)
-            }
-        if (res && res.success) {
-                router.push("/");
-            }
-		else if (res && res.status === 401 && res.success) {
-                ////console.log ("Error: ", signInResponse); 
-                toast.warning(res.message)
-            }
-			 else {
-                ////console.log ("Error: ", signInResponse); 
-                toast.warning(res.message)
-            }
+		toast.promise(
+			Auth.login({ username: username, password:  password, role: "ADMIN" }),{
+			loading: 'Loading...',
+			success: (data) => {
+				Cookies.set("gid", data.data.token)
+				console.log(data)
+				router.push("/printer")
+				if (data.status !== 200)
+					throw new Error(data.message)
+				return data.message;
+			},
+			error: (err)=>{return err.message}
+		})
         }
     return (
 		<form
 			className="h-full w-full mt-8 text-black  flex flex-col items-center"
 			action=""
 			method="POST"
-			onSubmit={()=>{}}>
+			onSubmit={(e)=>{handleSubmit(e)}}>
 			<div className="relative w-full">
 				<input
 					id="username"

@@ -42,11 +42,11 @@ export default function PrinterList({setView}:Props) {
     }, [status]);
 	return (
 		<>		 
-            <div className="mt-32 flex flex-col bg-white absolute animate-slide_in_up w-[calc(60%)]
+            <div className="mt-32 flex flex-col bg-white absolute animate-slide_in_up w-full h-full lg:w-[calc(60%)]
             rounded-3xl  gap-10 items-center py-10
-            h-[calc(80%)] overflow-y-scroll shadow-xl">
+            lg:h-[calc(80%)] overflow-y-scroll shadow-xl">
                 {status === "authenticated" && session ? 
-                <div className="animate-slide_in_up w-full">
+                <div className="animate-slide_in_up w-full flex flex-col gap-10">
                     {ListPayment?.map(({
                         brand,
                         description,
@@ -62,12 +62,19 @@ export default function PrinterList({setView}:Props) {
                         text-lg font-medium w-full px-10 rounded-lg shadow-md"
                         key={id}
                         >
-                        <div className="flex gap-5 items-center">
+                        <div className="flex lg:flex-row flex-col gap-5 items-center">
                             <Image 
                                 src="/photos/Printer.png" 
-                                alt="Printer" 
+                                alt="Printer"
+                                className="lg:block hidden" 
                                 width={200} 
                                 height={200} />
+                             {/* <Image 
+                                src="/photos/Printer.png" 
+                                alt="Printer" 
+                                className="lg:hidden block"
+                                width={100} 
+                                height={100} />     */}
                             <div className="flex flex-col items-start">
                                 <div className="font-bold text-xl">{id}.{name} - {type} - {brand} - <span className={`${getStatusClass(status)}`}>{status}</span></div>
                                 <div className="text-sm text-gray-600">{"Phòng "+location.roomNumber+", tầng "+location.floor+", toà "+location.name+", "+location.campus}</div>

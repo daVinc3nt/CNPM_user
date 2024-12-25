@@ -22,7 +22,7 @@ export default function Print() {
 		<>
 		<Aos/>
 			<div className="h-screen flex justify-center">
-				<div className="relative w-full px-20 flex items-center h-screen bg-[#0259BC]">
+				<div className="relative w-screen px-20 flex items-center h-screen bg-[#0259BC]">
 					<Image src="/photos/Vector13.png" alt="Bg" width={9999} height={9999} 
 						className="absolute bottom-0 left-0"
 					/>

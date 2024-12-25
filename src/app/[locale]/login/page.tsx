@@ -10,7 +10,7 @@ export default function Log() {
     const t =useTranslations("LogPage")
 	return (
         <div className="bg-primary fixed z-50 inset-0">
-        <div className={`relative duration-500 w-full flex flex-col py-5  px-10 items-center justify-center h-screen`}>
+        <div className={`relative duration-500 w-full flex flex-col py-5  px-10 items-center justify-center h-[calc(800px)] overflow-scroll`}>
             <div className="hidden lg:block lg:w-[calc(450px)] bg-blue-800 h-[calc(100%)] md:h-[calc(90%)] lg:max-h-[calc(800px)] absolute transition-all transform
             rounded-xl rotate-12 animate-rotate-in-12deg"></div>
             <div className="hidden lg:block lg:w-[calc(450px)] bg-blue-500  h-[calc(100%)] md:h-[calc(90%)] lg:max-h-[calc(800px)] absolute transition-all transform

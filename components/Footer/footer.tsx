@@ -8,7 +8,7 @@ export default function Footer() {
   const  t = useTranslations("footer")
   return (
     <footer>
-      <div className="relative py-12 md:py-16 bg-do">
+      <div className="relative py-12 md:py-16 bg-[#123760]">
       <p className="absolute bottom-0 m-auto left-0 right-0 text-white text-lg">{siteMetadata.version}</p>
         <div className="max-w-6xl mx-auto pl-10 pr-10 sm:px-14">
 
@@ -22,6 +22,7 @@ export default function Footer() {
                 {/* Logo */}
                 <Link href="/" aria-label="Cruip">
                   <Image
+                    className="bg-white rounded p-5"
                     src={siteMetadata.logo}
                     alt="/"
                     width="1300"
@@ -100,7 +101,7 @@ export default function Footer() {
 
               {/* 1nd block */}
               <div className="text-lg col-span-5">
-                <h6 className="text-yellow-300 font-bold uppercase mb-1">
+                <h6 className="text-white font-bold uppercase mb-1">
                   {t("address.title")}
                 </h6>
                 <ul className="list-disc marker:text-white">
@@ -123,7 +124,7 @@ export default function Footer() {
               </div>
               {/* 2nd block */}
               <div className="text-lg col-span-3">
-                <h6 className="text-yellow-300 font-bold uppercase mb-1">
+                <h6 className="text-white font-bold uppercase mb-1">
                   {t("working_hours.title")}
                 </h6>
                 <ul className="list-disc marker:text-white">
