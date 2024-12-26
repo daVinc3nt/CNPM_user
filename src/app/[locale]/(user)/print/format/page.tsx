@@ -42,13 +42,13 @@ function PrintConfig() {
   return (
     <>
       <div
-        className="w-screen h-screen shadow-lg overflow-hidden pt-20"
+        className="w-screen h-fit shadow-lg overflow-hidden pt-20 overflow-y-scroll"
       >
-        <div className="flex items-center w-full h-full px-20 py-10">
-            <div id="document-preview"  className="w-1/2 h-full">
+        <div className="lg:flex-row flex flex-col items-center w-full h-fit lg:px-20 px-5 py-10">
+            <div id="document-preview"  className="lg:w-1/2 w-full h-screen">
                 <FilePreview docs={doc} />
             </div>
-            <div className="w-1/2 h-full">
+            <div className="lg:w-1/2 w-full h-fit">
                 <ConfigArea
                     num_pages={no_pages_of_files}
                     set_pages_state={setPagesState}

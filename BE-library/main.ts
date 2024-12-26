@@ -76,7 +76,106 @@ export class AuthOperation {
 		}
     }
 }
+export class AdminAccountOperation {
+    private baseUrl: string;
+    private langQuery: string;
 
+    constructor() {
+        this.baseUrl = 'https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/internal/admin/detail/me';
+        this.langQuery = `lang=${LangVersion.vi}`;
+    }
+
+    setLanguage(lang: LangVersion) {
+        this.langQuery = `lang=${lang}`;
+    }
+
+    async getAuthenticatedInfo(token: string) {
+        try {
+			const response: AxiosResponse = await axios.get(`${this.baseUrl}`, {
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error searching accounts: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+
+    async resetPassword(email: EmailResetPassword) {
+        try {
+			const response: AxiosResponse = await axios.post(`${this.baseUrl}/password/reset?${this.langQuery}`, email, {
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error searching accounts: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+
+    async checkExist(email: CheckExistAccount) {
+        try {      
+			const response: AxiosResponse = await axios.post(`${this.baseUrl}/check?${this.langQuery}`, email, {
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error searching accounts: ", error.message);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+
+    public async verifyOtpForResetPassword(payload: VerifyOtpForResetPasswordPayload) {
+        try {
+			const response: AxiosResponse = await axios.post(`${this.baseUrl}/otp/verify?${this.langQuery}`, payload, {
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error verifying otp: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
+    }
+}
 export class AccountOperation {
     private baseUrl: string;
     private langQuery: string;
@@ -847,6 +946,30 @@ export class LocationOperation {
 
     setLanguage(lang: LangVersion) {
         this.langQuery = `lang=${lang}`;
+    }
+    async create(payload: any, token: string) {
+        try {
+			const response: AxiosResponse = await axios.post(`${this.baseUrl}`, payload, {
+
+				withCredentials: true,
+                validateStatus: status => status >= 200 && status <= 500,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+			});
+			
+			return {
+                success: response.data.success,
+                message: response.data.message,
+                data: response.data.data,
+                status: response.status
+            };
+		} 
+		catch (error: any) {
+			console.log("Error searching accounts: ", error?.response?.data);
+            console.error("Request that caused the error: ", error?.request);
+            return { success: error?.response?.data, request: error?.request, status: error.response ? error.response.status : null };
+		}
     }
     async searchAll(token: string) {
         try {

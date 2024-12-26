@@ -12,7 +12,8 @@ export function Logout(router: AppRouterInstance){
     // Nếu result là true, tức là người dùng nhấn yes
     if (result) {
         // action.logout()
-        router.push("/log")
+        Cookies.remove("gid")
+        router.push("/login")
     }
     // Nếu result là false, tức là người dùng nhấn no
     else {

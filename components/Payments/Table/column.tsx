@@ -83,7 +83,7 @@ export async function columns(
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Student Name
+          Họ và Tên
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
@@ -95,7 +95,7 @@ export async function columns(
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Balance
+          Số lượng trang in
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
@@ -107,7 +107,7 @@ export async function columns(
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Pay
+          Thanh toán
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
@@ -121,7 +121,7 @@ export async function columns(
         <Button
           variant="ghost"
         >
-          Payment Method
+          Phương thức thanh toán
         </Button>
       ),
     },
@@ -132,7 +132,7 @@ export async function columns(
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Transaction Date
+          Ngày giao dịch
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
@@ -160,7 +160,7 @@ export async function columns(
         <Button
           variant="ghost"
         >
-          Status
+          Trạng thái 
         </Button>
       ),
       cell: ({ row }) => {
@@ -191,7 +191,7 @@ export async function columns(
     },     
     {
       accessorKey: "Chi tiết/Sửa đổi",
-      header: () => "Detail",
+      header: () => "Chi tiết",
       cell: function Cell({ row }) {
         const [modalIsOpen, setModalIsOpen] = useState(false);
 

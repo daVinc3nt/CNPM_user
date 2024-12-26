@@ -6,6 +6,7 @@ import CustomLoadingElement from "../../loading";
 import { useTranslations } from "next-intl";
 import { PaymentOperation } from "@/BE-library/main";
 import moment from "moment";
+import { TabSlider } from "@/components/SliderTab/TabSlider";
 interface Payment {
 	id: number,
 	balance: number,
@@ -27,16 +28,18 @@ function getStatusClass(status) {
 	}
 }
 export default function Profile() {
+	const filterData = [
+		{ id: 0, name: "Lịch sử giao dịch", value: "PaymentHistory" },
+		{ id: 1, name: "Lịch sử in ấn", value: "PrintHistory" },
+	  ]
+	const [filter, setFilter] = useState<"PaymentHistory" | "PrintHistory">("PaymentHistory");
 	const {session, status} =useSession()
 	const [ListPayment, setListPayment] = useState<Payment[]>(null)
 	const t =useTranslations("profile")
 	const action = new PaymentOperation()
 	useEffect(() => {
         const fetchData = async () => {
-			const cnpm_token ="token"
-            const res = await action.searchByStudent(cnpm_token)
-			// const res = await action.searchStudentByID(1, "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNDkyMDQwOH0.dgKU2O0wOScCWnNpR_FM9IrJZAFN7I_rN_jD53R903I")
-			console.log(res)
+            const res = await action.searchByStudent(session.sid)
 			setListPayment(res.data)
         };
 		if (status == "authenticated")
@@ -96,7 +99,9 @@ export default function Profile() {
 							</span>
 						</div>
 					</div>
-					<h1 className="w-full text-center py-5 text-gray-700">Lịch sử giao dịch</h1>
+					
+					<TabSlider allTabs={filterData} onSelectOption={setFilter} /> 
+
 					<div className="grid grid-cols-6 text-center items-center p-4 text-lg font-bold w-full">
 							<div>ID</div>
 							<div>Số tờ mua</div>

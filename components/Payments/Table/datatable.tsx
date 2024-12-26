@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { TbMinusVertical } from "react-icons/tb";
 import { useState } from "react";
 import AddStaff from "./AddProduct/addstaff";
+import { toast } from "sonner";
 import {
   ColumnDef,
   SortingState,
@@ -102,7 +103,7 @@ export function DataTable<TData, TValue>({
   }
   const handleDeleteRowsSelected = async () => {
     table.getFilteredSelectedRowModel().rows.forEach(async (row) => {
-
+    toast.success("Xóa thanh toán thành công")
     });
   }
   const [findby, setFindby] = useState<"student_id" | "full_name">("full_name")
@@ -114,7 +115,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center py-4">
         <div className="w-full flex flex-col sm:flex-row">
           <div className="flex flex-col gap-5 w-full">
-            <div className="relative w-full sm:w-1/2 lg:w-1/2 flex">
+            <div className="relative w-full sm:w-1/2 lg:w-1/2 flex gap-2">
               <Dropdown className="z-30">
                 <DropdownTrigger>
                   <Button
@@ -154,7 +155,7 @@ export function DataTable<TData, TValue>({
                 onChange={(event) =>
                   table.getColumn("studentFullName")?.setFilterValue(event.target.value)
                 }
-                className={`peer h-full self-center w-full border border-gray-600 rounded focus:outline-none focus:border-blue-500 truncate bg-transparent
+                className={`peer h-full self-center w-full border border-gray-600 rounded focus:outline-none dark:focus:border-gray-100 focus:border-blue-500 truncate bg-transparent
                     text-left placeholder-transparent pl-3 pr-3 text-sm text`}
                 placeholder="Tìm kiếm tên"
               />
@@ -192,7 +193,7 @@ export function DataTable<TData, TValue>({
             </div>
 
           </div>
-          <div className="flex-grow h-10 flex mt-4 sm:mt-0 justify-center sm:justify-end">
+          {/* <div className="flex-grow h-10 flex mt-4 sm:mt-0 justify-center sm:justify-end">
             <BasicPopover icon={<FilterAltIcon />}>
               <div
                 onClick={() => {
@@ -211,7 +212,7 @@ export function DataTable<TData, TValue>({
             </BasicPopover>
             {modalIsOpen && <AddStaff onClose={closeModal} reload={reload} />}
             {modalIsOpen2 && (<AddFile onClose={closeModal2} reloadData={reload} />)}
-          </div>
+          </div> */}
 
           <div className="flex-grow h-10 mx-2 flex justify-center sm:justify-end">
             <Button
@@ -224,7 +225,7 @@ export function DataTable<TData, TValue>({
                 }`}
               onClick={handleDeleteRowsSelected}
             >
-              Xoá {" "}
+              Xóa {" "}
               {table.getFilteredSelectedRowModel().rows.length}/
               {table.getFilteredRowModel().rows.length}
             </Button>
