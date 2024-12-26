@@ -4,6 +4,7 @@ import { IoMdClose } from "react-icons/io";
 import { Button } from "@nextui-org/react";
 import { toast } from "sonner";
 import { FileFormatOperation } from "@/BE-library/main";
+import { useSession } from "@/providers/SessionProvider";
 
 interface AddStaffProps {
   onClose: () => void;
@@ -11,7 +12,7 @@ interface AddStaffProps {
 }
 
 const ALLOWED_FORMATS = ["pdf", "doc", "docx", "jpg", "jpeg", "png", "xlsx", "pptx"];  // Định dạng tệp hợp lệ
-
+import Cookies from 'js-cookie';
 const AddStaff: React.FC<AddStaffProps> = ({ onClose, reload }) => {
   const [isShaking, setIsShaking] = useState(false);
   const notificationRef = useRef<HTMLDivElement>(null);
@@ -52,7 +53,7 @@ const AddStaff: React.FC<AddStaffProps> = ({ onClose, reload }) => {
     // Xử lý gửi dữ liệu
     const senddata = async () => {
       const action = new FileFormatOperation();
-      const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
+      const cnpm_token = Cookies.get("gid");
       const res = await action.create(formatFile, cnpm_token);
       if (res.status === 200) {
         toast.success("Thêm định dạng tệp thành công");

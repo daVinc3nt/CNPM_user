@@ -6,10 +6,11 @@ import { useState, useEffect } from "react";
 // import { FindingStudentInfoByAdmin, StudentOperation, token } from "@/ambLib/amb";
 // import { ProductOperation } from "@/do_an-library/main";
 // const conditions: FindingStudentInfoByAdmin[] = [];
+import Cookies from 'js-cookie';
 async function getData(criteria ,value): Promise<any> {
   // const {session, status} = useSession();
   const action = new UserOperation();
-  const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNTIwMzUzN30.3Ueo-ovG1SspA3gOpij48hp0Zc1VCb6VM9Gd1myLWKI";
+  const cnpm_token = Cookies.get("gid");
   const res = await action.searchAllUser(10, 1, cnpm_token);
   console.log(res)
   // if (status == "authenticated")

@@ -6,10 +6,11 @@ import { useState, useEffect } from "react";
 // import { FindingStudentInfoByAdmin, StudentOperation, token } from "@/ambLib/amb";
 // import { ProductOperation } from "@/do_an-library/main";
 // const conditions: FindingStudentInfoByAdmin[] = [];
+import Cookies from 'js-cookie';
 async function getData(): Promise<any> {
   // const {session, status} = useSession();
   const action = new LocationOperation();
-  const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNzUxNTgwN30.Czy6rMZVB-UpKzIdBDeQiTvvl-Rh9qN_OXbHbUnBCrY";
+  const cnpm_token = Cookies.get("gid");
   const res = await action.searchAll(cnpm_token);
   return res?.data;
 }

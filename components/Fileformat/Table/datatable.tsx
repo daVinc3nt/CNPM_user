@@ -39,6 +39,7 @@ import BasicPopover from "@/components/Common/Popover";
 import AddFile from "./AddProduct/addNoti2";
 import { FileFormatOperation, PrinterOperation } from "@/BE-library/main";
 import { toast } from "sonner";
+import Cookies from 'js-cookie';
 // import { ProductOperation } from "@/do_an-library/main";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -106,7 +107,7 @@ export function DataTable<TData, TValue>({
     table.getFilteredSelectedRowModel().rows.forEach(async (row) => {
       const action = new FileFormatOperation
       const condition = (row.original as any).format_id
-      const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
+      const cnpm_token = Cookies.get("gid");
       const res = await action.delete(condition, cnpm_token);
       if( res.status === 200) {
         toast.success("Xóa định dạng tệp thành công")

@@ -5,6 +5,8 @@ import { Button } from "@nextui-org/react";
 import CustomDropdown from "./dropdown";
 import { toast } from "sonner";
 import { LocationOperation, PrinterOperation } from "@/BE-library/main";
+import { useSession } from "@/providers/SessionProvider";
+import Cookies from 'js-cookie';
 interface AddStaffProps {
   onClose: () => void;
   reload: any;
@@ -59,7 +61,7 @@ const AddStaff: React.FC<AddStaffProps> = ({ onClose, reload }) => {
   useEffect(() => {
       const fetchlocation = async () => {
         const action = new LocationOperation();
-        const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
+        const cnpm_token = Cookies.get("gid");
         const res = await action.searchAll(cnpm_token);
         res?.data.map((data)=>handleSetLocation(data?.id, `Phòng ${data?.roomNumber}, Tầng ${data?.floor},Tòa ${data?.name}, ${data?.campus}`))
       }
@@ -135,7 +137,7 @@ const AddStaff: React.FC<AddStaffProps> = ({ onClose, reload }) => {
     e.preventDefault()
     const senddata = async ()=>{
       const action =new PrinterOperation()
-      const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
+      const cnpm_token = Cookies.get("gid");
       const res= await action.create(Printer, cnpm_token)
       if (res?.status >= 200 && res?.status <= 299) {
         toast.success("Thêm thành công.")

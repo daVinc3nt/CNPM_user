@@ -7,7 +7,8 @@
   import { TabSlider } from "@/components/SliderTab/TabSlider";
   import { AccountOperation, AuthOperation, PrinterOperation } from "@/BE-library/main";
   import CustomDropdown from "./AddProduct/dropdown";
-
+import { useSession } from "@/providers/SessionProvider";
+import Cookies from 'js-cookie';
   interface DetailStaffProps {
     onClose: () => void;
     dataInitial: any;
@@ -97,8 +98,7 @@
       const action =new PrinterOperation()
       setIsEditing(false);
       delete updateData?.spso?.authorities;
-      console.log(updateData)
-      const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
+      const cnpm_token = Cookies.get("gid");
       const res =await action.update(data["id"], updateData, cnpm_token)
 
       reload()
@@ -106,7 +106,7 @@
     useEffect(() => {
       const fetchSPSO = async () =>{
         const action = new AuthOperation()
-        const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
+        const cnpm_token = Cookies.get("gid");
         const res = await action.getAdmin(1000, 1, cnpm_token)
         setlistSPSO(res?.data)
       }

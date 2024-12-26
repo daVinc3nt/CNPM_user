@@ -39,7 +39,9 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import BasicPopover from "@/components/Common/Popover";
 import AddFile from "./AddProduct/addNoti2";
 import { PrinterOperation } from "@/BE-library/main";
+import { useSession } from "@/providers/SessionProvider";
 // import { ProductOperation } from "@/do_an-library/main";
+import Cookies from 'js-cookie';
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -106,7 +108,7 @@ export function DataTable<TData, TValue>({
     table.getFilteredSelectedRowModel().rows.forEach(async (row) => {
       const action = new PrinterOperation
       const condition = (row.original as any).id
-      const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
+      const cnpm_token = Cookies.get("gid");
       const res = await action.delete(condition, cnpm_token);
       if (res?.status >= 200 && res?.status <= 299) {
         toast.success("Xóa thành công.")

@@ -39,6 +39,7 @@ import BasicPopover from "@/components/Common/Popover";
 import AddFile from "./AddProduct/addNoti2";
 import { LocationOperation } from "@/BE-library/main";
 import { toast } from "sonner";
+import { useSession } from "@/providers/SessionProvider";
 // import { ProductOperation } from "@/do_an-library/main";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -47,7 +48,7 @@ interface DataTableProps<TData, TValue> {
 }
 const validValue = ["AGENCY_MANAGER", "AGENCY_HUMAN_RESOURCE_MANAGER", "ADMIN", "HUMAN_RESOURCE_MANAGER"]
 // const student = new StudentOperation()
-
+import Cookies from 'js-cookie';
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -106,7 +107,7 @@ export function DataTable<TData, TValue>({
     table.getFilteredSelectedRowModel().rows.forEach(async (row) => {
       const action = new LocationOperation
       const condition = (row.original as any).id
-      const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNzUxNTgwN30.Czy6rMZVB-UpKzIdBDeQiTvvl-Rh9qN_OXbHbUnBCrY";
+      const cnpm_token =Cookies.get("gid");
       const res = await action.delete(condition, cnpm_token);
       if (res.status === 200) {
         toast.success("Xóa địa điểm thành công")

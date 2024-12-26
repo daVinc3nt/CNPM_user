@@ -8,6 +8,8 @@
   import { AccountOperation, AuthOperation, PrinterOperation } from "@/BE-library/main";
   import CustomDropdown from "./AddProduct/dropdown";
   import {toast} from "sonner";
+import { useSession } from "@/providers/SessionProvider";
+import Cookies from 'js-cookie';
   interface DetailStaffProps {
     onClose: () => void;
     dataInitial: any;
@@ -98,8 +100,7 @@
       const action =new PrinterOperation()
       setIsEditing(false);
       delete updateData?.spso?.authorities;
-      console.log(updateData)
-      const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
+      const cnpm_token = Cookies.get("gid");
       const res =await action.update(data["id"], updateData, cnpm_token)
       if (res?.status >= 200 && res?.status <= 299) {
         toast.success("Chỉnh sửa thành công.")
@@ -112,7 +113,7 @@
     useEffect(() => {
       const fetchSPSO = async () =>{
         const action = new AuthOperation()
-        const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
+        const cnpm_token = Cookies.get("gid");
         const res = await action.getAdmin(1000, 1, cnpm_token)
         setlistSPSO(res?.data)
       }

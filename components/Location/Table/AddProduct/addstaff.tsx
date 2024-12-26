@@ -5,7 +5,8 @@ import { IoMdClose } from "react-icons/io";
 import { Button } from "@nextui-org/react";
 import { toast } from "sonner";
 import { LocationOperation } from "@/BE-library/main";
-
+import { useSession } from "@/providers/SessionProvider";
+import Cookies from 'js-cookie';
 interface AddStaffProps {
   onClose: () => void;
   reload: any;
@@ -62,8 +63,7 @@ const AddStaff: React.FC<AddStaffProps> = ({ onClose, reload }) => {
     // Thực hiện gửi dữ liệu
     const senddata = async () => {
       const action = new LocationOperation();
-      const cnpm_token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNzUxNTgwN30.Czy6rMZVB-UpKzIdBDeQiTvvl-Rh9qN_OXbHbUnBCrY";
+      const cnpm_token = Cookies.get("gid");
       try {
         const res = await action.create(fileData, cnpm_token);
         if (res.status === 201) {

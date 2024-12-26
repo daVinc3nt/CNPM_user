@@ -3,6 +3,7 @@ import { useSession } from "@/providers/SessionProvider";
 import { columns } from "./column";
 import { DataTable } from "./datatable";
 import { useState, useEffect } from "react";
+import Cookies from 'js-cookie';
 // import { FindingStudentInfoByAdmin, StudentOperation, token } from "@/ambLib/amb";
 // import { ProductOperation } from "@/do_an-library/main";
 // const conditions: FindingStudentInfoByAdmin[] = [];
@@ -10,7 +11,7 @@ async function getData(criteria ,value): Promise<any> {
 
   // const {session, status} = useSession();
   const action = new PaymentOperation();
-  const cnpm_token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjYsInN1YiI6InRhbnRhaUBleGFtcGxlLmNvbSIsImV4cCI6MTczNjQ4MTc5M30.Rl9U4wkyNbdb2DjdWNORY9liL07sXdmwvdqzOZZBF1c";
+  const cnpm_token = Cookies.get("gid");
   const res = await action.getAll(cnpm_token);
   console.log(res)
   // if (status == "authenticated")
