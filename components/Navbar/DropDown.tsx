@@ -34,10 +34,7 @@ export default function DropDown() {
 		};
 	  }, [dropDown,status]);
 	  const handleOut =()=>{
-		Cookies.remove("gid", { path: '', domain: '.engonow.com' })
-		Cookies.remove('sid', { path: '/', domain: '.engonow.com' })
-		Cookies.remove('refresh_token', { path: '/', domain: '.engonow.com' })
-		Cookies.remove('uid', { path: '/', domain: 'study.engonow.com' })
+		Cookies.remove("gid")
 		location.reload()
 		router.push("/")
 		
@@ -69,17 +66,17 @@ export default function DropDown() {
 				<div
 					
 					className={`${dropDown ? "h-fit border py-4" : "h-0"} w-72 px-4 duration-100 bg-white 
-					absolute top-[75px] -right-28 rounded-xl shadow-md shadow-gray-400 flex flex-col gap-4 overflow-hidden`}>
+					absolute z-[100] top-[75px] -right-10 rounded-xl shadow-md shadow-gray-400 flex flex-col gap-4 overflow-hidden`}>
 					{status =="authenticated" && 
 					<div className="w-full h-fit flex flex-col justify-start items-start gap-2 text-sm">
 						<div className="text-gray-500 w-full text-xl text-center font-semibold">
-							{t("greeting")} <span className="text-red-500">{session && session.full_name}</span> 
+							{t("greeting")} <span className="text-red-500">{session && session.full_name || session.name}</span> 
 						</div>
 					</div>}
 
 					<hr className="solid bg-gray-200 border-gray-200 border rounded-full"></hr>
 
-					<div className="w-full h-fit flex flex-col justify-start items-start text-base">
+					{session?.role != "ADMIN" && <div className="w-full h-fit flex flex-col justify-start items-start text-base">
 						<Link
 							href="/profile"
 							className="w-full hover:bg-primary p-2 flex items-center justify-start">
@@ -91,7 +88,22 @@ export default function DropDown() {
 							{t("logout")}
 							<LogoutIcon height={6} width={6} color="black" />
 						</div>
-					</div>
+					</div>}
+					{session?.role == "ADMIN" && 
+					<div className="w-full h-fit flex flex-col justify-start items-start text-base">
+						<p
+							className="w-full hover:bg-primary p-2 flex items-center justify-start">
+							{session.name}
+						</p>
+						<p
+							className="w-full hover:bg-primary p-2 flex items-center justify-start">
+							{session.email}
+						</p>
+						<p
+							className="w-full hover:bg-primary p-2 flex items-center justify-start">
+							{session.phone_number}
+						</p>
+					</div>}
 				</div>
 			}
 		</button>

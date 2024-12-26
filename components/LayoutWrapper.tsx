@@ -42,7 +42,7 @@ const Wrapper = ({ children }: LayoutProps) => {
                   height="250"
           />
 
-          <motion.img
+          {/* <motion.img
                   variants={leftSideVariant}
                   initial="initial"
                   animate="enter"
@@ -53,7 +53,7 @@ const Wrapper = ({ children }: LayoutProps) => {
                   alt=""
                   width="100"
                   height="100"
-          />
+          /> */}
           <MenuHambuger toggle ={handleSidebarToggleMobile}/>
         </div>
           <div className="flex items-center">
