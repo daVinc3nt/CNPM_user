@@ -1,12 +1,13 @@
+import { Config, OptionalConfig } from "tailwindcss/types/config";
 
 
-const config = {
+const config:  Config = {
 	content: [
 		"./pages/**/*.{js,ts,jsx,tsx,mdx}",
 		"./components/**/*.{js,ts,jsx,tsx,mdx}",
 		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
 	],
-	darkMode:"class",
+	darkMode: 'class',
 	theme: {
 		extend: {
 			spacing: {

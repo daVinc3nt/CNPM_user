@@ -107,17 +107,12 @@ export default function Footer() {
                 <ul className="list-disc marker:text-white">
                   <li className="mb-2">
                     <div className="hover:text-gray-400 text-gray-100 transition duration-150 ease-in-out">
-                    {t("address.location1")}
+                    {siteMetadata.address1}
                     </div>
                   </li>
                   <li className="mb-2">
                     <div  className="hover:text-gray-400 text-gray-100 transition duration-150 ease-in-out">
-                    {t("address.location2")}
-                    </div>
-                  </li>
-                  <li className="mb-2">
-                    <div className="hover:text-gray-400 text-gray-100 transition duration-150 ease-in-out">
-                    {t("address.location3")}
+                    {siteMetadata.address2}
                     </div>
                   </li>
                 </ul>
