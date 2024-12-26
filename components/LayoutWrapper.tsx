@@ -2,11 +2,10 @@
 import React, { ReactNode, useState } from "react";
 import SideBar from "./Top&SideBar/SideBar"
 import MenuHambuger from "./Top&SideBar/MenuHambuger";
-// import ThemeSwitcher from "./Theme/ThemeSwitch";
-// import Provider from "./Theme/Provider";
 import { motion, Variants } from "framer-motion";
 import ThemeSwitcher from "./Theme/ThemeSwitch";
-// import LangSelector from "@/components/LangSelector/LangSelector";
+import Provider from "./Theme/Provider";
+import DropDown from "./Navbar/DropDown";
 interface LayoutProps {
   children: ReactNode;
 } 
@@ -23,6 +22,7 @@ const Wrapper = ({ children }: LayoutProps) => {
     settoggleCollapse(!toggleCollapse);
   };
   return (
+    <Provider>
    <div className="flex flex-col overflow-hidden">
       <div className="flex  flex-col h-screen ">
         <header className="py-2 flex justify-between w-full bg-white 
@@ -56,15 +56,15 @@ const Wrapper = ({ children }: LayoutProps) => {
           />
           <MenuHambuger toggle ={handleSidebarToggleMobile}/>
         </div>
-          {/* <div className="flex items-center">
+          <div className="flex items-center">
               <div className="flex items-center">
                 <div className="flex flex-row gap-2 items-center">
+                  <DropDown/>
                   <ThemeSwitcher/>
                 </div>
               </div>
-          </div> */}
+          </div>
         </header>
-
         <div className="flex-1 flex">
           <SideBar toggleCollapse={toggleCollapse}/>
           <div className="bg-gray-200 dark:bg-[#111319] flex flex-1 ">
@@ -73,6 +73,7 @@ const Wrapper = ({ children }: LayoutProps) => {
         </div>
       </div>
     </div>
+    </Provider>
   );
 };
 

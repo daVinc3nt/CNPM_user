@@ -39,24 +39,17 @@ export function SidebarLinks({ onClickRoute }: Props) {
     },
     {
       name: t("online_test"),
-      path: "/library",
+      path: "/print",
       icon: <IoLibrary className="h-6 w-6" />,
       type:"online_test",
     },
     {
       name: t("notes"),
-      path: "/flashcard",
+      path: "/buypage",
       icon: <FaRegWindowRestore className="h-5 w-5 ml-0.5" />,
       type:"notes",
       
-    },
-    {
-      name: t("news"),
-      path: "https://engonow.com/category/tin-tuc/",
-      icon: <FaRegNewspaper className="h-5 w-5 ml-0.5" />,
-      type:"news",
-      
-    },
+    }
   ];
   const Protectedroutes = [
     {
@@ -64,12 +57,6 @@ export function SidebarLinks({ onClickRoute }: Props) {
       path: "/profile",
       icon: <CgProfile className="h-5 w-5 ml-0.5" />,
       type:"home",  
-    },
-    {
-      name: t2("status"),
-      path: "/statistic",
-      icon: <FaChartPie className="h-6 w-6" />,
-      type:"online_test",
     },
     {
       name: t2("logout"),

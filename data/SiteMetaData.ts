@@ -6,16 +6,16 @@ const siteMetadata = {
     theme: 'system', // system, dark or light
     siteUrl: '',
     siteRepo: '',
-    logo: '/photos/LOGO_blackwhite.png',
-    tiktok: 'https://www.tiktok.com/@khangtranengonow',
-    linkedin: "https://www.linkedin.com/company/ielts-master-engonow",
-    mail: 'contact@engonow.com',
-    facebook: 'https://www.facebook.com/engonow',
-    zalo: 'https://zalo.me/2777399723510815358',
-    address1: "119 Phùng Tá Chu, P. An Lạc A, Q. Bình Tân, TP. Hồ Chí Minh.",
-    address2: "107 đường số 5, P. Bình Trị Đông B, Q. Bình Tân, TP. Hồ Chí Minh.",
-    address3: "117/15S Hồ Văn Long, P. Tân Tạo, Q. Bình Tân, TP. Hồ Chí Minh.",
-    phone:"0969 979 099",
+    logo: '/bk_name_vi.png',
+    tiktok: '/',
+    linkedin: "/",
+    mail: 'quangtran.dvincent@gmail.com',
+    facebook: '/',
+    zalo: '/',
+    address1: "268 Lý Thường Kiệt, Quận 10, Thành phố Hồ Chí Minh",
+    address2: "Khu phố Tân Lập, Phường Đông Hòa, TP. Dĩ An, Tỉnh Bình Dương",
+    address3: "",
+    phone:"0908440828",
     version:"v3.1.4.2"
 }
 

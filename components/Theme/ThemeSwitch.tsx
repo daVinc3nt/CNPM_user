@@ -25,8 +25,8 @@ const ThemeSwitcher = () => {
 
     if(currentTheme ==="dark"){
       return (
-        <div onClick={() =>{ console.log("hello");setTheme('light')}} className="rounded-full bg-sky-300 w-9 h-9 flex items-center justify-center">
-        <LightModeIcon className="scale-110 text-yellow-500" role="button" />
+        <div className="rounded-full bg-sky-300 w-9 h-9 flex items-center justify-center">
+        <LightModeIcon className="scale-110 text-yellow-500" role="button" onClick={() => setTheme('light')} />
         </div>
       )
     }
