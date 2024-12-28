@@ -1019,7 +1019,7 @@ export class LocationOperation {
     }
     async delete(id: UUID, token: string) {
         try {
-			const response: AxiosResponse = await axios.delete(`${this.baseUrl}/delete/${id}?${this.langQuery}`, {
+			const response: AxiosResponse = await axios.delete(`${this.baseUrl}/${id}`, {
 				withCredentials: true,
                 validateStatus: status => status >= 200 && status <= 500,
                 headers: {

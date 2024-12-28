@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -1408,7 +1408,7 @@ var LocationOperation = /** @class */ (function () {
                 switch (_c.label) {
                     case 0:
                         _c.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, axios_1.default.delete("".concat(this.baseUrl, "/delete/").concat(id, "?").concat(this.langQuery), {
+                        return [4 /*yield*/, axios_1.default.delete("".concat(this.baseUrl, "/").concat(id, "?"), {
                                 withCredentials: true,
                                 validateStatus: function (status) { return status >= 200 && status <= 500; },
                                 headers: {
@@ -1557,7 +1557,7 @@ var PageAllocOperation = /** @class */ (function () {
     };
     PageAllocOperation.prototype.insert = function (payload, token) {
         return __awaiter(this, void 0, void 0, function () {
-            var response, error_39;
+            var response, error_44;
             var _a, _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -1579,10 +1579,10 @@ var PageAllocOperation = /** @class */ (function () {
                                 status: response.status
                             }];
                     case 2:
-                        error_39 = _c.sent();
-                        console.log("Error searching accounts: ", (_a = error_39 === null || error_39 === void 0 ? void 0 : error_39.response) === null || _a === void 0 ? void 0 : _a.data);
-                        console.error("Request that caused the error: ", error_39 === null || error_39 === void 0 ? void 0 : error_39.request);
-                        return [2 /*return*/, { success: (_b = error_39 === null || error_39 === void 0 ? void 0 : error_39.response) === null || _b === void 0 ? void 0 : _b.data, request: error_39 === null || error_39 === void 0 ? void 0 : error_39.request, status: error_39.response ? error_39.response.status : null }];
+                        error_44 = _c.sent();
+                        console.log("Error searching accounts: ", (_a = error_44 === null || error_44 === void 0 ? void 0 : error_44.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.error("Request that caused the error: ", error_44 === null || error_44 === void 0 ? void 0 : error_44.request);
+                        return [2 /*return*/, { success: (_b = error_44 === null || error_44 === void 0 ? void 0 : error_44.response) === null || _b === void 0 ? void 0 : _b.data, request: error_44 === null || error_44 === void 0 ? void 0 : error_44.request, status: error_44.response ? error_44.response.status : null }];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -1590,7 +1590,7 @@ var PageAllocOperation = /** @class */ (function () {
     };
     PageAllocOperation.prototype.getAll = function (token) {
         return __awaiter(this, void 0, void 0, function () {
-            var response, error_40;
+            var response, error_45;
             var _a, _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -1612,10 +1612,10 @@ var PageAllocOperation = /** @class */ (function () {
                                 status: response.status
                             }];
                     case 2:
-                        error_40 = _c.sent();
-                        console.log("Error searching accounts: ", (_a = error_40 === null || error_40 === void 0 ? void 0 : error_40.response) === null || _a === void 0 ? void 0 : _a.data);
-                        console.error("Request that caused the error: ", error_40 === null || error_40 === void 0 ? void 0 : error_40.request);
-                        return [2 /*return*/, { success: (_b = error_40 === null || error_40 === void 0 ? void 0 : error_40.response) === null || _b === void 0 ? void 0 : _b.data, request: error_40 === null || error_40 === void 0 ? void 0 : error_40.request, status: error_40.response ? error_40.response.status : null }];
+                        error_45 = _c.sent();
+                        console.log("Error searching accounts: ", (_a = error_45 === null || error_45 === void 0 ? void 0 : error_45.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.error("Request that caused the error: ", error_45 === null || error_45 === void 0 ? void 0 : error_45.request);
+                        return [2 /*return*/, { success: (_b = error_45 === null || error_45 === void 0 ? void 0 : error_45.response) === null || _b === void 0 ? void 0 : _b.data, request: error_45 === null || error_45 === void 0 ? void 0 : error_45.request, status: error_45.response ? error_45.response.status : null }];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -1623,7 +1623,7 @@ var PageAllocOperation = /** @class */ (function () {
     };
     PageAllocOperation.prototype.getById = function (id, token) {
         return __awaiter(this, void 0, void 0, function () {
-            var response, error_41;
+            var response, error_46;
             var _a, _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -1645,10 +1645,10 @@ var PageAllocOperation = /** @class */ (function () {
                                 status: response.status
                             }];
                     case 2:
-                        error_41 = _c.sent();
-                        console.log("Error searching accounts: ", (_a = error_41 === null || error_41 === void 0 ? void 0 : error_41.response) === null || _a === void 0 ? void 0 : _a.data);
-                        console.error("Request that caused the error: ", error_41 === null || error_41 === void 0 ? void 0 : error_41.request);
-                        return [2 /*return*/, { success: (_b = error_41 === null || error_41 === void 0 ? void 0 : error_41.response) === null || _b === void 0 ? void 0 : _b.data, request: error_41 === null || error_41 === void 0 ? void 0 : error_41.request, status: error_41.response ? error_41.response.status : null }];
+                        error_46 = _c.sent();
+                        console.log("Error searching accounts: ", (_a = error_46 === null || error_46 === void 0 ? void 0 : error_46.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.error("Request that caused the error: ", error_46 === null || error_46 === void 0 ? void 0 : error_46.request);
+                        return [2 /*return*/, { success: (_b = error_46 === null || error_46 === void 0 ? void 0 : error_46.response) === null || _b === void 0 ? void 0 : _b.data, request: error_46 === null || error_46 === void 0 ? void 0 : error_46.request, status: error_46.response ? error_46.response.status : null }];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -1656,7 +1656,7 @@ var PageAllocOperation = /** @class */ (function () {
     };
     PageAllocOperation.prototype.update = function (id, payload, token) {
         return __awaiter(this, void 0, void 0, function () {
-            var response, error_42;
+            var response, error_47;
             var _a, _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -1678,10 +1678,10 @@ var PageAllocOperation = /** @class */ (function () {
                                 status: response.status
                             }];
                     case 2:
-                        error_42 = _c.sent();
-                        console.log("Error updating account: ", (_a = error_42 === null || error_42 === void 0 ? void 0 : error_42.response) === null || _a === void 0 ? void 0 : _a.data);
-                        console.error("Request that caused the error: ", error_42 === null || error_42 === void 0 ? void 0 : error_42.request);
-                        return [2 /*return*/, { success: (_b = error_42 === null || error_42 === void 0 ? void 0 : error_42.response) === null || _b === void 0 ? void 0 : _b.data, request: error_42 === null || error_42 === void 0 ? void 0 : error_42.request, status: error_42.response ? error_42.response.status : null }];
+                        error_47 = _c.sent();
+                        console.log("Error updating account: ", (_a = error_47 === null || error_47 === void 0 ? void 0 : error_47.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.error("Request that caused the error: ", error_47 === null || error_47 === void 0 ? void 0 : error_47.request);
+                        return [2 /*return*/, { success: (_b = error_47 === null || error_47 === void 0 ? void 0 : error_47.response) === null || _b === void 0 ? void 0 : _b.data, request: error_47 === null || error_47 === void 0 ? void 0 : error_47.request, status: error_47.response ? error_47.response.status : null }];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -1689,7 +1689,7 @@ var PageAllocOperation = /** @class */ (function () {
     };
     PageAllocOperation.prototype.delete = function (id, token) {
         return __awaiter(this, void 0, void 0, function () {
-            var response, error_43;
+            var response, error_48;
             var _a, _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -1711,10 +1711,10 @@ var PageAllocOperation = /** @class */ (function () {
                                 status: response.status
                             }];
                     case 2:
-                        error_43 = _c.sent();
-                        console.log("Error updating account: ", (_a = error_43 === null || error_43 === void 0 ? void 0 : error_43.response) === null || _a === void 0 ? void 0 : _a.data);
-                        console.error("Request that caused the error: ", error_43 === null || error_43 === void 0 ? void 0 : error_43.request);
-                        return [2 /*return*/, { success: (_b = error_43 === null || error_43 === void 0 ? void 0 : error_43.response) === null || _b === void 0 ? void 0 : _b.data, request: error_43 === null || error_43 === void 0 ? void 0 : error_43.request, status: error_43.response ? error_43.response.status : null }];
+                        error_48 = _c.sent();
+                        console.log("Error updating account: ", (_a = error_48 === null || error_48 === void 0 ? void 0 : error_48.response) === null || _a === void 0 ? void 0 : _a.data);
+                        console.error("Request that caused the error: ", error_48 === null || error_48 === void 0 ? void 0 : error_48.request);
+                        return [2 /*return*/, { success: (_b = error_48 === null || error_48 === void 0 ? void 0 : error_48.response) === null || _b === void 0 ? void 0 : _b.data, request: error_48 === null || error_48 === void 0 ? void 0 : error_48.request, status: error_48.response ? error_48.response.status : null }];
                     case 3: return [2 /*return*/];
                 }
             });
