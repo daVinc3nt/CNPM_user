@@ -8,7 +8,7 @@ import Provider from "./Theme/Provider";
 import DropDown from "./Navbar/DropDown";
 interface LayoutProps {
   children: ReactNode;
-} 
+}
 //reactNode is a dataType of react, its can be JSX, 
 //component or any fragment
 const leftSideVariant: Variants = {
@@ -23,26 +23,26 @@ const Wrapper = ({ children }: LayoutProps) => {
   };
   return (
     <Provider>
-   <div className="flex flex-col overflow-hidden">
-      <div className="flex  flex-col h-screen ">
-        <header className="py-2 flex justify-between w-full bg-white 
+      <div className="flex flex-col overflow-hidden">
+        <div className="flex  flex-col h-screen ">
+          <header className="py-2 flex justify-between w-full bg-white 
         dark:bg-[#111319] items-center px-4 xl:px-2 border-b shadow-xl 
         dark:border-gray-700 gap-1">
-        <div className="flex flex-row-reverse lg:flex-row items-center">
-          <motion.img
-                  variants={leftSideVariant}
-                  initial="initial"
-                  animate="enter"
-                  exit="exit"
-                  transition={{ duration: 0.7 }}
-                  className="rounded-xl p-2 hidden lg:block bg-white shadow-inner shadow-gray-400 "
-                  src={"/bk_name_vi.png"}
-                  alt=""
-                  width="250"
-                  height="250"
-          />
+            <div className="flex flex-row-reverse lg:flex-row items-center">
+              <motion.img
+                variants={leftSideVariant}
+                initial="initial"
+                animate="enter"
+                exit="exit"
+                transition={{ duration: 0.7 }}
+                className="rounded-xl p-2 hidden lg:block bg-white shadow-inner shadow-gray-400 "
+                src={"/bk_name_vi.png"}
+                alt=""
+                width="250"
+                height="250"
+              />
 
-          {/* <motion.img
+              {/* <motion.img
                   variants={leftSideVariant}
                   initial="initial"
                   animate="enter"
@@ -54,25 +54,25 @@ const Wrapper = ({ children }: LayoutProps) => {
                   width="100"
                   height="100"
           /> */}
-          <MenuHambuger toggle ={handleSidebarToggleMobile}/>
-        </div>
-          <div className="flex items-center">
+              <MenuHambuger toggle={handleSidebarToggleMobile} />
+            </div>
+            <div className="flex items-center">
               <div className="flex items-center">
                 <div className="flex flex-row gap-2 items-center">
-                  <DropDown/>
-                  <ThemeSwitcher/>
+                  <DropDown />
+                  <ThemeSwitcher />
                 </div>
               </div>
-          </div>
-        </header>
-        <div className="flex-1 flex">
-          <SideBar toggleCollapse={toggleCollapse}/>
-          <div className="bg-gray-200 dark:bg-[#111319] flex flex-1 ">
+            </div>
+          </header>
+          <div className="flex-1 flex">
+            <SideBar toggleCollapse={toggleCollapse} />
+            <div className="bg-gray-200 dark:bg-[#111319] flex flex-1 ">
               {children}
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </Provider>
   );
 };
