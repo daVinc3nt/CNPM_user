@@ -29,7 +29,7 @@ const Sidebar: FC<Props> = () => {
         </span>
 
         <div className={` flex flex-col items-center relative w-[210px]`}>
-          <Image src="/photos/LOGO_power.png" alt="Your image" width={100} height={100} />
+          <Image src="/logobachkhoa.png" alt="Your image" width={100} height={100} />
         </div>
         
 						

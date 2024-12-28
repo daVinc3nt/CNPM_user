@@ -43,9 +43,9 @@ export default async function RootLayout({
 			<body className="no-scrollbar hide-scrollbar">
 				<NextIntlClientProvider messages={messages}>
 				<SessionProvider>
-				<Toaster closeButton  expand={false} richColors position="top-center" />
-				{children}
-				</SessionProvider>
+					<Toaster closeButton  expand={false} richColors position="top-center" />
+					{children}
+					</SessionProvider>
 				</NextIntlClientProvider>
 			</body>
 		</html>
