@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export async function handler(req, res) {
+export async function GET(req, res) {
   const url = new URL(req.url);
   const mess = url.searchParams.get("message");
   console.log("hello")
