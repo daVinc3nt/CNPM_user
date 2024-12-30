@@ -7,7 +7,7 @@ export async function GET(req, res) {
   if (mess) {
 
     // Tạo response với cookie và redirect
-    const response = NextResponse.redirect(new URL(`/en/erro/${mess}`, req.url));
+    const response = NextResponse.redirect(new URL(`/en/error/${mess}`, req.url));
     // Set cookie với token
 
     return response;
