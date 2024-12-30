@@ -26,15 +26,9 @@ function AuthErrorPage() {
       <div
         className="flex flex-col gap-10 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 text-center"
       >
-        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white flex flex-row justify-center items-center gap-2">
+        <h2 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white flex flex-row justify-center items-center gap-2">
           Bạn phải dùng mail có đuôi là @hcmut.edu.vn nhé
-        </h5>
-        <Link
-            href="/login"
-            className="h-fit w-fit p-4 bg-[#ea2b2b] text-white font-bold rounded-full active:scale-125 duration-300 ease-in-out"
-        >
-          Quay lại
-        </Link>
+        </h2>
         {/* <div className="font-normal text-gray-700 dark:text-gray-400">
           {errorMap[error] || "Please contact us if this error persists."}
         </div> */}
