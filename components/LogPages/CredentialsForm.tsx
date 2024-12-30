@@ -18,8 +18,8 @@ export function CredentialsForm(props: CredentialsFormProps) {
     const router = useRouter();
     const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] =useState<formData>({
-		username: "",
-    	password: ""
+		username: "tantai",
+    	password: "@hcmut.edu.vn"
 	}
 	)
 	const t= useTranslations("LogPage")
@@ -93,6 +93,7 @@ export function CredentialsForm(props: CredentialsFormProps) {
 						type={type}
 						className=" peer h-10 w-full border-b-2 bg-transparent  border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-sky-700"
 						placeholder=""
+						value={formData.password}
 						onChange={(e) => {
 							const newForm = e.target.value;
 							const updatedFormValues = {

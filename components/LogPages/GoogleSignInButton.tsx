@@ -9,6 +9,8 @@ export function GoogleSignInButton() {
     const handleClick = async () => {
         setDisable(true)
         router.push('https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/users/custom-oauth-login');
+        // const res = await fetch('https://co3001-software-engineering-internal-kw83.onrender.com/api/v1/users/custom-oauth-login');
+        // console.log(res)
     }
     return ( 
             <button 

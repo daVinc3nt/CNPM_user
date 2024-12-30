@@ -5,7 +5,6 @@ export async function GET(req: NextRequest) {
   const token = url.searchParams.get("token");
 
   if (token) {
-    console.log("Token received:", token);
 
     // Tạo response với cookie và redirect
     const response = NextResponse.redirect(new URL("/en", req.url));
