@@ -1,5 +1,3 @@
-Dựa trên thông tin của bạn, đây là một mẫu README phù hợp cho dự án hệ thống Bkprinter:
-
 # Bkprinter System
 
 A web-based printing system designed for students of Bach Khoa University, offering functionalities for purchasing print pages, managing print formats, and administrative controls.
@@ -11,11 +9,19 @@ A web-based printing system designed for students of Bach Khoa University, offer
 - **Print Management**: Choose printing formats and settings as needed.
 - **Google Login**: Users log in securely via their Google accounts.
 
+MOMO demo:
+master card: 5200 0000 0000 1096
+ngày hết hạn: 11/01
+CVC: 111
+Tên chủ thẻ: Nguyen Van A
+Số điện thoại: rỗng
+
 ### Admin Features
 - **User Management**: Add, edit, or remove users in the system.
 - **Payment Management**: Monitor and manage payment transactions.
 - **File Format Management**: Administer available file formats for printing.
 - **Secure Login**: Admins log in using predefined credentials.
+
 Default Admin Credentials
 Username: tantai
 Password: @hcmut.edu.vn
